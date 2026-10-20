@@ -48,7 +48,7 @@ tailwind.config = {
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; color: #1a1a1a; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; }
-body.modal-open { overflow: hidden !important; height: 100vh !important; }
+body.modal-open { overflow: hidden !important; position: fixed !important; width: 100% !important; height: 100% !important; }
 .font-brand { font-family: 'Cinzel', serif; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #f7f5f0; }
@@ -201,11 +201,11 @@ body.modal-open { overflow: hidden !important; height: 100vh !important; }
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="team-list"></div>
         </section>
 
-        <!-- GALERIA (Z LIGHTBOX / ZOOM) -->
+        <!-- GALERIA -->
         <section id="galeria" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
             <div class="flex justify-between items-center">
                 <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Metamorfoz (Przed i Po)</h2>
-                <span class="text-xs text-gold-600 font-bold">Kliknij zdjęcie, aby powiększyć</span>
+                <span class="text-xs text-gold-600 font-bold">Z ochroną prywatności</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="gallery-grid"></div>
         </section>
@@ -357,21 +357,6 @@ body.modal-open { overflow: hidden !important; height: 100vh !important; }
             <button onclick="confirmBooking()" class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs sm:text-sm transition shadow-md shrink-0">
                 Zarezerwuj termin
             </button>
-        </div>
-    </div>
-</div>
-
-<!-- LIGHTBOX (FLOATING WINDOW) DLA ZDJĘĆ GALERII -->
-<div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-    <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/40"><i class="fa-solid fa-xmark"></i></button>
-    <div class="max-w-4xl w-full grid grid-cols-1 sm:grid-cols-2 gap-4 text-center" onclick="event.stopPropagation()">
-        <div class="space-y-2">
-            <span class="text-xs font-bold text-white uppercase bg-black/60 px-3 py-1 rounded-full">PRZED</span>
-            <img id="lightbox-img-before" src="" class="w-full max-h-[70vh] object-contain rounded-2xl border border-white/20 shadow-2xl bg-black">
-        </div>
-        <div class="space-y-2">
-            <span class="text-xs font-bold text-gold-400 uppercase bg-black/60 px-3 py-1 rounded-full">PO</span>
-            <img id="lightbox-img-after" src="" class="w-full max-h-[70vh] object-contain rounded-2xl border border-white/20 shadow-2xl bg-black">
         </div>
     </div>
 </div>
@@ -590,7 +575,7 @@ body.modal-open { overflow: hidden !important; height: 100vh !important; }
                 </div>
             </div>
 
-            <!-- TAB 3: CENNIK -->
+            <!-- TAB 3: CENNIK (KATEGORYZOWANY NA FRYZJERÓW) -->
             <div id="admin-section-services" class="admin-sec hidden space-y-5">
                 <div class="bg-cream-100 p-3.5 rounded-2xl border border-gray-200 space-y-2.5">
                     <h4 class="font-bold text-gray-900 text-xs sm:text-sm">Dodaj nową usługę</h4>
@@ -606,7 +591,7 @@ body.modal-open { overflow: hidden !important; height: 100vh !important; }
                     </div>
                     <button onclick="addNewService()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Dodaj usługę</button>
                 </div>
-                <div id="admin-services-list" class="space-y-2"></div>
+                <div id="admin-services-list" class="space-y-4"></div>
             </div>
 
             <!-- TAB 4: GALERIA I HASŁO -->
@@ -837,8 +822,13 @@ window.addEventListener('DOMContentLoaded', ()=>{
 });
 
 function toggleBodyScroll(lock){
-    if(lock) document.body.classList.add('modal-open');
-    else document.body.classList.remove('modal-open');
+    if(lock){
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+    }
 }
 
 function handleGoogleUserLogin(){
@@ -1244,6 +1234,7 @@ function switchAdminTab(tab){
     document.getElementById(`admin-tab-${tab}`).className="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap shrink-0";
     document.getElementById(`admin-section-${tab}`).classList.remove('hidden');
     if(tab==='crm') renderAdminCrmList();
+    if(tab==='services') renderAdminServices();
 }
 
 // CRM KLIENCI / RE-ENGAGEMENT
@@ -1291,7 +1282,7 @@ function renderAdminCrmList(){
                         <strong class="text-sm text-gray-900">${c.name}</strong>
                         <span class="px-2 py-0.5 rounded-full text-[10px] border ${badgeClass}">${badgeText}</span>
                     </div>
-                    <p class="text-gray-500 mt-0.5">Tel: <a href="tel:${c.phone}" class="text-gold-600 font-semibold underline">${c.phone}</a> | Ostatnia wizyta: ${c.lastVisit} (${c.serviceName})</p>
+                    <p class="text-gray-500 mt-0.5">Tel: <a href="tel:${c.phone}" class="text-gold-600 font-semibold underline">${c.phone}</a> | Ostatnia wizyta: ${c.lastVisit} (${c.serviceName}) [Średni cykl: co ${c.freqWeeks} tyg.]</p>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                     <a href="sms:${c.phone}?body=${smsText}" class="px-3 py-1.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold transition flex items-center gap-1.5 shadow-sm">
@@ -1405,7 +1396,7 @@ function renderAdminCalendar(){
 }
 function selectAdminDay(iso){ adminSelectedDateIso=iso; renderAdminCalendar(); renderAdminSelectedDayDetails(); }
 
-// ULEPSZONY WIDOK WIZYT W DNIU: PODZIELONY NA PORY DNIA (RANO / POPOŁUDNIE / WIECZÓR)
+// ULEPSZONY WIDOK WIZYT W DNIU: PODZIELONY NA PORY DNIA Z PRZYCISKIEM "EDYTUJ I ZATWIERDŹ"
 function renderAdminSelectedDayDetails(){
     document.getElementById('admin-selected-day-title').textContent=adminSelectedDateIso;
     const sched=getDayScheduleForStaff(currentAdminUser.id,adminSelectedDateIso);
@@ -1432,9 +1423,12 @@ function renderAdminSelectedDayDetails(){
                     ${list.map(b => {
                         const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
                         const clientHistory = bookings.filter(x => x.clientPhone === b.clientPhone && x.id !== b.id);
+                        
+                        // POPRZEDNIE WIZYTY ZACZYNAJĄ SIĘ OD NOWEJ LINII
                         const historyHtml = clientHistory.length > 0 
-                            ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong> ${clientHistory.map(h => `${h.date} (${h.serviceName} - ${h.price})`).join(', ')}</div>`
+                            ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong><br>${clientHistory.map(h => `• ${h.date} - ${h.serviceName} (${h.price})`).join('<br>')}</div>`
                             : `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-gray-400">Pierwsza wizyta tego klienta.</div>`;
+                        
                         const savedNote = clientPrivateNotes[b.clientPhone] || '';
 
                         return `
@@ -1447,12 +1441,12 @@ function renderAdminSelectedDayDetails(){
                                 <div class="mt-1">
                                     <input type="text" placeholder="Prywatna notatka o kliencie..." value="${savedNote}" onchange="saveClientNote('${b.clientPhone}', this.value)" class="w-full bg-gray-50 border border-gray-200 rounded p-1 text-[10px] text-gray-700">
                                 </div>
-                                <div class="flex items-center justify-between pt-1.5 border-t border-gray-100">
+                                <div class="flex items-center justify-between pt-1.5 border-t border-gray-100 gap-1 flex-wrap">
                                     <select onchange="changeBookingDuration(${b.id},this.value)" class="bg-gray-50 border rounded px-1.5 py-0.5 text-[11px] font-bold">
                                         ${[30,45,60,75,90,120,150,180].map(m=>`<option value="${m}" ${dur===m?'selected':''}>Czas: ${formatDuration(m)}</option>`).join('')}
                                     </select>
                                     <div class="flex gap-1">
-                                        ${pend?`<button onclick="approveBooking(${b.id})" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
+                                        ${pend?`<button onclick="editAndApproveBooking(${b.id})" class="px-2 py-0.5 rounded bg-gold-600 text-white font-bold text-[10px]" title="Edytuj czas i zatwierdź">Edytuj i zatwierdź</button><button onclick="approveBooking(${b.id})" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
                                         <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox();" class="px-2 py-0.5 rounded bg-red-50 text-red-600 font-bold text-[10px]">Usuń</button>
                                     </div>
                                 </div>
@@ -1472,6 +1466,16 @@ function renderAdminSelectedDayDetails(){
     document.getElementById('admin-quick-service').innerHTML=myS.map(s=>`<option value="${s.id}">${s.name} [${s.specialistId}]</option>`).join('');
     const free=getAvailableSlotsForService(currentAdminUser.id,adminSelectedDateIso,30);
     document.getElementById('admin-quick-time').innerHTML=free.length>0?free.map(t=>`<option value="${t}">${t}</option>`).join(''):`<option value="">Brak</option>`;
+}
+
+function editAndApproveBooking(id){
+    const b = bookings.find(x => x.id === id);
+    if(!b) return;
+    const newDur = prompt(`Podaj nowy czas trwania wizyty w minutach (np. 30, 45, 60, 90, 120):`, b.durationMin || 60);
+    if(newDur && !isNaN(newDur)){
+        changeBookingDuration(id, parseInt(newDur));
+    }
+    approveBooking(id);
 }
 
 function saveClientNote(phone, note){
@@ -1547,18 +1551,35 @@ function saveAdminSchedule(){
     localStorage.setItem('amaro_staff_v112',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
+// CENNIK KATEGORYZOWANY NA FRYZJERÓW (BEZ POWTARZANIA IMIENIA PRZY KAŻDEJ USŁUDZE)
 function renderAdminServices(){
-    document.getElementById('admin-services-list').innerHTML=services.map(s=>`
-        <div class="flex flex-wrap items-center justify-between bg-gray-50 p-2.5 rounded-xl border text-xs gap-2">
-            <div><span class="font-bold">${s.name}</span> <span class="text-gray-400">[${s.specialistId}]</span></div>
-            <div class="flex items-center gap-1.5">
-                <input type="number" id="dur-edit-${s.id}" value="${s.durationMin}" step="15" class="bg-white border rounded p-1 w-14 text-xs font-bold"><span>min</span>
-                <input type="text" id="price-edit-${s.id}" value="${s.price}" class="bg-white border rounded p-1 w-24 text-xs font-bold text-gold-600">
-                <button onclick="updateServicePrice(${s.id})" class="px-2.5 py-1 rounded bg-gold-500 text-white font-bold">Zapisz</button>
-                <button onclick="deleteService(${s.id})" class="px-2 py-1 rounded bg-red-100 text-red-600"><i class="fa-solid fa-trash"></i></button>
+    const container = document.getElementById('admin-services-list');
+    const staffList = collabModeActive ? staff : [currentAdminUser];
+
+    container.innerHTML = staffList.map(st => {
+        const mySrv = services.filter(s => s.specialistId === st.id);
+        if(mySrv.length === 0) return '';
+        return `
+            <div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-200 space-y-2">
+                <h5 class="font-brand font-bold text-xs text-gold-700 uppercase tracking-wider border-b pb-1"><i class="fa-solid fa-user-tie mr-1"></i> Usługi w strefie: ${st.name}</h5>
+                <div class="space-y-2">
+                    ${mySrv.map(s => `
+                        <div class="flex flex-wrap items-center justify-between bg-white p-2 rounded-xl border text-xs gap-2">
+                            <span class="font-bold text-gray-900">${s.name}</span>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="dur-edit-${s.id}" value="${s.durationMin}" step="15" class="bg-gray-50 border rounded p-1 w-14 text-xs font-bold text-center"><span>min</span>
+                                <input type="text" id="price-edit-${s.id}" value="${s.price}" class="bg-gray-50 border rounded p-1 w-24 text-xs font-bold text-gold-600 text-center">
+                                <button onclick="updateServicePrice(${s.id})" class="px-2.5 py-1 rounded bg-gold-500 text-white font-bold">Zapisz</button>
+                                <button onclick="deleteService(${s.id})" class="px-2 py-1 rounded bg-red-100 text-red-600"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>`).join('');
+        `;
+    }).join('');
 }
+
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
     if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v112',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
@@ -1572,7 +1593,7 @@ function addNewService(){
 function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v112',JSON.stringify(services)); renderServices(); renderAdminServices(); }
 function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v112',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
 
-// WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNą CENZURĄ OCZU
+// WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNĄ CENZURĄ OCZU
 function handleAdminBeforeAfterUpload(){
     const beforeInput = document.getElementById('upload-before-file');
     const afterInput = document.getElementById('upload-after-file');
