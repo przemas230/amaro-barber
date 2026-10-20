@@ -7,6 +7,31 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase SDK (v10) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  
+  // TUTAJ WKLEJ SWOJE DANE Z KONSOLI FIREBASE (opcjonalnie do pełnej chmury)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "your-app.firebaseapp.com",
+    projectId: "your-app",
+    storageBucket: "your-app.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123:web:abc"
+  };
+
+  // Inicjalizacja Firebase (gdy klucze zostaną podane)
+  window.isFirebaseConfigured = false;
+  if(firebaseConfig.apiKey !== "YOUR_API_KEY") {
+      window.app = initializeApp(firebaseConfig);
+      window.auth = getAuth(window.app);
+      window.googleProvider = new GoogleAuthProvider();
+      window.isFirebaseConfigured = true;
+  }
+</script>
+
 <script>
 tailwind.config = {
     theme: {
@@ -52,6 +77,11 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
             <a href="#kontakt" class="hover:text-gold-600">Kontakt</a>
         </nav>
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <!-- Przycisk logowania Google dla Klienta / Użytkownika -->
+            <button onclick="handleGoogleUserLogin()" id="google-user-login-btn" class="px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
+                <i class="fa-brands fa-google text-red-500"></i>
+                <span class="hidden sm:inline" id="google-user-label">Konto Google</span>
+            </button>
             <button onclick="handleAdminHeaderClick()" class="relative px-2.5 sm:px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group">
                 <i class="fa-solid fa-user-shield text-gold-600 group-hover:text-white"></i>
                 <span class="hidden sm:inline" id="admin-header-btn-label">Panel Admina</span>
@@ -596,7 +626,7 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
         <p>© Salon fryzjerski AMARO • Ul. Kryształowa 28a, 20-583 Lublin</p>
         <div class="flex items-center gap-4">
-            <button onclick="downloadSourceAsFile('index.html')" class="text-gold-600 font-bold hover:underline"><i class="fa-solid fa-download mr-1"></i> Pobierz plik index.html</button>
+            <button onclick="downloadMasterCode()" class="text-gold-600 font-bold hover:underline"><i class="fa-solid fa-download mr-1"></i> Pobierz plik index.html</button>
             <a href="https://amarosalon.pl/" target="_blank" class="text-gold-600 font-semibold hover:underline">amarosalon.pl</a>
         </div>
     </div>
@@ -613,13 +643,13 @@ const defaultWeeklyHours = {
     0:{open:false,start:'09:00',end:'14:00',name:'Niedziela'}
 };
 
-let staff = JSON.parse(localStorage.getItem('amaro_staff_v7')) || [
+let staff = JSON.parse(localStorage.getItem('amaro_staff_v8')) || [
     {id:'arek',name:'Arek',role:'Stylista męski / Barber',phone:'+48 737 308 832',pass:'password',bio:'Stylista męski, barber. Pasjonat fryzjerstwa.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]},
     {id:'agata',name:'Agata Płonkowska',role:'Fryzjer Damski',phone:'+48 736 998 192',pass:'password',bio:'Łączy pasję z profesjonalizmem w strefie damskiej.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]}
 ];
 staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; });
 
-let services = JSON.parse(localStorage.getItem('amaro_services_v7')) || [
+let services = JSON.parse(localStorage.getItem('amaro_services_v8')) || [
     {id:50,category:'arek',specialistId:'arek',name:'Strzyżenie męskie',durationMin:45,price:'65 – 70 zł',desc:'Precyzyjne strzyżenie męskie i stylizacja.'},
     {id:51,category:'arek',specialistId:'arek',name:'Strzyżenie brody',durationMin:30,price:'50 zł',desc:'Trymowanie, konturowanie i pielęgnacja zarostu.'},
     {id:52,category:'arek',specialistId:'arek',name:'Combo broda + włosy',durationMin:75,price:'100 zł',desc:'Kompleksowe strzyżenie włosów oraz brody.'},
@@ -639,7 +669,7 @@ let services = JSON.parse(localStorage.getItem('amaro_services_v7')) || [
     {id:22,category:'spa',specialistId:'agata',name:'Zabieg S.O.S. / Clean-up + Action',durationMin:60,price:'120 zł',desc:'Regeneracja ekspresowa.'}
 ];
 
-let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v7')) || [
+let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v8')) || [
     {url:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',label:'Arek – Strefa Barber'},
     {url:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',label:'Agata Płonkowska'},
     {url:'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80',label:'Barber & Fade'},
@@ -648,7 +678,7 @@ let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v7')) || [
 
 let reviewsData = [
     {name:'Pani Żaneta', rating:5, text:'„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie i kondycję moich włosów.”', staff:'agata'},
-    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuje i serdecznie polecam.”', staff:'arek'},
+    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuję i serdecznie polecam.”', staff:'arek'},
     {name:'Pan Radosław', rating:5, text:'„Zawsze miałem obawy związane z wyborem fryzjera, ale od kiedy trafiłem do Amaro Salon i skorzystałem z usług Arkadiusza, moje obawy zniknęły.”', staff:'arek'},
     {name:'Pani Małgorzata', rating:5, text:'„Bardzo długo szukałam odpowiedniego miejsca w którym obsługa przyjmuje klientów z uśmiechem. W końcu znalazłam! Polecam!”', staff:'agata'},
     {name:'Karolina S.', rating:5, text:'„Najlepsze sombre w Lublinie! Agata ma niesamowity talent do koloryzacji, włosy są lśniące i zdrowe.”', staff:'agata'},
@@ -657,12 +687,13 @@ let reviewsData = [
 
 let bookingHorizonDays = parseInt(localStorage.getItem('amaro_horizon_days')) || 30;
 let bufferTimeMinutes = parseInt(localStorage.getItem('amaro_buffer_time')) || 5;
-let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v7')) || [];
+let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v8')) || [];
 
 let currentCategory = 'all', selectedService = null, selectedStaff = 'arek', selectedDate = '', selectedTime = '', clientExtraMinutes = 0;
 let clientCalDate = new Date(), adminCalDate = new Date(), adminWeekPlanStart = getMonday(new Date()), currentAdminUser = null, adminSelectedDateIso = toIsoDate(new Date());
 let collabModeActive = false;
 let pendingCollisionBookingId = null;
+let loggedInGoogleUser = null;
 
 function toIsoDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function getMonday(d){ const dt=new Date(d), day=dt.getDay(), diff=dt.getDate()-day+(day===0?-6:1); dt.setDate(diff); dt.setHours(0,0,0,0); return dt; }
@@ -710,13 +741,69 @@ window.addEventListener('DOMContentLoaded', ()=>{
         document.getElementById('client-phone').value = localStorage.getItem('amaro_client_phone')||'';
         document.getElementById('client-email').value = localStorage.getItem('amaro_client_email')||'';
     }
-    // Trwała sesja admina w LocalStorage
     const savedAdmin = localStorage.getItem('amaro_active_admin');
     if(savedAdmin){
         const st = staff.find(s=>s.id===savedAdmin);
-        if(st){ currentAdminUser = st; }
+        if(st) currentAdminUser = st;
+    }
+    const savedGoogleUser = localStorage.getItem('amaro_google_user');
+    if(savedGoogleUser){
+        loggedInGoogleUser = JSON.parse(savedGoogleUser);
+        updateGoogleUserUI();
     }
 });
+
+// LOGOWANIE GOOGLE DLA UŻYTKOWNIKA (FIREBASE AUTH)
+function handleGoogleUserLogin(){
+    if(loggedInGoogleUser){
+        if(confirm(`Zalogowany jako ${loggedInGoogleUser.name}. Czy chcesz się wylogować?`)){
+            loggedInGoogleUser = null;
+            localStorage.removeItem('amaro_google_user');
+            updateGoogleUserUI();
+            showToast('Wylogowano z konta Google.');
+        }
+        return;
+    }
+
+    if(window.isFirebaseConfigured && window.auth && window.googleProvider){
+        signInWithPopup(window.auth, window.googleProvider)
+          .then((result) => {
+              const u = result.user;
+              loggedInGoogleUser = { name: u.displayName, email: u.email, photo: u.photoURL };
+              localStorage.setItem('amaro_google_user', JSON.stringify(loggedInGoogleUser));
+              updateGoogleUserUI();
+              document.getElementById('client-name').value = u.displayName || '';
+              document.getElementById('client-email').value = u.email || '';
+              showToast(`Zalogowano pomyślnie jako ${u.displayName}!`);
+          })
+          .catch((error) => {
+              alert("Błąd logowania Google: " + error.message);
+          });
+    } else {
+        // Symulacja logowania Google jeśli Firebase nie jest skonfigurowany w kodzie
+        const fakeName = prompt("Podaj imię i nazwisko do symulacji konta Google:", "Jan Kowalski");
+        if(fakeName){
+            loggedInGoogleUser = { name: fakeName, email: fakeName.toLowerCase().replace(/\s+/g,'.')+'@gmail.com', photo: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80' };
+            localStorage.setItem('amaro_google_user', JSON.stringify(loggedInGoogleUser));
+            updateGoogleUserUI();
+            document.getElementById('client-name').value = loggedInGoogleUser.name;
+            document.getElementById('client-email').value = loggedInGoogleUser.email;
+            showToast(`Zalogowano jako ${fakeName} (Tryb testowy Google)`);
+        }
+    }
+}
+
+function updateGoogleUserUI(){
+    const lbl = document.getElementById('google-user-label');
+    const btn = document.getElementById('google-user-login-btn');
+    if(loggedInGoogleUser){
+        lbl.textContent = loggedInGoogleUser.name.split(' ')[0];
+        btn.className = "px-2.5 sm:px-3 py-2 rounded-xl bg-gold-50 text-gold-700 border border-gold-500 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm";
+    } else {
+        lbl.textContent = "Konto Google";
+        btn.className = "px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm";
+    }
+}
 
 function updateNextFreeBadges(){
     ['arek','agata'].forEach(stId=>{
@@ -837,6 +924,10 @@ function openBookingModal(serviceId){
     document.getElementById('modal-service-meta').textContent = `Domyślnie: ${formatDuration(selectedService.durationMin)} • ${selectedService.price}`;
     document.getElementById('client-horizon-info').textContent = `(do ${bookingHorizonDays} dni w przód)`;
     setExtraTime(0);
+    if(loggedInGoogleUser){
+        document.getElementById('client-name').value = loggedInGoogleUser.name;
+        document.getElementById('client-email').value = loggedInGoogleUser.email;
+    }
     const today = new Date();
     for(let i=0;i<=bookingHorizonDays;i++){
         const d=new Date(today); d.setDate(today.getDate()+i);
@@ -907,14 +998,14 @@ function confirmBooking(){
     const stObj=staff.find(s=>s.id===selectedStaff);
     localStorage.setItem('amaro_client_name',name); localStorage.setItem('amaro_client_phone',phone); localStorage.setItem('amaro_client_email',email);
     bookings.unshift({id:Date.now(),serviceName:selectedService.name,price:selectedService.price,durationMin:dur,staffId:selectedStaff,staffName:stObj.name,date:selectedDate,time:selectedTime,clientName:name,clientPhone:phone,clientEmail:email,note,status:'pending'});
-    localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     closeBookingModal(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Zarezerwowano u ${stObj.name} (${selectedDate} ${selectedTime}). Oczekuje na potwierdzenie salonu.`);
 }
 
 function generateFakeBookings(){
-    const mC=[{n:'Michał K.',p:'501 234 567'},{n:'Dawid N.',p:'602 345 678'},{n:'Kamil W.',p:'789 456 123'},{n:'Piotr Z.',p:'512 987 654'}];
-    const fC=[{n:'Anna M.',p:'503 444 555'},{n:'Karolina W.',p:'608 777 888'},{n:'Magda D.',p:'721 333 999'},{n:'Paulina K.',p:'515 666 777'}];
+    const mC=[{n:'Michał K.',p:'501 234 567',e:'michal@wp.pl'},{n:'Dawid N.',p:'602 345 678',e:'dawid@gmail.com'},{n:'Kamil W.',p:'789 456 123',e:'kamil@onet.pl'},{n:'Piotr Z.',p:'512 987 654',e:'piotr@gmail.com'}];
+    const fC=[{n:'Anna M.',p:'503 444 555',e:'anna@gmail.com'},{n:'Karolina W.',p:'608 777 888',e:'karolina@wp.pl'},{n:'Magda D.',p:'721 333 999',e:'magda@onet.pl'},{n:'Paulina K.',p:'515 666 777',e:'paulina@gmail.com'}];
     bookings = bookings.filter(b=>!b.isFake);
     const today=new Date(); let cnt=0;
     for(let off=0;off<16;off++){
@@ -927,19 +1018,19 @@ function generateFakeBookings(){
                 const srv=myS[Math.floor(Math.random()*myS.length)], av=getAvailableSlotsForService(stId,iso,srv.durationMin);
                 if(av.length===0) break;
                 const t=av[Math.floor(Math.random()*av.length)], cl=(stId==='arek'?mC:fC)[Math.floor(Math.random()*4)], stObj=staff.find(s=>s.id===stId);
-                bookings.push({id:Date.now()+cnt+Math.floor(Math.random()*99999),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,staffId:stId,staffName:stObj.name,date:iso,time:t,clientName:cl.n,clientPhone:cl.p,clientEmail:'',note:'Testowa wizyta',status:(off<2&&cnt%3===0)?'pending':'confirmed',isFake:true});
+                bookings.push({id:Date.now()+cnt+Math.floor(Math.random()*99999),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,staffId:stId,staffName:stObj.name,date:iso,time:t,clientName:cl.n,clientPhone:cl.p,clientEmail:cl.e,note:'Wizyta testowa (Historia)',status:(off<2&&cnt%3===0)?'pending':'confirmed',isFake:true});
                 cnt++;
                 if(bookings.filter(b=>b.staffId===stId&&b.date===iso).length>=target) break;
             }
         });
     }
-    localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); updateBookingBadge(); updateNextFreeBadges();
-    showToast(`Wygenerowano ${cnt} testowych wizyt!`);
+    showToast(`Wygenerowano ${cnt} testowych wizyt z historią klientów!`);
 }
 
 function clearFakeBookings(){
-    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Usunięto wizyty testowe.');
 }
@@ -967,7 +1058,7 @@ function handleAdminLogin(){
 function switchAdminProfile(id){ currentAdminUser=staff.find(s=>s.id===id); localStorage.setItem('amaro_active_admin', id); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminScheduleEditor(); renderSpecificWeekEditor(); renderAdminServices(); }
 function openAdminDashboard(){
     if(!currentAdminUser) currentAdminUser = staff[0];
-    document.getElementById('admin-switch-staff').value = currentAdminUser.id;
+    document.getElementById('admin-current-staff-label').textContent = `${currentAdminUser.name} (${currentAdminUser.role})`;
     document.getElementById('admin-horizon-select').value=String(bookingHorizonDays);
     document.getElementById('admin-buffer-input').value=String(bufferTimeMinutes);
     adminCalDate=new Date(); adminSelectedDateIso=toIsoDate(new Date());
@@ -1008,11 +1099,11 @@ function renderAdminPendingBox(){
             <button onclick="approveBooking(${b.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shrink-0">Zatwierdź</button>
         </div>`).join('');
 }
-function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
+function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
 function approveAllPending(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     bookings.forEach(b=>{ if((!targetStaffId || b.staffId===targetStaffId) && b.status==='pending') b.status='confirmed'; });
-    localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Zatwierdzono wszystkie!');
 }
 
@@ -1029,7 +1120,7 @@ function changeBookingDuration(id, val){
         return;
     }
 
-    b.durationMin=dur; localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    b.durationMin=dur; localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zmieniono czas wizyty na ${formatDuration(dur)}.`);
 }
@@ -1055,7 +1146,7 @@ function autoResolveCollision(){
         }
     }
 
-    localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     document.getElementById('admin-collision-alert').classList.add('hidden');
     pendingCollisionBookingId = null;
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
@@ -1110,11 +1201,19 @@ function renderAdminSelectedDayDetails(){
     
     document.getElementById('admin-day-bookings-list').innerHTML = dayB.length===0 ? `<div class="p-3 text-center text-xs text-gray-400 bg-white rounded-xl border">Brak wizyt.</div>` : dayB.map(b=>{
         const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
+        
+        // Znajdź historię wizyt tego klienta (po numerze telefonu)
+        const clientHistory = bookings.filter(x => x.clientPhone === b.clientPhone && x.id !== b.id);
+        const historyHtml = clientHistory.length > 0 
+            ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong> ${clientHistory.map(h => `${h.date} (${h.serviceName} - ${h.price})`).join(', ')}</div>`
+            : `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-gray-400">Pierwsza wizyta tego klienta w salonie.</div>`;
+
         return `<div class="p-2.5 bg-white rounded-xl border ${pend?'border-amber-400':'border-gray-200'} space-y-1.5 text-xs">
             <div class="flex justify-between items-start gap-1">
-                <div><span class="font-bold text-gold-600">${b.time}–${endT} [${b.staffName.split(' ')[0]}]</span><span class="font-bold block">${b.serviceName}</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone})</span></div>
+                <div><span class="font-bold text-gold-600">${b.time}–${endT} [${b.staffName.split(' ')[0]}]</span><span class="font-bold block">${b.serviceName} (${b.price})</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone}) ${b.clientEmail ? '• '+b.clientEmail : ''}</span></div>
                 <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-800'}">${pend?'Oczekuje':'Potwierdzona'}</span>
             </div>
+            ${historyHtml}
             <div class="flex items-center justify-between pt-1.5 border-t border-gray-100">
                 <select onchange="changeBookingDuration(${b.id},this.value)" class="bg-gray-50 border rounded px-1.5 py-0.5 text-[11px] font-bold">
                     ${[30,45,60,75,90,120,150,180].map(m=>`<option value="${m}" ${dur===m?'selected':''}>Czas: ${formatDuration(m)}</option>`).join('')}
@@ -1136,7 +1235,7 @@ function renderAdminSelectedDayDetails(){
 function saveCustomDayHours(){
     const st=document.getElementById('admin-day-start').value, en=document.getElementById('admin-day-end').value;
     currentAdminUser.customDates[adminSelectedDateIso]={open:true,start:st,end:en};
-    localStorage.setItem('amaro_staff_v7',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v8',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zapisano godziny ${st}–${en} na ${adminSelectedDateIso}`);
 }
@@ -1144,7 +1243,7 @@ function saveCustomDayHours(){
 function toggleBlockSelectedDay(){
     const idx=currentAdminUser.blockedDates.indexOf(adminSelectedDateIso);
     if(idx>-1) currentAdminUser.blockedDates.splice(idx,1); else currentAdminUser.blockedDates.push(adminSelectedDateIso);
-    localStorage.setItem('amaro_staff_v7',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v8',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
 }
 
@@ -1155,7 +1254,7 @@ function addManualAdminBooking(){
     if(!isSlotAvailable(srv.specialistId,adminSelectedDateIso,time,srv.durationMin)){ alert('Kolizja czasu!'); return; }
     const stObj = staff.find(s=>s.id===srv.specialistId);
     bookings.unshift({id:Date.now(),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,staffId:srv.specialistId,staffName:stObj.name,date:adminSelectedDateIso,time,clientName:cl,clientPhone:'Tel.',clientEmail:'',status:'confirmed'});
-    localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Dodano rezerwację telefoniczną!');
 }
@@ -1179,7 +1278,7 @@ function saveSpecificWeekSchedule(){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d);
         currentAdminUser.customDates[iso]={open:document.getElementById(`spec-open-${iso}`).checked,start:document.getElementById(`spec-start-${iso}`).value,end:document.getElementById(`spec-end-${iso}`).value};
     }
-    localStorage.setItem('amaro_staff_v7',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
+    localStorage.setItem('amaro_staff_v8',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
 }
 
 function renderAdminScheduleEditor(){
@@ -1197,7 +1296,7 @@ function saveAdminSchedule(){
         currentAdminUser.schedule[i].start=document.getElementById(`sched-start-${i}`).value;
         currentAdminUser.schedule[i].end=document.getElementById(`sched-end-${i}`).value;
     });
-    localStorage.setItem('amaro_staff_v7',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
+    localStorage.setItem('amaro_staff_v8',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
 function renderAdminServices(){
@@ -1214,17 +1313,17 @@ function renderAdminServices(){
 }
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
-    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v7',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
+    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v8',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
 }
 function addNewService(){
     const name=document.getElementById('new-srv-name').value.trim(), price=document.getElementById('new-srv-price').value.trim(), dur=parseInt(document.getElementById('new-srv-dur').value)||60, cat=document.getElementById('new-srv-cat').value;
     if(!name||!price) return;
     services.push({id:Date.now(),category:cat,specialistId:cat==='arek'?'arek':'agata',name,durationMin:dur,price,desc:'Usługa w salonie AMARO.'});
-    localStorage.setItem('amaro_services_v7',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
+    localStorage.setItem('amaro_services_v8',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
 }
-function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v7',JSON.stringify(services)); renderServices(); renderAdminServices(); }
-function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v7',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
-function addNewGalleryPhoto(){ const u=document.getElementById('new-img-url').value.trim(), l=document.getElementById('new-img-label').value.trim(); if(u&&l){ galleryPhotos.unshift({url:u,label:l}); localStorage.setItem('amaro_gallery_v7',JSON.stringify(galleryPhotos)); renderGallery(); showToast('Dodano zdjęcie!'); } }
+function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v8',JSON.stringify(services)); renderServices(); renderAdminServices(); }
+function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v8',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
+function addNewGalleryPhoto(){ const u=document.getElementById('new-img-url').value.trim(), l=document.getElementById('new-img-label').value.trim(); if(u&&l){ galleryPhotos.unshift({url:u,label:l}); localStorage.setItem('amaro_gallery_v8',JSON.stringify(galleryPhotos)); renderGallery(); showToast('Dodano zdjęcie!'); } }
 
 function updateBookingBadge(){
     const b=document.getElementById('booking-badge'), cnt=bookings.length;
@@ -1248,7 +1347,7 @@ function toggleMyBookings(){
         }).join('');
     }
 }
-function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v7',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
+function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v8',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
 function navigateFromCurrentLocation(){ window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin')}`,'_blank'); }
 function openReviewsModal(){ document.getElementById('reviews-modal').classList.remove('hidden'); }
 function closeReviewsModal(){ document.getElementById('reviews-modal').classList.add('hidden'); }
