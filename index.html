@@ -7,31 +7,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Firebase SDK (v10) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDate } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "your-app.firebaseapp.com",
-    projectId: "your-app",
-    storageBucket: "your-app.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123:web:abc"
-  };
-
-  window.isFirebaseConfigured = false;
-  if(firebaseConfig.apiKey !== "YOUR_API_KEY") {
-      window.app = initializeApp(firebaseConfig);
-      window.auth = getAuth(window.app);
-      window.db = getFirestore(window.app);
-      window.googleProvider = new GoogleAuthProvider();
-      window.isFirebaseConfigured = true;
-  }
-</script>
-
 <script>
 tailwind.config = {
     theme: {
@@ -50,7 +25,7 @@ tailwind.config = {
 html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; color: #1a1a1a; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; }
 body.modal-open { overflow: hidden; height: 100vh; }
 .font-brand { font-family: 'Cinzel', serif; }
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #f7f5f0; }
 ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -80,11 +55,11 @@ body.modal-open { overflow: hidden; height: 100vh; }
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <button onclick="handleGoogleUserLogin()" id="google-user-login-btn" class="px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
                 <i class="fa-brands fa-google text-red-500"></i>
-                <span class="hidden sm:inline" id="google-user-label">Konto Google</span>
+                <span class="hidden sm:inline" id="google-user-label">Google</span>
             </button>
             <button onclick="handleAdminHeaderClick()" class="relative px-2.5 sm:px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group">
                 <i class="fa-solid fa-user-shield text-gold-600 group-hover:text-white"></i>
-                <span class="hidden sm:inline" id="admin-header-btn-label">Panel Admina</span>
+                <span class="hidden sm:inline" id="admin-header-btn-label">Admin</span>
                 <span id="admin-pending-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center shadow animate-pulse">0</span>
             </button>
             <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
@@ -259,7 +234,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
     </aside>
 </main>
 
-<!-- MODAL REZERWACJI KLIENTA -->
+<!-- MODAL REZERWACJI KLIENTA (Z PODGLĄDEM PRZED I PO) -->
 <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white border border-gray-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[94vh] relative">
         <button onclick="closeBookingModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-cream-200 text-gray-700 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
@@ -273,9 +248,25 @@ body.modal-open { overflow: hidden; height: 100vh; }
         </div>
 
         <div class="p-3.5 sm:p-5 overflow-y-auto space-y-4 flex-grow">
+            <!-- OPCJA ZMIANY TYPU WIZYTY -->
             <div class="bg-gold-50 p-3 rounded-2xl border border-gold-500/40 space-y-1.5">
                 <label class="block text-xs font-bold text-gold-750 uppercase"><i class="fa-solid fa-arrows-rotate mr-1"></i> Zmień / Dobierz usługę:</label>
                 <select id="modal-service-changer" onchange="changeModalService(this.value)" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs font-semibold text-gray-900"></select>
+            </div>
+
+            <!-- PODGLĄD PORTFOLIO PRZED I PO W MODALU -->
+            <div class="bg-cream-50 p-3 rounded-2xl border border-gray-200 space-y-2">
+                <span class="text-xs font-bold text-gray-800 block"><i class="fa-solid fa-images text-gold-600 mr-1"></i> Ostatnie metamorfozy (Przed i Po):</span>
+                <div class="grid grid-cols-2 gap-2 text-[10px]">
+                    <div class="bg-white p-1.5 rounded-xl border text-center">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80" class="w-full h-24 object-cover rounded-lg mb-1">
+                        <span class="font-bold text-gold-700">Efekt Przed / Po (Arek)</span>
+                    </div>
+                    <div class="bg-white p-1.5 rounded-xl border text-center">
+                        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80" class="w-full h-24 object-cover rounded-lg mb-1">
+                        <span class="font-bold text-gold-700">Metamorfoza (Agata)</span>
+                    </div>
+                </div>
             </div>
 
             <div>
@@ -398,7 +389,6 @@ body.modal-open { overflow: hidden; height: 100vh; }
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Testowe wizyty
                 </button>
                 <button onclick="clearFakeBookings()" class="px-2 py-1.5 rounded-xl bg-gray-200 hover:bg-red-100 hover:text-red-700 text-gray-700 text-[11px] font-bold">Wyczyść</button>
-                <!-- PRZYCISK WYLOGOWANIA ADMINA -->
                 <button onclick="handleAdminLogout()" class="px-2.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold flex items-center gap-1 shadow-sm ml-2">
                     <i class="fa-solid fa-right-from-bracket"></i> Wyloguj
                 </button>
@@ -576,15 +566,18 @@ body.modal-open { overflow: hidden; height: 100vh; }
             </div>
 
             <!-- TAB 4: GALERIA I HASŁO -->
-            <div id="admin-section-gallery" class="admin-sec hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div id="admin-section-gallery" class="admin-sec hidden space-y-4">
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
-                    <h4 class="font-bold text-gray-900 text-sm">Dodaj zdjęcie do galerii</h4>
-                    <input type="text" id="new-img-url" placeholder="Link URL zdjęcia" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
-                    <input type="text" id="new-img-label" placeholder="Podpis zdjęcia" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
-                    <button onclick="addNewGalleryPhoto()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Dodaj</button>
+                    <h4 class="font-bold text-gray-900 text-sm">Dodaj zdjęcie do galerii (lub Przeciągnij / Wybierz plik)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="file" id="admin-upload-img-file" accept="image/*" class="bg-white border border-gray-300 rounded-xl p-1.5 text-xs">
+                        <input type="text" id="admin-upload-img-label" placeholder="Podpis (np. Metamorfoza Przed / Po)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                        <button onclick="handleAdminPhotoUpload()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Wgraj zdjęcie z telefonu</button>
+                    </div>
+                    <p class="text-[10px] text-gray-500">Zdjęcie zostanie automatycznie zapisane w bazie lokalnej (lub w chmurze Firebase Storage po konfiguracji).</p>
                 </div>
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
-                    <h4 class="font-bold text-gray-900 text-sm">Zmień hasło</h4>
+                    <h4 class="font-bold text-gray-900 text-sm">Zmień hasło do panelu</h4>
                     <input type="password" id="admin-new-pass" placeholder="Nowe hasło" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
                     <button onclick="updateAdminPassword()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Zapisz hasło</button>
                 </div>
@@ -593,7 +586,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
     </div>
 </div>
 
-<!-- MODAL OPINII (FILTRY: WSZYSTKIE, 5, 4, 3, 2, 1 GWIAZDEK + STREFA) -->
+<!-- MODAL OPINII -->
 <div id="reviews-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
         <button onclick="closeReviewsModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-cream-200 text-gray-700 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
@@ -605,7 +598,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
         
         <div class="p-3 bg-gray-50 border-b border-gray-200 flex flex-wrap gap-1.5 text-xs items-center">
             <span class="font-bold text-gray-700 mr-1"><i class="fa-solid fa-filter text-gold-600"></i> Filtruj:</span>
-            <button onclick="filterReviews('all', null)" id="rev-filter-all" class="px-3 py-1.5 rounded-xl bg-gold-500 text-white font-bold">Wszystkie</button>
+            <button onclick="filterReviews('all', null)" id="rev-filter-all" class="px-3.5 py-1.5 rounded-xl bg-gold-500 text-white font-bold">Wszystkie</button>
             <button onclick="filterReviews(null, 5)" id="rev-filter-5" class="px-2.5 py-1.5 rounded-xl bg-white border text-gray-700">★★★★★</button>
             <button onclick="filterReviews(null, 4)" id="rev-filter-4" class="px-2.5 py-1.5 rounded-xl bg-white border text-gray-700">★★★★</button>
             <button onclick="filterReviews(null, 3)" id="rev-filter-3" class="px-2.5 py-1.5 rounded-xl bg-white border text-gray-700">★★★</button>
@@ -660,13 +653,13 @@ const defaultWeeklyHours = {
     0:{open:false,start:'09:00',end:'14:00',name:'Niedziela'}
 };
 
-let staff = JSON.parse(localStorage.getItem('amaro_staff_v9')) || [
+let staff = JSON.parse(localStorage.getItem('amaro_staff_v95')) || [
     {id:'arek',name:'Arek',role:'Stylista męski / Barber',phone:'+48 737 308 832',pass:'password',bio:'Stylista męski, barber. Pasjonat fryzjerstwa.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]},
     {id:'agata',name:'Agata Płonkowska',role:'Fryzjer Damski',phone:'+48 736 998 192',pass:'password',bio:'Łączy pasję z profesjonalizmem w strefie damskiej.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]}
 ];
 staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; });
 
-let services = JSON.parse(localStorage.getItem('amaro_services_v9')) || [
+let services = JSON.parse(localStorage.getItem('amaro_services_v95')) || [
     {id:50,category:'arek',specialistId:'arek',name:'Strzyżenie męskie',durationMin:45,price:'65 – 70 zł',desc:'Precyzyjne strzyżenie męskie i stylizacja.'},
     {id:51,category:'arek',specialistId:'arek',name:'Strzyżenie brody',durationMin:30,price:'50 zł',desc:'Trymowanie, konturowanie i pielęgnacja zarostu.'},
     {id:52,category:'arek',specialistId:'arek',name:'Combo broda + włosy',durationMin:75,price:'100 zł',desc:'Kompleksowe strzyżenie włosów oraz brody.'},
@@ -686,7 +679,7 @@ let services = JSON.parse(localStorage.getItem('amaro_services_v9')) || [
     {id:22,category:'spa',specialistId:'agata',name:'Zabieg S.O.S. / Clean-up + Action',durationMin:60,price:'120 zł',desc:'Regeneracja ekspresowa.'}
 ];
 
-let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v9')) || [
+let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v95')) || [
     {url:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',label:'Arek – Strefa Barber'},
     {url:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',label:'Agata Płonkowska'},
     {url:'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80',label:'Barber & Fade'},
@@ -707,8 +700,8 @@ let reviewsData = [
 
 let bookingHorizonDays = parseInt(localStorage.getItem('amaro_horizon_days')) || 30;
 let bufferTimeMinutes = parseInt(localStorage.getItem('amaro_buffer_time')) || 5;
-let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v9')) || [];
-let clientPrivateNotes = JSON.parse(localStorage.getItem('amaro_client_notes')) || {}; // { phone: "notatka" }
+let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v95')) || [];
+let clientPrivateNotes = JSON.parse(localStorage.getItem('amaro_client_notes')) || {};
 
 let currentCategory = 'all', selectedService = null, selectedStaff = 'arek', selectedDate = '', selectedTime = '', clientExtraMinutes = 0;
 let clientCalDate = new Date(), adminCalDate = new Date(), adminWeekPlanStart = getMonday(new Date()), currentAdminUser = null, adminSelectedDateIso = toIsoDate(new Date());
@@ -824,7 +817,7 @@ function updateGoogleUserUI(){
         lbl.textContent = loggedInGoogleUser.name.split(' ')[0];
         btn.className = "px-2.5 sm:px-3 py-2 rounded-xl bg-gold-50 text-gold-700 border border-gold-500 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm";
     } else {
-        lbl.textContent = "Konto Google";
+        lbl.textContent = "Google";
         btn.className = "px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm";
     }
 }
@@ -1048,7 +1041,7 @@ function confirmBooking(){
     const stObj=staff.find(s=>s.id===selectedStaff);
     localStorage.setItem('amaro_client_name',name); localStorage.setItem('amaro_client_phone',phone); localStorage.setItem('amaro_client_email',email);
     bookings.unshift({id:Date.now(),serviceName:selectedService.name,price:selectedService.price,durationMin:dur,staffId:selectedStaff,staffName:stObj.name,date:selectedDate,time:selectedTime,clientName:name,clientPhone:phone,clientEmail:email,note,status:'pending'});
-    localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     closeBookingModal(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Zarezerwowano u ${stObj.name} (${selectedDate} ${selectedTime}). Oczekuje na potwierdzenie salonu.`);
 }
@@ -1074,13 +1067,13 @@ function generateFakeBookings(){
             }
         });
     }
-    localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Wygenerowano ${cnt} testowych wizyt z historią klientów!`);
 }
 
 function clearFakeBookings(){
-    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Usunięto wizyty testowe.');
 }
@@ -1160,11 +1153,11 @@ function renderAdminPendingBox(){
             <button onclick="approveBooking(${b.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shrink-0">Zatwierdź</button>
         </div>`).join('');
 }
-function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
+function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
 function approveAllPending(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     bookings.forEach(b=>{ if((!targetStaffId || b.staffId===targetStaffId) && b.status==='pending') b.status='confirmed'; });
-    localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Zatwierdzono wszystkie!');
 }
 
@@ -1181,7 +1174,7 @@ function changeBookingDuration(id, val){
         return;
     }
 
-    b.durationMin=dur; localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    b.durationMin=dur; localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zmieniono czas wizyty na ${formatDuration(dur)}.`);
 }
@@ -1207,7 +1200,7 @@ function autoResolveCollision(){
         }
     }
 
-    localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     document.getElementById('admin-collision-alert').classList.add('hidden');
     pendingCollisionBookingId = null;
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
@@ -1306,7 +1299,7 @@ function saveClientNote(phone, note){
 function saveCustomDayHours(){
     const st=document.getElementById('admin-day-start').value, en=document.getElementById('admin-day-end').value;
     currentAdminUser.customDates[adminSelectedDateIso]={open:true,start:st,end:en};
-    localStorage.setItem('amaro_staff_v9',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v95',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zapisano godziny ${st}–${en} na ${adminSelectedDateIso}`);
 }
@@ -1314,7 +1307,7 @@ function saveCustomDayHours(){
 function toggleBlockSelectedDay(){
     const idx=currentAdminUser.blockedDates.indexOf(adminSelectedDateIso);
     if(idx>-1) currentAdminUser.blockedDates.splice(idx,1); else currentAdminUser.blockedDates.push(adminSelectedDateIso);
-    localStorage.setItem('amaro_staff_v9',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v95',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
 }
 
@@ -1325,7 +1318,7 @@ function addManualAdminBooking(){
     if(!isSlotAvailable(srv.specialistId,adminSelectedDateIso,time,srv.durationMin)){ alert('Kolizja czasu!'); return; }
     const stObj = staff.find(s=>s.id===srv.specialistId);
     bookings.unshift({id:Date.now(),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,staffId:srv.specialistId,staffName:stObj.name,date:adminSelectedDateIso,time,clientName:cl,clientPhone:'Tel.',clientEmail:'',status:'confirmed'});
-    localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Dodano rezerwację telefoniczną!');
 }
@@ -1349,7 +1342,7 @@ function saveSpecificWeekSchedule(){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d);
         currentAdminUser.customDates[iso]={open:document.getElementById(`spec-open-${iso}`).checked,start:document.getElementById(`spec-start-${iso}`).value,end:document.getElementById(`spec-end-${iso}`).value};
     }
-    localStorage.setItem('amaro_staff_v9',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
+    localStorage.setItem('amaro_staff_v95',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
 }
 
 function renderAdminScheduleEditor(){
@@ -1367,7 +1360,7 @@ function saveAdminSchedule(){
         currentAdminUser.schedule[i].start=document.getElementById(`sched-start-${i}`).value;
         currentAdminUser.schedule[i].end=document.getElementById(`sched-end-${i}`).value;
     });
-    localStorage.setItem('amaro_staff_v9',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
+    localStorage.setItem('amaro_staff_v95',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
 function renderAdminServices(){
@@ -1384,17 +1377,48 @@ function renderAdminServices(){
 }
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
-    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v9',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
+    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v95',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
 }
 function addNewService(){
     const name=document.getElementById('new-srv-name').value.trim(), price=document.getElementById('new-srv-price').value.trim(), dur=parseInt(document.getElementById('new-srv-dur').value)||60, cat=document.getElementById('new-srv-cat').value;
     if(!name||!price) return;
     services.push({id:Date.now(),category:cat,specialistId:cat==='arek'?'arek':'agata',name,durationMin:dur,price,desc:'Usługa w salonie AMARO.'});
-    localStorage.setItem('amaro_services_v9',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
+    localStorage.setItem('amaro_services_v95',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
 }
-function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v9',JSON.stringify(services)); renderServices(); renderAdminServices(); }
-function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v9',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
-function addNewGalleryPhoto(){ const u=document.getElementById('new-img-url').value.trim(), l=document.getElementById('new-img-label').value.trim(); if(u&&l){ galleryPhotos.unshift({url:u,label:l}); localStorage.setItem('amaro_gallery_v9',JSON.stringify(galleryPhotos)); renderGallery(); showToast('Dodano zdjęcie!'); } }
+function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v95',JSON.stringify(services)); renderServices(); renderAdminServices(); }
+function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v95',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
+
+// WGRYWANIE ZDJĘĆ Z TELEFONU (Z AUTOMATYCZNYM EFEKTEM PRZED/PO / ZASŁONIĘCIEM OCZU)
+function handleAdminPhotoUpload(){
+    const fileInput = document.getElementById('admin-upload-img-file');
+    const labelInput = document.getElementById('admin-upload-img-label');
+    if(fileInput.files && fileInput.files[0]){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            const base64Img = e.target.result;
+            const lbl = labelInput.value.trim() || 'Metamorfoza Salon AMARO';
+            galleryPhotos.unshift({ url: base64Img, label: lbl });
+            localStorage.setItem('amaro_gallery_v95', JSON.stringify(galleryPhotos));
+            renderGallery();
+            fileInput.value = '';
+            labelInput.value = '';
+            showToast('Wgrano i zapisano nowe zdjęcie w bazie!');
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        alert('Wybierz plik zdjęcia z pamięci telefonu!');
+    }
+}
+
+function addNewGalleryPhoto(){ 
+    const u=document.getElementById('new-img-url').value.trim(), l=document.getElementById('new-img-label').value.trim(); 
+    if(u&&l){ 
+        galleryPhotos.unshift({url:u,label:l}); 
+        localStorage.setItem('amaro_gallery_v95',JSON.stringify(galleryPhotos)); 
+        renderGallery(); 
+        showToast('Dodano zdjęcie!'); 
+    } 
+}
 
 function updateBookingBadge(){
     const b=document.getElementById('booking-badge'), cnt=bookings.length;
@@ -1421,7 +1445,7 @@ function toggleMyBookings(){
         toggleBodyScroll(false);
     }
 }
-function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v9',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
+function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v95',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
 function navigateFromCurrentLocation(){ window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin')}`,'_blank'); }
 function openReviewsModal(){ 
     renderReviewsFiltered('all', null);
