@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMARO Salon Fryzjerski & Barber | Agata & Arek - Rezerwacje</title>
+    <title>AMARO Salon Fryzjerski & Barber | Lublin, ul. Kryształowa 28a</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Skonfiguruj w panelu EmailJS
+        })();
+    </script>
     
     <script>
         tailwind.config = {
@@ -17,17 +24,8 @@
             theme: {
                 extend: {
                     colors: {
-                        gold: {
-                            400: '#e5c158',
-                            500: '#d4af37',
-                            600: '#b5952f',
-                        },
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#121212',
-                            700: '#1a1a1a',
-                            600: '#262626'
-                        }
+                        gold: { 400: '#e5c158', 500: '#d4af37', 600: '#b5952f' },
+                        dark: { 900: '#0a0a0a', 800: '#121212', 700: '#1a1a1a', 600: '#262626' }
                     },
                     fontFamily: {
                         serif: ['Cinzel', 'serif'],
@@ -57,14 +55,14 @@
                 </div>
                 <div>
                     <span class="font-brand text-xl tracking-wider font-bold text-white block leading-none">AMARO</span>
-                    <span class="text-[10px] tracking-[0.22em] text-gold-500 uppercase">Agata & Arek Salon</span>
+                    <span class="text-[10px] tracking-[0.22em] text-gold-500 uppercase">Salon Fryzjerski Lublin</span>
                 </div>
             </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#uslugi" class="hover:text-gold-400 transition">Cennik i Usługi</a>
-                <a href="#zespol" class="hover:text-gold-400 transition">O nas (Agata & Arek)</a>
-                <a href="#galeria" class="hover:text-gold-400 transition">Galeria</a>
+                <a href="#uslugi" class="hover:text-gold-400 transition">Cennik</a>
+                <a href="#zespol" class="hover:text-gold-400 transition">O nas</a>
+                <a href="#opinie" class="hover:text-gold-400 transition">Opinie</a>
                 <a href="#kontakt" class="hover:text-gold-400 transition">Kontakt</a>
             </nav>
 
@@ -76,58 +74,25 @@
         </div>
     </header>
 
-    <!-- HERO SECTION / BANER ZE ZDJĘCIEM SALONU -->
+    <!-- HERO SECTION -->
     <section class="relative bg-dark-800 border-b border-white/10 overflow-hidden">
-        <!-- Tło wizualne -->
-        <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1600&q=80');"></div>
+        <div class="absolute inset-0 opacity-15 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent"></div>
 
-        <div class="relative max-w-6xl mx-auto px-4 py-10 md:py-14">
-            <div class="grid md:grid-cols-3 gap-8 items-center">
-                <div class="md:col-span-2 space-y-4">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold">
-                        <i class="fa-solid fa-star"></i> Oficjalny System Rezerwacji • amarosalon.pl
-                    </div>
-                    <h1 class="font-brand text-3xl md:text-5xl font-bold text-white tracking-wide">
-                        AMARO Salon Fryzjerski & Barber
-                    </h1>
-                    <p class="text-gray-300 text-sm md:text-base max-w-2xl leading-relaxed">
-                        Dwa światy pod jednym dachem. <strong>Arek</strong> zadba o perfekcyjny fade, klasyczne strzyżenie męskie i królewską pielęgnację brody. <strong>Agata</strong> stworzy wymarzoną koloryzację, cięcie i regenerację w strefie damskiej.
-                    </p>
-                    <div class="flex flex-wrap items-center gap-6 pt-2 text-sm text-gray-300">
-                        <div class="flex items-center gap-2">
-                            <div class="flex text-gold-500">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="font-bold text-white">5.0</span>
-                            <span class="text-gray-400">(Stali klienci)</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-user-check text-gold-500"></i>
-                            <span>Arek (Barber) & Agata (Fryzjer Damski)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Szybki wybór strefy -->
-                <div class="bg-dark-800/90 backdrop-blur-md p-6 rounded-2xl border border-white/15 space-y-4 shadow-2xl">
-                    <p class="text-xs text-gold-400 uppercase tracking-wider font-bold">Wybierz swoją strefę</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="setCategory('arek'); document.getElementById('uslugi').scrollIntoView();" class="p-3 rounded-xl bg-dark-700 hover:bg-gold-500 hover:text-black border border-white/10 transition text-left group">
-                            <i class="fa-solid fa-beard text-gold-500 group-hover:text-black text-xl mb-1 block"></i>
-                            <span class="font-bold text-sm block">Strefa Arka</span>
-                            <span class="text-[11px] text-gray-400 group-hover:text-black/80">Barber & Męskie</span>
-                        </button>
-                        <button onclick="setCategory('agata'); document.getElementById('uslugi').scrollIntoView();" class="p-3 rounded-xl bg-dark-700 hover:bg-gold-500 hover:text-black border border-white/10 transition text-left group">
-                            <i class="fa-solid fa-wand-magic-sparkles text-gold-500 group-hover:text-black text-xl mb-1 block"></i>
-                            <span class="font-bold text-sm block">Strefa Agaty</span>
-                            <span class="text-[11px] text-gray-400 group-hover:text-black/80">Fryzjer Damski</span>
-                        </button>
-                    </div>
-                    <a href="https://amarosalon.pl/" target="_blank" class="block w-full text-center py-2.5 rounded-xl bg-dark-900 hover:bg-dark-700 text-gray-300 border border-white/10 text-xs font-medium transition">
-                        <i class="fa-solid fa-globe text-gold-500 mr-1"></i> Odwiedź amarosalon.pl
-                    </a>
-                </div>
+        <div class="relative max-w-6xl mx-auto px-4 py-12 md:py-16 text-center space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold">
+                <i class="fa-solid fa-award"></i> Laureat Nagrody „Orły Fryzjerstwa” (Ocena 9,2/10)
+            </div>
+            <h1 class="font-brand text-3xl md:text-5xl font-bold text-white tracking-wide">
+                Rozkwitnij w naszym salonie AMARO
+            </h1>
+            <p class="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                Dajemy włosom siłę, a Tobie inspirację. Używamy profesjonalnych produktów Farmagan, Pure i Juuce oraz składników takich jak olejek arganowy, keratyna kaszmirowa i kwas hialuronowy.
+            </p>
+            <div class="flex justify-center gap-4 pt-2">
+                <a href="#uslugi" class="px-6 py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-bold text-sm transition shadow-lg shadow-gold-500/20">
+                    Zobacz Cennik i Zarezerwuj
+                </a>
             </div>
         </div>
     </section>
@@ -135,101 +100,88 @@
     <!-- GŁÓWNA ZAWARTOŚĆ -->
     <main class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-10 flex-grow w-full">
         
-        <!-- LEWA KOLUMNA: CENNIK, ZESPÓŁ, GALERIA -->
         <div class="md:col-span-2 space-y-12">
             
-            <!-- SEKCJA USŁUG I CENNIKA -->
+            <!-- CENNIK -->
             <section id="uslugi" class="space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-white">Cennik i Rezerwacja Usług</h2>
-                        <p class="text-xs text-gray-400 mt-0.5">Kliknij „Umów”, aby wybrać dogodny dzień i godzinę</p>
+                        <h2 class="text-2xl font-bold text-white">Pełny Cennik Usług</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">Wybierz kategorię i umów wizytę online</p>
                     </div>
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                        <input type="text" id="search-input" oninput="renderServices()" placeholder="Szukaj (np. broda, balejaż)..." 
+                        <input type="text" id="search-input" oninput="renderServices()" placeholder="Szukaj usługi..." 
                             class="bg-dark-800 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 w-full sm:w-60">
                     </div>
                 </div>
 
-                <!-- Filtry Kategorii (Podział na Arka i Agatę) -->
                 <div class="flex gap-2 overflow-x-auto pb-2" id="category-tabs">
-                    <button onclick="setCategory('all')" class="cat-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-gold-500 text-black transition whitespace-nowrap" data-cat="all">
-                        Wszystkie usługi
-                    </button>
-                    <button onclick="setCategory('arek')" class="cat-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap flex items-center gap-2" data-cat="arek">
-                        <i class="fa-solid fa-scissors text-gold-500"></i> AREK • Barber & Strzyżenie Męskie
-                    </button>
-                    <button onclick="setCategory('agata')" class="cat-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap flex items-center gap-2" data-cat="agata">
-                        <i class="fa-solid fa-sparkles text-gold-500"></i> AGATA • Strefa Damska & Koloryzacje
-                    </button>
+                    <button onclick="setCategory('all')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-black transition whitespace-nowrap" data-cat="all">Wszystkie</button>
+                    <button onclick="setCategory('agata')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap" data-cat="agata">Strefa Agaty (Damski)</button>
+                    <button onclick="setCategory('spa')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap" data-cat="spa">Strefa SPA / Pielęgnacja</button>
+                    <button onclick="setCategory('arek')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap" data-cat="arek">Strefa Arka (Barber)</button>
                 </div>
 
-                <!-- Lista usług generowana przez JS -->
                 <div id="services-list" class="space-y-3"></div>
             </section>
 
-            <!-- SEKCJA ZESPÓŁ (TYLKO AREK I AGATA ZE ZDJĘCIAMI) -->
+            <!-- ZESPÓŁ -->
             <section id="zespol" class="space-y-6 pt-6 border-t border-white/10">
                 <div>
-                    <h2 class="text-2xl font-bold text-white">Poznaj nasz zespół</h2>
-                    <p class="text-xs text-gray-400 mt-1">Stawiamy na indywidualne podejście i wieloletnie doświadczenie</p>
+                    <h2 class="text-2xl font-bold text-white">Nasz Zespół</h2>
+                    <p class="text-xs text-gray-400 mt-1">Agata Płonkowska & Arek</p>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-6" id="team-list">
-                    <!-- Generowane przez JS -->
-                </div>
+                <div class="grid sm:grid-cols-2 gap-6" id="team-list"></div>
             </section>
 
-            <!-- SEKCJA GALERIA ZDJĘĆ -->
-            <section id="galeria" class="space-y-6 pt-6 border-t border-white/10">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">Galeria naszych prac i salonu</h2>
-                        <p class="text-xs text-gray-400 mt-1">Klimat salonu Amaro – precyzja w każdym calu</p>
+            <!-- OPINIE -->
+            <section id="opinie" class="space-y-6 pt-6 border-t border-white/10">
+                <h2 class="text-2xl font-bold text-white">Co mówią nasi klienci</h2>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="bg-dark-800 p-5 rounded-xl border border-white/10 space-y-2">
+                        <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
+                        <span class="text-xs text-gold-400 font-semibold block">— Pani Żaneta</span>
                     </div>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="gallery-grid">
-                    <!-- Generowane przez JS -->
+                    <div class="bg-dark-800 p-5 rounded-xl border border-white/10 space-y-2">
+                        <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
+                        <span class="text-xs text-gold-400 font-semibold block">— Pan Daniel</span>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <!-- PRAWA KOLUMNA: KONTAKT I GODZINY -->
+        <!-- KONTAKT / GODZINY OTWARCIA -->
         <aside id="kontakt" class="space-y-6">
             <div class="bg-dark-800 p-6 rounded-2xl border border-white/10 sticky top-24 space-y-6">
                 <div>
-                    <h3 class="font-bold text-white text-lg mb-2">AMARO Salon</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">
-                        Profesjonalne strzyżenie męskie, barbering oraz kompleksowe fryzjerstwo damskie. Zarezerwuj wizytę u Arka lub Agaty bez dzwonienia i czekania w kolejce.
-                    </p>
+                    <h3 class="font-brand font-bold text-white text-lg mb-1">AMARO Lublin</h3>
+                    <p class="text-xs text-gray-400">Ul. Kryształowa 28a, 20-583 Lublin</p>
                 </div>
 
-                <div class="bg-dark-700 p-4 rounded-xl border border-white/5 flex items-start gap-3">
-                    <i class="fa-solid fa-location-dot text-gold-500 text-xl mt-1"></i>
-                    <div>
-                        <p class="text-sm font-bold text-white">Adres Salonu</p>
-                        <p class="text-xs text-gray-400 mt-0.5">Sprawdź dojazd na oficjalnej stronie:</p>
-                        <a href="https://amarosalon.pl/" target="_blank" class="text-xs text-gold-400 hover:underline mt-1 inline-block font-semibold">amarosalon.pl →</a>
-                    </div>
-                </div>
-
-                <!-- Godziny otwarcia -->
                 <div>
-                    <h4 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                    <h4 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
                         <i class="fa-regular fa-clock text-gold-500"></i> Godziny otwarcia
                     </h4>
-                    <ul class="space-y-2 text-xs text-gray-300">
-                        <li class="flex justify-between py-1 border-b border-white/5"><span>Poniedziałek - Piątek</span><span class="font-semibold text-white">09:00 - 19:00</span></li>
-                        <li class="flex justify-between py-1 border-b border-white/5"><span>Sobota</span><span class="font-semibold text-white">08:00 - 15:00</span></li>
+                    <ul class="space-y-1.5 text-xs text-gray-300">
+                        <li class="flex justify-between py-1 border-b border-white/5"><span>Poniedziałek</span><span class="text-gray-500">Zamknięte</span></li>
+                        <li class="flex justify-between py-1 border-b border-white/5"><span>Wtorek - Piątek</span><span class="font-semibold text-white">10:00 – 21:00</span></li>
+                        <li class="flex justify-between py-1 border-b border-white/5"><span>Sobota</span><span class="font-semibold text-white">09:00 – 14:00</span></li>
                         <li class="flex justify-between py-1 text-gray-500"><span>Niedziela</span><span>Zamknięte</span></li>
                     </ul>
                 </div>
 
-                <!-- Szybki kontakt -->
-                <div class="pt-2 border-t border-white/10 space-y-3">
-                    <a href="tel:+48500000000" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-dark-700 hover:bg-dark-600 text-white text-xs font-semibold border border-white/10 transition">
-                        <i class="fa-solid fa-phone text-gold-500"></i> Zadzwoń do salonu
-                    </a>
+                <div class="space-y-3 text-xs text-gray-300 pt-2 border-t border-white/10">
+                    <div class="p-3 bg-dark-700 rounded-xl border border-white/5 space-y-1">
+                        <span class="font-bold text-white block"><i class="fa-solid fa-scissors text-gold-500 mr-1"></i> Agata Płonkowska</span>
+                        <a href="tel:+48736998192" class="text-gold-400 font-semibold hover:underline block">+48 736 998 192</a>
+                    </div>
+                    <div class="p-3 bg-dark-700 rounded-xl border border-white/5 space-y-1">
+                        <span class="font-bold text-white block"><i class="fa-solid fa-beard text-gold-500 mr-1"></i> Arek (Barber)</span>
+                        <a href="tel:+48737308832" class="text-gold-400 font-semibold hover:underline block">+48 737 308 832</a>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -239,75 +191,61 @@
     <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-white/15 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
-            <!-- Nagłówek Modala -->
             <div class="p-5 bg-dark-900 border-b border-white/10 flex justify-between items-center">
                 <div>
-                    <span class="text-[10px] uppercase tracking-widest text-gold-500 font-bold">Rezerwacja Wizyty</span>
-                    <h3 id="modal-service-name" class="text-base sm:text-lg font-bold text-white mt-0.5">Nazwa Usługi</h3>
-                    <p id="modal-service-meta" class="text-xs text-gray-400">45 min • 80 zł</p>
+                    <span class="text-[10px] uppercase tracking-widest text-gold-500 font-bold">Rezerwacja online</span>
+                    <h3 id="modal-service-name" class="text-base font-bold text-white mt-0.5">Usługa</h3>
+                    <p id="modal-service-meta" class="text-xs text-gray-400">Cena / Czas</p>
                 </div>
                 <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-dark-700 text-gray-400 hover:text-white flex items-center justify-center">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Ciało Modala -->
             <div class="p-6 overflow-y-auto space-y-6 flex-grow">
-                
-                <!-- KROK 1: Specjalista (Arek lub Agata) -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">1. Twój specjalista</label>
-                    <div id="modal-staff-list" class="grid grid-cols-2 gap-3">
-                        <!-- Generowane przez JS -->
-                    </div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">1. Specjalista</label>
+                    <div id="modal-staff-list" class="grid grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- KROK 2: Wybór dnia -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">2. Wybierz dzień wizyty</label>
-                    <div id="modal-date-list" class="flex gap-2 overflow-x-auto pb-2">
-                        <!-- Generowane przez JS -->
-                    </div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">2. Wybierz dzień</label>
+                    <div id="modal-date-list" class="flex gap-2 overflow-x-auto pb-2"></div>
                 </div>
 
-                <!-- KROK 3: Wybór godziny -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">3. Dostępne godziny</label>
-                    <div id="modal-time-list" class="grid grid-cols-4 gap-2">
-                        <!-- Generowane przez JS -->
-                    </div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">3. Godzina</label>
+                    <div id="modal-time-list" class="grid grid-cols-4 gap-2"></div>
                 </div>
 
-                <!-- KROK 4: Dane klienta -->
                 <div class="space-y-3 pt-2 border-t border-white/10">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400">4. Twoje dane</label>
                     <div class="grid sm:grid-cols-2 gap-3">
                         <input type="text" id="client-name" placeholder="Imię i nazwisko *" required
                             class="bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500">
-                        <input type="tel" id="client-phone" placeholder="Telefon (np. 500 100 200) *" required
+                        <input type="tel" id="client-phone" placeholder="Telefon *" required
                             class="bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500">
                     </div>
-                    <input type="text" id="client-note" placeholder="Uwagi (np. długość włosów, preferencje)"
+                    <input type="text" id="client-note" placeholder="Uwagi (opcjonalnie)"
                         class="w-full bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500">
                 </div>
 
                 <p id="booking-error" class="hidden text-xs text-red-400 font-medium bg-red-500/10 border border-red-500/20 p-3 rounded-lg"></p>
             </div>
 
-            <!-- Stopka Modala -->
             <div class="p-4 bg-dark-900 border-t border-white/10 flex items-center justify-between">
                 <div>
-                    <span class="text-xs text-gray-400 block">Cena orientacyjna:</span>
-                    <span id="modal-total-price" class="text-lg font-bold text-gold-400">80 zł</span>
+                    <span class="text-xs text-gray-400 block">Cena:</span>
+                    <span id="modal-total-price" class="text-lg font-bold text-gold-400">0 zł</span>
                 </div>
-                <button onclick="confirmBooking()" class="px-6 py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-bold text-sm transition shadow-lg shadow-gold-500/20">
-                    Zarezerwuj termin
+                <button id="confirm-btn" onclick="confirmBooking()" class="px-6 py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-bold text-sm transition shadow-lg shadow-gold-500/20">
+                    Zarezerwuj
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- SZUFLADA: MOJE WIZYTY -->
+    <!-- SZUFLADA MOJE WIZYTY -->
     <div id="my-bookings-drawer" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex justify-end">
         <div class="bg-dark-800 border-l border-white/10 w-full max-w-md h-full flex flex-col justify-between p-6 overflow-y-auto">
             <div class="space-y-6">
@@ -321,102 +259,73 @@
                 </div>
                 <div id="my-bookings-list" class="space-y-4"></div>
             </div>
-            <div class="pt-4 border-t border-white/10 text-center">
-                <p class="text-xs text-gray-500">AMARO Salon • System Rezerwacji Online</p>
-            </div>
         </div>
     </div>
 
     <!-- TOAST -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-medium">
         <i class="fa-solid fa-circle-check text-lg"></i>
-        <span id="toast-msg">Rezerwacja zapisana!</span>
+        <span id="toast-msg">Rezerwacja powiodła się!</span>
     </div>
 
-    <!-- FOOTER -->
     <footer class="bg-dark-900 border-t border-white/10 py-6 text-center text-xs text-gray-500">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <p>© 2026 AMARO Salon (Agata & Arek). Wszelkie prawa zastrzeżone.</p>
+            <p>© 2024 Salon fryzjerski AMARO • Ul. Kryształowa 28a, Lublin</p>
             <a href="https://amarosalon.pl/" target="_blank" class="text-gold-500 hover:underline">amarosalon.pl</a>
         </div>
     </footer>
 
-    <!-- LOGIKA JAVASCRIPT -->
+    <!-- SKRYPT JAVASCRIPT -->
     <script>
-        // ============================================================================
-        // KONFIGURACJA ZDJĘĆ I DANYCH (MOŻESZ TU WKLEIĆ BEZPOŚREDNIE LINKI Z AMAROSALON.PL)
-        // ============================================================================
         const staff = [
-            { 
-                id: 'arek', 
-                name: 'Arek', 
-                role: 'Barber & Strzyżenie Męskie', 
-                bio: 'Specjalista od precyzyjnego cięcia męskiego, skin fade’u oraz tradycyjnej pielęgnacji i konturowania brody brzytwą.',
-                photo: 'https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=600&q=80' // <- Tu możesz wkleić link do zdjęcia Arka z amarosalon.pl
-            },
-            { 
-                id: 'agata', 
-                name: 'Agata', 
-                role: 'Stylistka & Fryzjer Damski', 
-                bio: 'Ekspertka od koloryzacji (Sombre, AirTouch, Balejaż), strzyżenia damskiego, stylizacji okolicznościowych oraz głębokiej regeneracji włosów.',
-                photo: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=80' // <- Tu możesz wkleić link do zdjęcia Agaty z amarosalon.pl
-            }
+            { id: 'agata', name: 'Agata Płonkowska', role: 'Fryzjer Damski', phone: '+48 736 998 192', email: 'agata@amarosalon.pl', bio: 'Łączy pasję z profesjonalizmem, dostosowując fryzurę do stylu życia.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg' },
+            { id: 'arek', name: 'Arek', role: 'Stylista męski / Barber', phone: '+48 737 308 832', email: 'arek@amarosalon.pl', bio: 'Pasjonat fryzjerstwa, nieustannie śledzący nowinki techniczne.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg' }
         ];
 
-        const galleryPhotos = [
-            { url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80', label: 'Strefa Barber - Arek' },
-            { url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80', label: 'Strefa Damska - Agata' },
-            { url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80', label: 'Precyzyjny Fade & Broda' },
-            { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', label: 'Koloryzacja i Modelowanie' },
-            { url: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80', label: 'Klasyczne Rzemiosło' },
-            { url: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80', label: 'Pielęgnacja i Stylizacja' }
-        ];
-
-        // ============================================================================
-        // CENNIK USŁUG (PODZIAŁ: AREK - BARBER / AGATA - DAMSKIE)
-        // ============================================================================
         const services = [
-            // --- STREFA ARKA (BARBER) ---
-            { id: 1, category: 'arek', specialistId: 'arek', name: 'Strzyżenie Męskie Klasyczne / Fade', duration: '45 min', price: '70 zł', desc: 'Konsultacja, mycie głowy, precyzyjne strzyżenie nożyczkami i maszynką, stylizacja włosów.' },
-            { id: 2, category: 'arek', specialistId: 'arek', name: 'Combo (Włosy + Broda + Gorący Ręcznik)', duration: '1h 15min', price: '120 zł', desc: 'Kompleksowe strzyżenie włosów oraz trymowanie i konturowanie brody brzytwą z kompresami.' },
-            { id: 3, category: 'arek', specialistId: 'arek', name: 'Trymowanie i Stylizacja Brody', duration: '30 min', price: '60 zł', desc: 'Nadanie odpowiedniego kształtu brodzie, wyrównanie konturów brzytwą, wmasowanie olejku i balsamu.' },
-            { id: 4, category: 'arek', specialistId: 'arek', name: 'Strzyżenie Maszynką (1 długość)', duration: '25 min', price: '50 zł', desc: 'Szybkie strzyżenie całości głowy maszynką wraz z podgoleniem karku i myciem.' },
-            { id: 5, category: 'arek', specialistId: 'arek', name: 'Strzyżenie Chłopięce (do 10 lat)', duration: '30 min', price: '50 zł', desc: 'Komfortowe i dokładne strzyżenie dla najmłodszych klientów.' },
-            { id: 6, category: 'arek', specialistId: 'arek', name: 'Królewskie Golenie Brzytwą / Odżywienie Brody', duration: '40 min', price: '70 zł', desc: 'Rytuał z gorącym ręcznikiem, dokładne golenie lub odżywienie zarostu.' },
+            // Agata - Damskie
+            { id: 1, category: 'agata', specialistId: 'agata', name: 'Strzyżenie damskie', duration: '1h 00min', price: '120 - 140 zł', desc: 'Dopasowanie fryzury do natury i pielęgnacji.' },
+            { id: 2, category: 'agata', specialistId: 'agata', name: 'Strzyżenie do koloryzacji', duration: '45 min', price: '70 zł', desc: 'Precyzyjne cięcie w połączeniu z koloryzacją.' },
+            { id: 3, category: 'agata', specialistId: 'agata', name: 'Modelowanie', duration: '45 min', price: '70 - 80 zł', desc: 'Profesjonalne ułożenie włosów.' },
+            { id: 4, category: 'agata', specialistId: 'agata', name: 'Fale / Loki', duration: '1h 00min', price: '80 - 100 zł', desc: 'Eleganckie fale lub sprężyste loki.' },
+            { id: 5, category: 'agata', specialistId: 'agata', name: 'Koloryzacja jednolita', duration: '2h 00min', price: '180 - 220 zł', desc: 'Farbowanie produktów firm Farmagan, Pure i Juuce.' },
+            { id: 6, category: 'agata', specialistId: 'agata', name: 'Sombre', duration: '3h 00min', price: '290 - 420 zł', desc: 'Wielowymiarowa, naturalna koloryzacja.' },
+            { id: 7, category: 'agata', specialistId: 'agata', name: 'Pasemka / Balejaż', duration: '2h 30min', price: '250 - 320 zł', desc: 'Klasyczne rozjaśnianie pasm.' },
+            { id: 8, category: 'agata', specialistId: 'agata', name: 'Tonowanie', duration: '1h 00min', price: '120 - 190 zł', desc: 'Odświeżenie i korekta koloru.' },
 
-            // --- STREFA AGATY (FRYZJER DAMSKI) ---
-            { id: 101, category: 'agata', specialistId: 'agata', name: 'Strzyżenie Damskie z Modelowaniem (Włosy Krótkie / Średnie)', duration: '1h 00min', price: '90 - 110 zł', desc: 'Mycie pielęgnacyjne, strzyżenie dopasowane do urody oraz modelowanie na szczotkę.' },
-            { id: 102, category: 'agata', specialistId: 'agata', name: 'Strzyżenie Damskie z Modelowaniem (Włosy Długie)', duration: '1h 15min', price: '120 - 140 zł', desc: 'Mycie z odżywką, strzyżenie warstwowe lub na prosto oraz profesjonalne wygładzenie/modelowanie.' },
-            { id: 103, category: 'agata', specialistId: 'agata', name: 'Koloryzacja Jednolita + Strzyżenie + Modelowanie', duration: '2h 15min', price: '200 - 260 zł', desc: 'Pokrycie odrostu lub całościowa zmiana koloru wraz ze strzyżeniem i stylizacją.' },
-            { id: 104, category: 'agata', specialistId: 'agata', name: 'Koloryzacja Sombre / Ombre / AirTouch / Balejaż', duration: '3h 00min', price: '300 - 450 zł', desc: 'Wielowymiarowa koloryzacja połączona z tonowaniem, ochroną włosa i modelowaniem.' },
-            { id: 105, category: 'agata', specialistId: 'agata', name: 'Zabieg Regeneracyjny / Botoks / Keratynowe Odbudowanie', duration: '1h 30min', price: '150 - 250 zł', desc: 'Głębokie odżywienie, wygładzenie i nadanie blasku włosom suchym oraz zniszczonym.' },
-            { id: 106, category: 'agata', specialistId: 'agata', name: 'Modelowanie Okolicznościowe / Upięcie / Loki', duration: '1h 00min', price: '100 - 150 zł', desc: 'Trwała fryzura wieczorowa, fale objętościowe lub eleganckie upięcie.' }
+            // SPA / Pielęgnacja
+            { id: 20, category: 'spa', specialistId: 'agata', name: 'Fusion Complex', duration: '1h 15min', price: '190 zł', desc: 'Regeneracja z kwasem hialuronowym.' },
+            { id: 21, category: 'spa', specialistId: 'agata', name: 'Keratyna kaszmirowa', duration: '1h 30min', price: '290 zł', desc: 'Głębokie odżywienie i wygładzenie.' },
+            { id: 22, category: 'spa', specialistId: 'agata', name: 'Zabieg S.O.S.', duration: '1h 00min', price: '120 zł', desc: 'Ratunek dla zniszczonych włosów.' },
+
+            // Arek - Barber
+            { id: 50, category: 'arek', specialistId: 'arek', name: 'Strzyżenie męskie', duration: '45 min', price: '65 - 70 zł', desc: 'Precyzyjne cięcie męskie i stylizacja.' },
+            { id: 51, category: 'arek', specialistId: 'arek', name: 'Strzyżenie brody', duration: '30 min', price: '50 zł', desc: 'Trymowanie i konturowanie zarostu.' },
+            { id: 52, category: 'arek', specialistId: 'arek', name: 'Combo broda + włosy', duration: '1h 15min', price: '100 zł', desc: 'Kompleksowa usługa barberska.' },
+            { id: 53, category: 'arek', specialistId: 'arek', name: 'Strzyżenie dziecięce (chłopiec)', duration: '30 min', price: '45 - 50 zł', desc: 'Strzyżenie dla najmłodszych.' }
         ];
 
-        const timeSlots = ['09:00', '10:00', '11:00', '12:00', '13:30', '15:00', '16:30', '17:30', '18:30'];
+        const timeSlots = ['10:00', '11:00', '12:00', '13:30', '15:00', '16:30', '17:30', '18:30', '19:30', '20:00'];
 
         let currentCategory = 'all';
         let selectedService = null;
-        let selectedStaff = 'arek';
+        let selectedStaff = 'agata';
         let selectedDate = '';
         let selectedTime = '';
-        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v2')) || [];
+        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_lublin')) || [];
 
         window.addEventListener('DOMContentLoaded', () => {
             renderServices();
             renderTeamSection();
-            renderGallery();
             updateBookingBadge();
         });
 
         function setCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                if (btn.dataset.cat === cat) {
-                    btn.className = 'cat-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-gold-500 text-black transition whitespace-nowrap flex items-center gap-2';
-                } else {
-                    btn.className = 'cat-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap flex items-center gap-2';
-                }
+                btn.className = btn.dataset.cat === cat 
+                    ? 'cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-black transition whitespace-nowrap'
+                    : 'cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-dark-700 text-gray-300 hover:bg-dark-600 transition whitespace-nowrap';
             });
             renderServices();
         }
@@ -426,35 +335,31 @@
             const query = document.getElementById('search-input').value.toLowerCase();
             
             const filtered = services.filter(s => {
-                const matchesCat = currentCategory === 'all' || s.category === currentCategory;
-                const matchesQuery = s.name.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query);
-                return matchesCat && matchesQuery;
+                return (currentCategory === 'all' || s.category === currentCategory) &&
+                       (s.name.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query));
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-gray-500 bg-dark-800 rounded-xl border border-white/5">Brak usług pasujących do wyszukiwania.</div>`;
+                container.innerHTML = `<div class="p-8 text-center text-gray-500 bg-dark-800 rounded-xl border border-white/5">Brak usług.</div>`;
                 return;
             }
 
             container.innerHTML = filtered.map(s => {
-                const specBadge = s.specialistId === 'arek' 
-                    ? `<span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-gold-400 border border-gold-500/20"><i class="fa-solid fa-scissors mr-1"></i>Arek (Barber)</span>`
-                    : `<span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Agata (Damski)</span>`;
-
+                const specName = s.specialistId === 'agata' ? 'Agata Płonkowska' : 'Arek';
                 return `
                 <div class="bg-dark-800 hover:bg-dark-700/90 p-5 rounded-xl border border-white/10 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                    <div class="space-y-1.5 max-w-xl">
-                        <div>${specBadge}</div>
+                    <div class="space-y-1 max-w-xl">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-400">${specName}</span>
                         <h3 class="font-bold text-white text-base group-hover:text-gold-400 transition">${s.name}</h3>
                         <p class="text-xs text-gray-400 leading-relaxed">${s.desc}</p>
                     </div>
                     <div class="flex sm:flex-col items-center sm:items-end justify-between gap-3 shrink-0 border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0">
                         <div class="text-left sm:text-right">
                             <span class="text-lg font-bold text-gold-400 block leading-none">${s.price}</span>
-                            <span class="text-[11px] text-gray-400 mt-1 block"><i class="fa-regular fa-clock mr-1"></i>${s.duration}</span>
+                            <span class="text-[11px] text-gray-400 mt-1 block">${s.duration}</span>
                         </div>
                         <button onclick="openBookingModal(${s.id})" class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-bold text-xs transition shadow-md">
-                            Umów wizytę
+                            Umów
                         </button>
                     </div>
                 </div>
@@ -462,31 +367,14 @@
         }
 
         function renderTeamSection() {
-            const container = document.getElementById('team-list');
-            container.innerHTML = staff.map(m => `
-                <div class="bg-dark-800 rounded-2xl border border-white/10 overflow-hidden flex flex-col sm:flex-row items-center gap-5 p-5 hover:border-gold-500/40 transition">
-                    <img src="${m.photo}" alt="${m.name}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-gold-500/40 shrink-0">
-                    <div class="space-y-2 text-center sm:text-left">
-                        <div class="inline-block text-[10px] font-bold uppercase tracking-wider text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full">
-                            ${m.role}
-                        </div>
-                        <h3 class="text-xl font-bold text-white">${m.name}</h3>
+            document.getElementById('team-list').innerHTML = staff.map(m => `
+                <div class="bg-dark-800 rounded-2xl border border-white/10 overflow-hidden flex flex-col sm:flex-row items-center gap-5 p-5">
+                    <img src="${m.photo}" alt="${m.name}" class="w-24 h-24 rounded-2xl object-cover border-2 border-gold-500/40 shrink-0">
+                    <div class="space-y-1.5 text-center sm:text-left">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full">${m.role}</span>
+                        <h3 class="text-lg font-bold text-white">${m.name}</h3>
                         <p class="text-xs text-gray-400 leading-relaxed">${m.bio}</p>
-                        <button onclick="setCategory('${m.id}'); document.getElementById('uslugi').scrollIntoView();" class="text-xs font-bold text-gold-400 hover:underline pt-1 inline-block">
-                            Zobacz cennik (${m.name}) →
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderGallery() {
-            const container = document.getElementById('gallery-grid');
-            container.innerHTML = galleryPhotos.map(img => `
-                <div class="group relative rounded-xl overflow-hidden border border-white/10 aspect-square bg-dark-800">
-                    <img src="${img.url}" alt="${img.label}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
-                        <span class="text-xs font-semibold text-white">${img.label}</span>
+                        <p class="text-xs font-semibold text-gold-400 pt-1"><i class="fa-solid fa-phone mr-1"></i> ${m.phone}</p>
                     </div>
                 </div>
             `).join('');
@@ -496,17 +384,10 @@
             const days = [];
             const dayNames = ['Niedz', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob'];
             const monthNames = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'];
-            
             let date = new Date();
             while (days.length < 7) {
-                if (date.getDay() !== 0) {
-                    const iso = date.toISOString().split('T')[0];
-                    days.push({
-                        iso: iso,
-                        dayName: dayNames[date.getDay()],
-                        dayNumber: date.getDate(),
-                        month: monthNames[date.getMonth()]
-                    });
+                if (date.getDay() !== 0 && date.getDay() !== 1) { // Pomijamy niedziele i poniedziałki (zamknięte)
+                    days.push({ iso: date.toISOString().split('T')[0], dayName: dayNames[date.getDay()], dayNumber: date.getDate(), month: monthNames[date.getMonth()] });
                 }
                 date.setDate(date.getDate() + 1);
             }
@@ -515,9 +396,7 @@
 
         function openBookingModal(serviceId) {
             selectedService = services.find(s => s.id === serviceId);
-            // Automatycznie wybierz Arka dla usług barberskich lub Agatę dla usług damskich
             selectedStaff = selectedService.specialistId;
-            
             const days = getUpcomingDays();
             selectedDate = days[0].iso;
             selectedTime = '';
@@ -530,7 +409,6 @@
             renderModalStaff();
             renderModalDates(days);
             renderModalTimes();
-
             document.getElementById('booking-modal').classList.remove('hidden');
         }
 
@@ -539,40 +417,32 @@
         }
 
         function renderModalStaff() {
-            const container = document.getElementById('modal-staff-list');
-            container.innerHTML = staff.map(m => {
-                const isSelected = selectedStaff === m.id;
-                return `
-                    <button onclick="selectStaff('${m.id}')" class="p-3 rounded-xl border text-left transition flex items-center gap-3 ${isSelected ? 'bg-gold-500/15 border-gold-500 text-white' : 'bg-dark-900 border-white/10 text-gray-400 hover:border-white/30'}">
-                        <img src="${m.photo}" alt="${m.name}" class="w-10 h-10 rounded-full object-cover border border-gold-500/50">
-                        <div>
-                            <span class="text-sm font-bold block leading-tight text-white">${m.name}</span>
-                            <span class="text-[10px] text-gray-400 block">${m.role}</span>
-                        </div>
-                    </button>
-                `;
-            }).join('');
+            document.getElementById('modal-staff-list').innerHTML = staff.map(m => `
+                <button onclick="selectStaff('${m.id}')" class="p-3 rounded-xl border text-left transition flex items-center gap-3 ${selectedStaff === m.id ? 'bg-gold-500/15 border-gold-500 text-white' : 'bg-dark-900 border-white/10 text-gray-400'}">
+                    <img src="${m.photo}" class="w-9 h-9 rounded-full object-cover border border-gold-500/50">
+                    <div>
+                        <span class="text-sm font-bold block text-white">${m.name.split(' ')[0]}</span>
+                        <span class="text-[10px] text-gray-400 block">${m.role}</span>
+                    </div>
+                </button>
+            `).join('');
         }
 
-        function selectStaff(staffId) {
-            selectedStaff = staffId;
+        function selectStaff(id) {
+            selectedStaff = id;
             selectedTime = '';
             renderModalStaff();
             renderModalTimes();
         }
 
         function renderModalDates(days) {
-            const container = document.getElementById('modal-date-list');
-            container.innerHTML = days.map(d => {
-                const isSelected = selectedDate === d.iso;
-                return `
-                    <button onclick="selectDate('${d.iso}')" class="min-w-[70px] p-2.5 rounded-xl border text-center transition shrink-0 ${isSelected ? 'bg-gold-500 text-black border-gold-500 font-bold' : 'bg-dark-900 border-white/10 text-gray-300 hover:border-white/30'}">
-                        <span class="text-[10px] uppercase block opacity-80">${d.dayName}</span>
-                        <span class="text-base font-bold block">${d.dayNumber}</span>
-                        <span class="text-[10px] block opacity-80">${d.month}</span>
-                    </button>
-                `;
-            }).join('');
+            document.getElementById('modal-date-list').innerHTML = days.map(d => `
+                <button onclick="selectDate('${d.iso}')" class="min-w-[70px] p-2.5 rounded-xl border text-center transition shrink-0 ${selectedDate === d.iso ? 'bg-gold-500 text-black border-gold-500 font-bold' : 'bg-dark-900 border-white/10 text-gray-300'}">
+                    <span class="text-[10px] uppercase block opacity-80">${d.dayName}</span>
+                    <span class="text-base font-bold block">${d.dayNumber}</span>
+                    <span class="text-[10px] block opacity-80">${d.month}</span>
+                </button>
+            `).join('');
         }
 
         function selectDate(iso) {
@@ -583,20 +453,10 @@
         }
 
         function renderModalTimes() {
-            const container = document.getElementById('modal-time-list');
-            container.innerHTML = timeSlots.map(time => {
+            document.getElementById('modal-time-list').innerHTML = timeSlots.map(time => {
                 const isTaken = bookings.some(b => b.date === selectedDate && b.time === time && b.staffId === selectedStaff);
-                const isSelected = selectedTime === time;
-
-                if (isTaken) {
-                    return `<button disabled class="py-2 rounded-lg bg-dark-900/40 border border-white/5 text-gray-600 text-xs line-through cursor-not-allowed">${time}</button>`;
-                }
-
-                return `
-                    <button onclick="selectTime('${time}')" class="py-2 rounded-lg border text-xs font-semibold transition ${isSelected ? 'bg-gold-500 text-black border-gold-500 font-bold' : 'bg-dark-900 border-white/10 text-white hover:border-gold-500/50'}">
-                        ${time}
-                    </button>
-                `;
+                if (isTaken) return `<button disabled class="py-2 rounded-lg bg-dark-900/45 border border-white/5 text-gray-600 text-xs line-through cursor-not-allowed">${time}</button>`;
+                return `<button onclick="selectTime('${time}')" class="py-2 rounded-lg border text-xs font-semibold transition ${selectedTime === time ? 'bg-gold-500 text-black border-gold-500 font-bold' : 'bg-dark-900 border-white/10 text-white hover:border-gold-500/50'}">${time}</button>`;
             }).join('');
         }
 
@@ -611,113 +471,85 @@
             const note = document.getElementById('client-note').value.trim();
             const errorEl = document.getElementById('booking-error');
 
-            if (!selectedTime) {
-                errorEl.textContent = 'Wybierz godzinę wizyty.';
-                errorEl.classList.remove('hidden');
-                return;
-            }
-            if (!name || !phone) {
-                errorEl.textContent = 'Podaj swoje imię oraz numer telefonu.';
-                errorEl.classList.remove('hidden');
-                return;
-            }
+            if (!selectedTime) { errorEl.textContent = 'Wybierz godzinę.'; errorEl.classList.remove('hidden'); return; }
+            if (!name || !phone) { errorEl.textContent = 'Podaj imię i numer telefonu.'; errorEl.classList.remove('hidden'); return; }
 
             const staffObj = staff.find(s => s.id === selectedStaff);
+            const btn = document.getElementById('confirm-btn');
+            btn.textContent = 'Wysyłanie...';
+            btn.disabled = true;
 
-            const newBooking = {
-                id: Date.now(),
-                serviceName: selectedService.name,
-                price: selectedService.price,
-                duration: selectedService.duration,
-                staffId: selectedStaff,
-                staffName: staffObj.name,
-                date: selectedDate,
-                time: selectedTime,
-                clientName: name,
-                clientPhone: phone,
-                note: note
+            const templateParams = {
+                to_email: staffObj.email, staff_name: staffObj.name, service_name: selectedService.name,
+                price: selectedService.price, date: selectedDate, time: selectedTime, client_name: name, client_phone: phone, note: note || 'Brak'
             };
 
-            bookings.unshift(newBooking);
-            localStorage.setItem('amaro_bookings_v2', JSON.stringify(bookings));
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).catch(err => console.log(err));
 
-            document.getElementById('client-name').value = '';
-            document.getElementById('client-phone').value = '';
-            document.getElementById('client-note').value = '';
+            setTimeout(() => {
+                bookings.unshift({
+                    id: Date.now(), serviceName: selectedService.name, price: selectedService.price,
+                    staffId: selectedStaff, staffName: staffObj.name, date: selectedDate, time: selectedTime,
+                    clientName: name, clientPhone: phone
+                });
+                localStorage.setItem('amaro_bookings_lublin', JSON.stringify(bookings));
 
-            closeBookingModal();
-            updateBookingBadge();
-            showToast(`Zarezerwowano u: ${staffObj.name} (${selectedDate} o ${selectedTime})`);
+                document.getElementById('client-name').value = '';
+                document.getElementById('client-phone').value = '';
+                document.getElementById('client-note').value = '';
+                btn.textContent = 'Zarezerwuj';
+                btn.disabled = false;
+
+                closeBookingModal();
+                updateBookingBadge();
+                showToast(`Zarezerwowano u: ${staffObj.name} (${selectedDate} o ${selectedTime})`);
+            }, 600);
         }
 
         function updateBookingBadge() {
             const badge = document.getElementById('booking-badge');
-            if (bookings.length > 0) {
-                badge.textContent = bookings.length;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            if (bookings.length > 0) { badge.textContent = bookings.length; badge.classList.remove('hidden'); }
+            else { badge.classList.add('hidden'); }
         }
 
         function toggleMyBookings() {
             const drawer = document.getElementById('my-bookings-drawer');
             drawer.classList.toggle('hidden');
             if (!drawer.classList.contains('hidden')) {
-                renderMyBookings();
-            }
-        }
-
-        function renderMyBookings() {
-            const container = document.getElementById('my-bookings-list');
-            if (bookings.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12 space-y-3">
-                        <i class="fa-regular fa-calendar-xmark text-4xl text-gray-600"></i>
-                        <p class="text-sm text-gray-400">Brak zaplanowanych wizyt.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = bookings.map(b => `
-                <div class="bg-dark-900 p-4 rounded-xl border border-white/10 space-y-3">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Potwierdzona</span>
-                            <h4 class="font-bold text-white text-sm mt-1">${b.serviceName}</h4>
+                document.getElementById('my-bookings-list').innerHTML = bookings.length === 0 ? 
+                    `<div class="text-center py-12 text-gray-400 text-sm">Brak zaplanowanych wizyt.</div>` :
+                    bookings.map(b => `
+                        <div class="bg-dark-900 p-4 rounded-xl border border-white/10 space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div><span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Potwierdzona</span>
+                                <h4 class="font-bold text-white text-sm mt-1">${b.serviceName}</h4></div>
+                                <span class="font-bold text-gold-400 text-sm">${b.price}</span>
+                            </div>
+                            <div class="text-xs text-gray-400 space-y-1">
+                                <div><i class="fa-regular fa-calendar text-gold-500 w-4"></i> ${b.date} o <strong>${b.time}</strong></div>
+                                <div><i class="fa-solid fa-user-check text-gold-500 w-4"></i> Specjalista: <strong>${b.staffName}</strong></div>
+                            </div>
+                            <div class="pt-2 flex justify-end">
+                                <button onclick="cancelBooking(${b.id})" class="text-xs text-red-400 hover:underline">Odwołaj wizytę</button>
+                            </div>
                         </div>
-                        <span class="font-bold text-gold-400 text-sm">${b.price}</span>
-                    </div>
-                    <div class="text-xs text-gray-400 space-y-1 border-t border-white/5 pt-2">
-                        <div><i class="fa-regular fa-calendar text-gold-500 w-5"></i> <strong>${b.date}</strong> o godz. <strong>${b.time}</strong></div>
-                        <div><i class="fa-solid fa-user-check text-gold-500 w-5"></i> Specjalista: <strong>${b.staffName}</strong></div>
-                        <div><i class="fa-regular fa-user text-gold-500 w-5"></i> Klient: ${b.clientName} (${b.clientPhone})</div>
-                    </div>
-                    <div class="pt-2 flex justify-end">
-                        <button onclick="cancelBooking(${b.id})" class="text-xs text-red-400 hover:text-red-300 font-medium flex items-center gap-1">
-                            <i class="fa-regular fa-trash-can"></i> Odwołaj wizytę
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+                    `).join('');
+            }
         }
 
         function cancelBooking(id) {
             bookings = bookings.filter(b => b.id !== id);
-            localStorage.setItem('amaro_bookings_v2', JSON.stringify(bookings));
-            renderMyBookings();
+            localStorage.setItem('amaro_bookings_lublin', JSON.stringify(bookings));
+            toggleMyBookings(); toggleMyBookings();
             updateBookingBadge();
             showToast('Wizyta została odwołana.');
         }
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').textContent = message;
-            toast.classList.remove('hidden');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 4000);
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 4000);
         }
     </script>
 </body>
