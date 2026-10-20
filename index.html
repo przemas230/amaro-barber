@@ -48,7 +48,7 @@ tailwind.config = {
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; color: #1a1a1a; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; }
-body.modal-open { overflow: hidden; height: 100vh; }
+body.modal-open { overflow: hidden !important; height: 100vh !important; }
 .font-brand { font-family: 'Cinzel', serif; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #f7f5f0; }
@@ -1119,7 +1119,7 @@ function generateFakeBookings(){
                 const srv=myS[Math.floor(Math.random()*myS.length)];
                 const cl=(stId==='arek'?mC:fC)[Math.floor(Math.random()*4)];
                 const stObj=staff.find(s=>s.id===stId);
-                bookings.push({id:Date.now()+cnt+Math.floor(Math.random()*99999),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,freqWeeks:srv.freqWeeks||4,staffId:stId,staffName:stObj.name,date:iso,time:a%2===0?'10:00':'15:30',clientName:cl.n,clientPhone:cl.p,clientEmail:cl.e,note:'Wizyta testowa',status:'confirmed',isFake:true});
+                bookings.push({id:Date.now()+cnt+Math.floor(Math.random()*99999),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,freqWeeks:srv.freqWeeks||4,staffId:stId,staffName:stObj.name,date:iso,time:'12:00',clientName:cl.n,clientPhone:cl.p,clientEmail:cl.e,note:'Wizyta testowa',status:'confirmed',isFake:true});
                 cnt++;
             }
         });
