@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>AMARO Salon Fryzjerski & Barber | Lublin, ul. Kryształowa 28a</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,29 +28,40 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfbfa; color: #1a1a1a; scroll-behavior: smooth; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfbfa; 
+            color: #1a1a1a; 
+            scroll-behavior: smooth; 
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
         .font-brand { font-family: 'Cinzel', serif; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: #f7f5f0; }
         ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-gold-500 selection:text-white w-full overflow-x-hidden">
 
     <!-- NAWIGACJA -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-9 h-9 rounded-full bg-gold-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-gold-500/20">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex justify-between items-center gap-2">
+            <a href="#" class="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gold-500 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-md shadow-gold-500/20">
                     <i class="fa-solid fa-scissors"></i>
                 </div>
                 <div>
-                    <span class="font-brand text-lg sm:text-xl tracking-wider font-bold text-gray-900 block leading-none">AMARO</span>
-                    <span class="text-[9px] tracking-[0.2em] text-gold-600 font-semibold uppercase">Salon & Barber Lublin</span>
+                    <span class="font-brand text-base sm:text-xl tracking-wider font-bold text-gray-900 block leading-none">AMARO</span>
+                    <span class="text-[8px] sm:text-[9px] tracking-[0.18em] text-gold-600 font-semibold uppercase block">Salon & Barber Lublin</span>
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
                 <a href="#strefy" class="hover:text-gold-600 transition">Strefy</a>
                 <a href="#uslugi" class="hover:text-gold-600 transition">Cennik</a>
                 <a href="#zespol" class="hover:text-gold-600 transition">Zespół</a>
@@ -59,44 +70,51 @@
                 <a href="#kontakt" class="hover:text-gold-600 transition">Kontakt</a>
             </nav>
 
-            <div class="flex items-center gap-2">
-                <button onclick="toggleAdminModal()" class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group" title="Panel Administratora">
-                    <i class="fa-solid fa-calendar-days text-gold-600 group-hover:text-white"></i>
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <button onclick="toggleAdminModal()" class="relative px-2.5 sm:px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group" title="Panel Administratora">
+                    <i class="fa-solid fa-user-shield text-gold-600 group-hover:text-white"></i>
                     <span class="hidden sm:inline">Panel Admina</span>
+                    <span id="admin-pending-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center shadow animate-pulse">0</span>
                 </button>
-                <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
+                <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
                     <i class="fa-regular fa-calendar-check text-gold-600"></i>
-                    <span>Moje Wizyty</span>
-                    <span id="booking-badge" class="hidden absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gold-500 text-white text-xs font-bold flex items-center justify-center shadow">0</span>
+                    <span>Wizyty</span>
+                    <span id="booking-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gold-500 text-white text-[10px] font-bold flex items-center justify-center shadow">0</span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- PRZEŁĄCZNIK STREF NA GÓRZE -->
-    <section id="strefy" class="bg-gradient-to-b from-cream-100 to-white py-6 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center max-w-xl mx-auto mb-5 space-y-1">
+    <section id="strefy" class="bg-gradient-to-b from-cream-100 to-white py-5 sm:py-6 border-b border-gray-200 w-full">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6">
+            <div class="text-center max-w-xl mx-auto mb-4 space-y-1">
                 <span class="text-[10px] font-bold tracking-widest text-gold-600 uppercase">Wybierz swój świat w AMARO</span>
-                <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Do którego specjalisty chcesz się zapisać?</h2>
+                <h2 class="font-brand text-lg sm:text-2xl font-bold text-gray-900">Do którego specjalisty chcesz się zapisać?</h2>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-                <button onclick="switchZone('arek')" id="zone-btn-arek" class="zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md hover:shadow-lg transition flex items-center gap-4 text-left group">
-                    <img src="https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg" alt="Arek Barber" class="w-16 h-16 rounded-xl object-cover border border-gold-500/40 shrink-0">
-                    <div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2 py-0.5 rounded">Strefa Barber</span>
-                        <h3 class="font-brand text-lg font-bold text-gray-900 mt-0.5">Arek</h3>
-                        <p class="text-xs text-gray-500">Stylista męski, broda, fade i klasyczne cięcia</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
+                <button onclick="switchZone('arek')" id="zone-btn-arek" class="zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md hover:shadow-lg transition flex items-center gap-3.5 text-left group w-full min-w-0">
+                    <img src="https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg" alt="Arek Barber" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gold-500/40 shrink-0">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2 py-0.5 rounded">Strefa Barber</span>
+                            <span id="next-free-arek" class="text-[10px] font-semibold text-emerald-700 truncate"></span>
+                        </div>
+                        <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900 mt-0.5 truncate">Arek</h3>
+                        <p class="text-xs text-gray-500 line-clamp-1">Stylista męski, broda, fade i klasyczne cięcia</p>
                     </div>
                 </button>
 
-                <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-4 text-left group opacity-75 hover:opacity-100">
-                    <img src="https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg" alt="Agata Fryzjer" class="w-16 h-16 rounded-xl object-cover border border-gray-300 shrink-0">
-                    <div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-500/10 px-2 py-0.5 rounded">Strefa Fryzjerska</span>
-                        <h3 class="font-brand text-lg font-bold text-gray-900 mt-0.5">Agata Płonkowska</h3>
-                        <p class="text-xs text-gray-500">Koloryzacje, sombre, cięcia damskie i SPA włosów</p>
+                <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-3.5 text-left group opacity-80 hover:opacity-100 w-full min-w-0">
+                    <img src="https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg" alt="Agata Fryzjer" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gray-300 shrink-0">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-500/10 px-2 py-0.5 rounded">Strefa Damska</span>
+                            <span id="next-free-agata" class="text-[10px] font-semibold text-emerald-700 truncate"></span>
+                        </div>
+                        <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900 mt-0.5 truncate">Agata Płonkowska</h3>
+                        <p class="text-xs text-gray-500 line-clamp-1">Koloryzacje, sombre, cięcia damskie i SPA</p>
                     </div>
                 </button>
             </div>
@@ -104,40 +122,43 @@
     </section>
 
     <!-- HERO / BANER WSTĘPNY -->
-    <section class="relative bg-white border-b border-gray-200 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-12 grid md:grid-cols-2 gap-8 items-center">
-            <div class="space-y-4 text-center md:text-left">
+    <section class="relative bg-white border-b border-gray-200 overflow-hidden w-full">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
+            <div class="space-y-4 text-center md:text-left min-w-0">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-750 text-xs font-semibold">
                     <i class="fa-solid fa-award"></i> Laureat Nagrody „Orły Fryzjerstwa” (Ocena 9,2/10)
                 </div>
-                <h1 class="font-brand text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                <h1 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
                     Rozkwitnij w naszym salonie AMARO
                 </h1>
-                <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                <p class="text-gray-600 text-xs sm:text-base leading-relaxed">
                     Dajemy włosom siłę, a Tobie inspirację. Pracujemy na renomowanych kosmetykach włoskiej marki <strong>Farmagan</strong> oraz australijskich <strong>Pure i Juuce</strong> (olejek arganowy, keratyna kaszmirowa, kwas hialuronowy).
                 </p>
-                <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-3">
-                    <a href="#uslugi" class="px-6 py-3 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-sm transition shadow-md shadow-gold-500/20">
+                <div class="pt-1 flex flex-wrap justify-center md:justify-start gap-2.5">
+                    <a href="#uslugi" class="px-5 py-3 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs sm:text-sm transition shadow-md shadow-gold-500/20">
                         Wybierz usługę i termin
                     </a>
+                    <button onclick="openFastFinder()" class="px-4 py-3 rounded-xl bg-cream-100 hover:bg-cream-200 text-gray-900 border border-gold-500/40 font-bold text-xs sm:text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-gold-600"></i> Znajdź najszybszy wolny termin
+                    </button>
                 </div>
             </div>
 
-            <div class="bg-cream-100 p-6 sm:p-8 rounded-3xl border border-gold-500/30 shadow-inner grid grid-cols-2 gap-4 text-center">
-                <div class="p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                    <span class="text-2xl sm:text-3xl font-brand font-bold text-gold-600 block">5.0/5</span>
-                    <span class="text-xs font-semibold text-gray-700 block mt-1">Ocena na Booksy</span>
+            <div class="bg-cream-100 p-4 sm:p-7 rounded-3xl border border-gold-500/30 shadow-inner grid grid-cols-2 gap-3 sm:gap-4 text-center min-w-0">
+                <div class="p-3.5 sm:p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <span class="text-xl sm:text-3xl font-brand font-bold text-gold-600 block">5.0/5</span>
+                    <span class="text-[11px] sm:text-xs font-semibold text-gray-700 block mt-1">Ocena na Booksy</span>
                 </div>
-                <div class="p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                    <span class="text-2xl sm:text-3xl font-brand font-bold text-gold-600 block">4.8/5</span>
-                    <span class="text-xs font-semibold text-gray-700 block mt-1">Ocena Google</span>
+                <div class="p-3.5 sm:p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <span class="text-xl sm:text-3xl font-brand font-bold text-gold-600 block">4.8/5</span>
+                    <span class="text-[11px] sm:text-xs font-semibold text-gray-700 block mt-1">Ocena Google</span>
                 </div>
-                <div class="col-span-2 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-trophy text-gold-500 text-xl"></i>
-                        <div class="text-left">
-                            <span class="text-xs font-bold text-gray-900 block">3x Orły Fryzjerstwa • 5+ lat na rynku</span>
-                            <span class="text-[11px] text-gray-500">Ul. Kryształowa 28a, Lublin</span>
+                <div class="col-span-2 p-3.5 sm:p-4 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <i class="fa-solid fa-trophy text-gold-500 text-lg sm:text-xl shrink-0"></i>
+                        <div class="text-left min-w-0">
+                            <span class="text-xs font-bold text-gray-900 block truncate">3x Orły Fryzjerstwa • 5+ lat</span>
+                            <span class="text-[11px] text-gray-500 block truncate">Ul. Kryształowa 28a, Lublin</span>
                         </div>
                     </div>
                     <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline shrink-0">Opinie →</button>
@@ -147,67 +168,67 @@
     </section>
 
     <!-- GŁÓWNA ZAWARTOŚĆ -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-3 gap-10 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 flex-grow w-full">
         
-        <div class="lg:col-span-2 space-y-12 w-full">
+        <div class="lg:col-span-2 space-y-10 sm:space-y-12 w-full min-w-0">
             
             <!-- CENNIK -->
-            <section id="uslugi" class="space-y-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+            <section id="uslugi" class="space-y-5 w-full min-w-0">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-4">
                     <div>
-                        <h2 class="font-brand text-2xl font-bold text-gray-900">Cennik i Rezerwacja Online</h2>
-                        <p class="text-xs text-gray-500 mt-0.5">System automatycznie dopasowuje czas trwania wizyty, zapobiegając nakładaniu się terminów</p>
+                        <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Cennik i Rezerwacja Online</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">System automatycznie blokuje odpowiednią ilość czasu i chroni przed nakładaniem wizyt</p>
                     </div>
-                    <div class="relative w-full sm:w-auto">
+                    <div class="relative w-full sm:w-60 shrink-0">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                         <input type="text" id="search-input" oninput="renderServices()" placeholder="Szukaj usługi..." 
-                            class="bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gold-500 w-full sm:w-60 shadow-sm">
+                            class="bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gold-500 w-full shadow-sm">
                     </div>
                 </div>
 
-                <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-tabs">
-                    <button onclick="setCategory('all')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-white transition whitespace-nowrap shadow-sm" data-cat="all">Wszystkie</button>
-                    <button onclick="setCategory('arek')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap" data-cat="arek">Arek (Barber)</button>
-                    <button onclick="setCategory('agata')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap" data-cat="agata">Agata (Fryzjer Damski)</button>
-                    <button onclick="setCategory('spa')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap" data-cat="spa">Strefa SPA Wellness</button>
+                <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar w-full" id="category-tabs">
+                    <button onclick="setCategory('all')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gold-500 text-white transition whitespace-nowrap shadow-sm shrink-0" data-cat="all">Wszystkie usługi</button>
+                    <button onclick="setCategory('arek')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap shrink-0" data-cat="arek">Arek (Barber)</button>
+                    <button onclick="setCategory('agata')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap shrink-0" data-cat="agata">Agata (Fryzjer Damski)</button>
+                    <button onclick="setCategory('spa')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap shrink-0" data-cat="spa">Strefa SPA Wellness</button>
                 </div>
 
-                <div id="services-list" class="space-y-3.5 w-full"></div>
+                <div id="services-list" class="space-y-3 w-full"></div>
             </section>
 
             <!-- ZESPÓŁ -->
-            <section id="zespol" class="space-y-6 pt-6 border-t border-gray-200">
+            <section id="zespol" class="space-y-5 pt-6 border-t border-gray-200 w-full min-w-0">
                 <div>
-                    <h2 class="font-brand text-2xl font-bold text-gray-900">Nasz Zespół</h2>
+                    <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Nasz Zespół</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Poznaj profesjonalistów tworzących AMARO</p>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-6" id="team-list"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" id="team-list"></div>
             </section>
 
             <!-- GALERIA -->
-            <section id="galeria" class="space-y-6 pt-6 border-t border-gray-200">
+            <section id="galeria" class="space-y-5 pt-6 border-t border-gray-200 w-full min-w-0">
                 <div>
-                    <h2 class="font-brand text-2xl font-bold text-gray-900">Galeria Realizacji</h2>
+                    <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Realizacji</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Przykłady prac naszego salonu w Lublinie</p>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="gallery-grid"></div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4" id="gallery-grid"></div>
             </section>
 
             <!-- OPINIE -->
-            <section id="opinie" class="space-y-6 pt-6 border-t border-gray-200">
-                <div class="flex justify-between items-center">
-                    <h2 class="font-brand text-2xl font-bold text-gray-900">Opinie klientów</h2>
-                    <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline">Zobacz wszystkie opinie (4) →</button>
+            <section id="opinie" class="space-y-5 pt-6 border-t border-gray-200 w-full min-w-0">
+                <div class="flex justify-between items-center gap-2">
+                    <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Opinie klientów</h2>
+                    <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline shrink-0">Wszystkie opinie →</button>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-4">
-                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
                         <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="text-gray-700 text-sm italic">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
+                        <p class="text-gray-700 text-xs sm:text-sm italic">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
                         <span class="text-xs font-bold text-gold-600 block">— Pani Żaneta</span>
                     </div>
-                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
                         <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="text-gray-700 text-sm italic">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
+                        <p class="text-gray-700 text-xs sm:text-sm italic">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
                         <span class="text-xs font-bold text-gold-600 block">— Pan Daniel</span>
                     </div>
                 </div>
@@ -215,8 +236,8 @@
         </div>
 
         <!-- KONTAKT I MAPA GOOGLE -->
-        <aside id="kontakt" class="space-y-6 w-full">
-            <div class="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200 shadow-md sticky top-20 space-y-6">
+        <aside id="kontakt" class="space-y-6 w-full min-w-0">
+            <div class="bg-white p-5 sm:p-7 rounded-3xl border border-gray-200 shadow-md lg:sticky lg:top-20 space-y-5 w-full">
                 <div>
                     <h3 class="font-brand font-bold text-gray-900 text-lg mb-1">AMARO Lublin</h3>
                     <p class="text-xs text-gray-500 flex items-center gap-1.5 mt-1">
@@ -224,8 +245,7 @@
                     </p>
                 </div>
 
-                <!-- Osadzona mapa Google + Przycisk GPS -->
-                <div class="rounded-2xl overflow-hidden border border-gray-200 h-44 bg-gray-100">
+                <div class="rounded-2xl overflow-hidden border border-gray-200 h-44 bg-gray-100 w-full">
                     <iframe class="w-full h-full" frameborder="0" style="border:0" loading="lazy" allowfullscreen
                         src="https://maps.google.com/maps?q=Kryszta%C5%82owa%2028a,%20Lublin&t=&z=15&ie=UTF8&iwloc=&output=embed">
                     </iframe>
@@ -237,20 +257,20 @@
                 </button>
 
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
-                        <i class="fa-regular fa-clock text-gold-500"></i> Godziny otwarcia salonu
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2.5 flex items-center gap-2">
+                        <i class="fa-regular fa-clock text-gold-500"></i> Domyślne godziny otwarcia
                     </h4>
-                    <ul class="space-y-2 text-xs text-gray-700" id="hours-list-display"></ul>
+                    <ul class="space-y-1.5 text-xs text-gray-700" id="hours-list-display"></ul>
                 </div>
 
-                <div class="space-y-3 pt-3 border-t border-gray-200">
-                    <div class="p-3 bg-cream-100 rounded-xl border border-gray-200 space-y-1">
-                        <span class="font-bold text-gray-900 text-xs block"><i class="fa-solid fa-wand-magic-sparkles text-gold-600 mr-1"></i> Agata Płonkowska</span>
-                        <a href="tel:+48736998192" class="text-gold-600 font-bold text-xs hover:underline block">+48 736 998 192</a>
+                <div class="space-y-2.5 pt-3 border-t border-gray-200">
+                    <div class="p-3 bg-cream-100 rounded-xl border border-gray-200 flex justify-between items-center">
+                        <span class="font-bold text-gray-900 text-xs"><i class="fa-solid fa-wand-magic-sparkles text-gold-600 mr-1"></i> Agata</span>
+                        <a href="tel:+48736998192" class="text-gold-600 font-bold text-xs hover:underline">+48 736 998 192</a>
                     </div>
-                    <div class="p-3 bg-cream-100 rounded-xl border border-gray-200 space-y-1">
-                        <span class="font-bold text-gray-900 text-xs block"><i class="fa-solid fa-scissors text-gold-600 mr-1"></i> Arek (Barber)</span>
-                        <a href="tel:+48737308832" class="text-gold-600 font-bold text-xs hover:underline block">+48 737 308 832</a>
+                    <div class="p-3 bg-cream-100 rounded-xl border border-gray-200 flex justify-between items-center">
+                        <span class="font-bold text-gray-900 text-xs"><i class="fa-solid fa-scissors text-gold-600 mr-1"></i> Arek</span>
+                        <a href="tel:+48737308832" class="text-gold-600 font-bold text-xs hover:underline">+48 737 308 832</a>
                     </div>
                 </div>
             </div>
@@ -258,94 +278,119 @@
     </main>
 
     <!-- ========================================================================= -->
-    <!-- MODAL REZERWACJI KLIENTA (Z PEŁNYM KALENDARZEM I BLOKADĄ NAKŁADANIA)      -->
+    <!-- MODAL REZERWACJI KLIENTA (INTELIGENTNY CZAS + PEŁNY KALENDARZ)            -->
     <!-- ========================================================================= -->
     <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white border border-gray-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
+        <div class="bg-white border border-gray-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[94vh]">
             
-            <div class="p-4 sm:p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
-                <div>
-                    <span class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Rezerwacja wizyty online</span>
-                    <h3 id="modal-service-name" class="font-brand text-base sm:text-lg font-bold text-gray-900 mt-0.5">Usługa</h3>
+            <div class="p-4 sm:p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center gap-2 shrink-0">
+                <div class="min-w-0">
+                    <span class="text-[10px] uppercase tracking-widest text-gold-600 font-bold block">Rezerwacja wizyty online</span>
+                    <h3 id="modal-service-name" class="font-brand text-sm sm:text-lg font-bold text-gray-900 truncate mt-0.5">Usługa</h3>
                     <p id="modal-service-meta" class="text-xs text-gray-500 font-medium">Czas • Cena</p>
                 </div>
-                <button onclick="closeBookingModal()" class="w-9 h-9 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center shadow-sm">
+                <button onclick="closeBookingModal()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center shadow-sm shrink-0">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div class="p-4 sm:p-6 overflow-y-auto space-y-6 flex-grow">
+            <div class="p-3.5 sm:p-6 overflow-y-auto space-y-5 flex-grow">
                 <!-- KROK 1: Specjalista -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2.5">1. Wybrany specjalista</label>
-                    <div id="modal-staff-list" class="grid grid-cols-2 gap-3"></div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">1. Wybrany specjalista</label>
+                    <div id="modal-staff-list" class="grid grid-cols-2 gap-2.5"></div>
                 </div>
 
-                <!-- KROK 2: Pełny Kalendarz Klienta (z limitem dni ustawionym przez Admina) -->
+                <!-- INNOWACJA: Personalizacja długości włosów i czasu trwania przed wyborem godziny -->
+                <div class="bg-cream-50 p-3.5 rounded-2xl border border-gold-500/30 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-gold-600"></i> Dopasuj czas do swoich włosów:
+                        </label>
+                        <span id="computed-duration-badge" class="text-[11px] font-bold text-gold-750 bg-gold-100 px-2 py-0.5 rounded-full">Czas: 45 min</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <button type="button" onclick="setExtraTime(0)" id="extra-time-0" class="extra-time-btn py-2 px-2 rounded-xl border font-semibold bg-gold-500 text-white border-gold-500">
+                            Standardowe (+0m)
+                        </button>
+                        <button type="button" onclick="setExtraTime(15)" id="extra-time-15" class="extra-time-btn py-2 px-2 rounded-xl border font-semibold bg-white text-gray-700 border-gray-200">
+                            Długie (+15 min)
+                        </button>
+                        <button type="button" onclick="setExtraTime(30)" id="extra-time-30" class="extra-time-btn py-2 px-2 rounded-xl border font-semibold bg-white text-gray-700 border-gray-200">
+                            B. gęste (+30 min)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KROK 2: Pełny Kalendarz Klienta -->
                 <div>
-                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                    <div class="flex flex-wrap items-center justify-between gap-1 mb-2">
                         <label class="text-xs font-bold uppercase tracking-wider text-gray-400">
-                            2. Wybierz dzień <span id="client-horizon-info" class="text-gold-600 font-semibold">(Dostępne na 30 dni w przód)</span>
+                            2. Wybierz dzień <span id="client-horizon-info" class="text-gold-600 font-semibold"></span>
                         </label>
                         <div class="flex items-center gap-2 text-[10px] text-gray-500">
-                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Dużo miejsc</span>
-                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Ostatnie miejsca</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Dużo</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Mało</span>
                             <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Brak</span>
                         </div>
                     </div>
 
-                    <div class="bg-cream-50 border border-gray-200 rounded-2xl p-3 sm:p-4">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="bg-cream-50 border border-gray-200 rounded-2xl p-2.5 sm:p-4">
+                        <div class="flex items-center justify-between mb-2.5">
                             <button onclick="changeClientMonth(-1)" class="w-8 h-8 rounded-lg bg-white border border-gray-200 hover:border-gold-500 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                            <span id="client-cal-month-label" class="font-brand font-bold text-sm text-gray-900 uppercase tracking-wider">Październik 2026</span>
+                            <span id="client-cal-month-label" class="font-brand font-bold text-xs sm:text-sm text-gray-900 uppercase tracking-wider">Październik 2026</span>
                             <button onclick="changeClientMonth(1)" class="w-8 h-8 rounded-lg bg-white border border-gray-200 hover:border-gold-500 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                         <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 uppercase mb-1">
                             <div>Pn</div><div>Wt</div><div>Śr</div><div>Cz</div><div>Pt</div><div>Sb</div><div>Nd</div>
                         </div>
-                        <div id="client-calendar-grid" class="grid grid-cols-7 gap-1.5"></div>
+                        <div id="client-calendar-grid" class="grid grid-cols-7 gap-1"></div>
                     </div>
                 </div>
 
-                <!-- KROK 3: Dostępne Godziny (Podzielone na pory dnia, uwzględniające czas trwania usługi!) -->
+                <!-- KROK 3: Dostępne Godziny -->
                 <div>
-                    <div class="flex justify-between items-center mb-2.5">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400">3. Wybierz godzinę rozpoczęcia</label>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400">3. Wybierz godzinę</label>
                         <span id="selected-date-display" class="text-xs font-bold text-gold-600"></span>
                     </div>
                     <div id="modal-time-list" class="space-y-3"></div>
                 </div>
 
-                <!-- KROK 4: Dane kontaktowe -->
+                <!-- KROK 4: Dane kontaktowe + Opcja Cichej Wizyty -->
                 <div class="space-y-3 pt-3 border-t border-gray-200">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400">4. Twoje dane kontaktowe</label>
-                    <div class="grid sm:grid-cols-2 gap-3">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400">4. Twoje dane i preferencje</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <input type="text" id="client-name" placeholder="Imię i nazwisko *" required
-                            class="bg-gray-50 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-gold-500">
+                            class="bg-gray-50 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-gold-500 w-full">
                         <input type="tel" id="client-phone" placeholder="Numer telefonu *" required
-                            class="bg-gray-50 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-gold-500">
+                            class="bg-gray-50 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-gold-500 w-full">
                     </div>
-                    <input type="text" id="client-note" placeholder="Uwagi do rezerwacji (np. długość włosów)"
+                    <label class="flex items-center gap-2 text-xs text-gray-700 bg-gray-50 p-2.5 rounded-xl border border-gray-200 cursor-pointer">
+                        <input type="checkbox" id="client-silent-visit" class="rounded text-gold-500">
+                        <span><i class="fa-solid fa-volume-xmark text-gold-600 mr-1"></i> <strong>Cicha wizyta (Strefa Relaksu)</strong> – chcę odpocząć bez rozmów podczas usługi</span>
+                    </label>
+                    <input type="text" id="client-note" placeholder="Dodatkowe uwagi dla fryzjera (opcjonalnie)"
                         class="w-full bg-gray-50 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-gold-500">
                 </div>
 
                 <p id="booking-error" class="hidden text-xs text-red-600 font-medium bg-red-50 border border-red-200 p-3 rounded-xl"></p>
             </div>
 
-            <div class="p-4 bg-cream-100 border-t border-gray-200 flex items-center justify-between">
-                <div>
-                    <span class="text-xs text-gray-500 block">Szacowana cena i czas:</span>
-                    <span id="modal-total-price" class="text-base sm:text-lg font-brand font-bold text-gold-600">0 zł</span>
+            <div class="p-3.5 sm:p-4 bg-cream-100 border-t border-gray-200 flex items-center justify-between gap-2 shrink-0">
+                <div class="min-w-0">
+                    <span class="text-[11px] text-gray-500 block">Szacowana cena i czas:</span>
+                    <span id="modal-total-price" class="text-sm sm:text-lg font-brand font-bold text-gold-600 truncate block">0 zł</span>
                 </div>
-                <button id="confirm-btn" onclick="confirmBooking()" class="px-6 py-3 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-sm transition shadow-md shadow-gold-500/20">
-                    Potwierdź rezerwację
+                <button id="confirm-btn" onclick="confirmBooking()" class="px-5 py-3 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs sm:text-sm transition shadow-md shadow-gold-500/20 shrink-0">
+                    Zarezerwuj termin
                 </button>
             </div>
         </div>
     </div>
 
     <!-- ========================================================================= -->
-    <!-- PANEL ADMINISTRATORA (MIESIĘCZNA MAPA CIEPŁA, GRAFIK, WYPRZEDZENIE)       -->
+    <!-- PANEL ADMINISTRATORA (SYMULATOR, ZATWIERDZANIE WIZYT, GRAFIK TYGODNI)     -->
     <!-- ========================================================================= -->
     <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white border border-gray-200 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl p-6 space-y-4">
@@ -371,148 +416,209 @@
         </div>
     </div>
 
-    <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white border border-gray-200 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
-            <div class="p-4 sm:p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gold-500 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-calendar-check"></i></div>
-                    <div>
-                        <span id="admin-panel-title" class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Zalogowano</span>
-                        <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900">Centrum Zarządzania Kalendarzem AMARO</h3>
-                    </div>
-                </div>
-                <button onclick="closeAdminDashboard()" class="w-9 h-9 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- Nawigacja zakładek w Panelu Admina -->
-            <div class="flex border-b border-gray-200 bg-gray-50 px-4 pt-2 gap-2 overflow-x-auto scrollbar-none">
-                <button onclick="switchAdminTab('calendar')" id="admin-tab-calendar" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap">
-                    <i class="fa-solid fa-calendar-days mr-1"></i> Kalendarz Miesięczny & Slot-Mapa
-                </button>
-                <button onclick="switchAdminTab('schedule')" id="admin-tab-schedule" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap">
-                    <i class="fa-regular fa-clock mr-1"></i> Dni i Godziny Pracy
-                </button>
-                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap">
-                    <i class="fa-solid fa-tags mr-1"></i> Cennik i Czas Usług
-                </button>
-                <button onclick="switchAdminTab('gallery')" id="admin-tab-gallery" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap">
-                    <i class="fa-regular fa-images mr-1"></i> Galeria i Hasło
-                </button>
-            </div>
-
-            <div class="p-4 sm:p-6 overflow-y-auto space-y-6 flex-grow bg-white">
-                
-                <!-- ZAKŁADKA 1: MIESIĘCZNY KALENDARZ Z MAPĄ CIEPŁA SLOTÓW -->
-                <div id="admin-section-calendar" class="admin-sec space-y-6">
-                    <!-- Pasek sterowania wyprzedzeniem rezerwacji -->
-                    <div class="bg-cream-100 p-4 rounded-2xl border border-gold-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-gold-750">Zasięg Kalendarza Klienta (Na ile dni w przód można się zapisać)</h4>
-                            <p class="text-[11px] text-gray-500">Klienci zobaczą w kalendarzu tylko terminy w wybranym poniżej oknie czasowym.</p>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <select id="admin-horizon-select" onchange="updateBookingHorizon()" class="bg-white border border-gray-300 rounded-xl px-3 py-2 text-xs font-bold text-gray-900">
-                                <option value="7">7 dni w przód (1 tydzień)</option>
-                                <option value="14">14 dni w przód (2 tygodnie)</option>
-                                <option value="30">30 dni w przód (1 miesiąc)</option>
-                                <option value="60">60 dni w przód (2 miesiące)</option>
-                                <option value="90">90 dni w przód (3 miesiące)</option>
+    <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-1.5 sm:p-4">
+        <div class="bg-white border border-gray-200 rounded-2xl sm:rounded-3xl max-w-6xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[96vh]">
+            
+            <!-- Nagłówek Admina z przełącznikiem fryzjera i generatorem danych testowych -->
+            <div class="p-3.5 sm:p-5 bg-cream-100 border-b border-gray-200 flex flex-wrap justify-between items-center gap-3 shrink-0">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-9 h-9 rounded-full bg-gold-500 text-white flex items-center justify-center font-bold text-base shrink-0"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Panel Fryzjera:</span>
+                            <select id="admin-switch-staff" onchange="switchAdminProfile(this.value)" class="bg-white border border-gold-500 rounded-lg px-2 py-0.5 text-xs font-bold text-gray-900">
+                                <option value="arek">Arek (Barber)</option>
+                                <option value="agata">Agata Płonkowska</option>
                             </select>
                         </div>
+                        <h3 class="font-brand text-sm sm:text-lg font-bold text-gray-900 truncate">Centrum Planowania i Kalendarza AMARO</h3>
+                    </div>
+                </div>
+
+                <!-- Przyciski Symulatora Fejkowych Wizyt -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="generateFakeBookings()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Wygeneruj testowe wizyty
+                    </button>
+                    <button onclick="clearFakeBookings()" class="px-2.5 py-1.5 rounded-xl bg-gray-200 hover:bg-red-100 hover:text-red-700 text-gray-700 text-xs font-bold transition">
+                        Wyczyść testowe
+                    </button>
+                    <button onclick="closeAdminDashboard()" class="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zakładki w Panelu Admina -->
+            <div class="flex border-b border-gray-200 bg-gray-50 px-3 pt-2 gap-1.5 overflow-x-auto no-scrollbar shrink-0">
+                <button onclick="switchAdminTab('calendar')" id="admin-tab-calendar" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap shrink-0">
+                    <i class="fa-solid fa-calendar-days mr-1"></i> Kalendarz & Zatwierdzanie <span id="tab-pending-count" class="ml-1 px-1.5 py-0.2 rounded-full bg-red-600 text-white text-[10px] hidden">0</span>
+                </button>
+                <button onclick="switchAdminTab('schedule')" id="admin-tab-schedule" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap shrink-0">
+                    <i class="fa-regular fa-clock mr-1"></i> Grafik Tygodniowy & Wyjątki Dni
+                </button>
+                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap shrink-0">
+                    <i class="fa-solid fa-tags mr-1"></i> Cennik & Domyślny Czas Usług
+                </button>
+                <button onclick="switchAdminTab('gallery')" id="admin-tab-gallery" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap shrink-0">
+                    <i class="fa-regular fa-images mr-1"></i> Galeria & Hasło
+                </button>
+            </div>
+
+            <div class="p-3.5 sm:p-6 overflow-y-auto space-y-6 flex-grow bg-white">
+                
+                <!-- ZAKŁADKA 1: KALENDARZ MIESIĘCZNY + POWIADOMIENIA O NOWYCH WIZYTACH -->
+                <div id="admin-section-calendar" class="admin-sec space-y-5">
+                    
+                    <!-- Skrzynka powiadomień o nowych wizytach oczekujących na zatwierdzenie -->
+                    <div id="admin-pending-alert-box" class="hidden bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs sm:text-sm font-bold text-amber-900 flex items-center gap-2">
+                                <i class="fa-solid fa-bell text-amber-600 animate-bounce"></i> Nowe rezerwacje oczekujące na Twoje potwierdzenie:
+                            </h4>
+                            <button onclick="approveAllPending()" class="px-3 py-1 rounded-lg bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700">
+                                Zatwierdź wszystkie
+                            </button>
+                        </div>
+                        <div id="admin-pending-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                     </div>
 
-                    <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Pasek sterowania wyprzedzeniem rezerwacji -->
+                    <div class="bg-cream-100 p-3.5 rounded-2xl border border-gold-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gold-750">Zasięg Kalendarza Klienta (Na ile dni w przód można rezerwować)</h4>
+                            <p class="text-[11px] text-gray-500">Kliknij w dowolny dzień na kalendarzu, aby edytować czas trwania wizyt lub zmienić godziny pracy w tym konkretnym dniu.</p>
+                        </div>
+                        <select id="admin-horizon-select" onchange="updateBookingHorizon()" class="bg-white border border-gray-300 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 shrink-0">
+                            <option value="7">7 dni w przód (1 tydzień)</option>
+                            <option value="14">14 dni w przód (2 tygodnie)</option>
+                            <option value="30">30 dni w przód (1 miesiąc)</option>
+                            <option value="60">60 dni w przód (2 miesiące)</option>
+                            <option value="90">90 dni w przód (3 miesiące)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
                         <!-- Siatka Miesiąca (2 kolumny) -->
-                        <div class="lg:col-span-2 bg-gray-50 border border-gray-200 rounded-2xl p-4">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <div class="flex items-center gap-2">
+                        <div class="lg:col-span-2 bg-gray-50 border border-gray-200 rounded-2xl p-3 sm:p-4 min-w-0">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                <div class="flex items-center gap-1.5">
                                     <button onclick="changeAdminMonth(-1)" class="w-8 h-8 rounded-lg bg-white border border-gray-300 hover:border-gold-500 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                                    <span id="admin-cal-month-label" class="font-brand font-bold text-base text-gray-900 uppercase px-2">Październik 2026</span>
+                                    <span id="admin-cal-month-label" class="font-brand font-bold text-sm sm:text-base text-gray-900 uppercase px-2">Październik 2026</span>
                                     <button onclick="changeAdminMonth(1)" class="w-8 h-8 rounded-lg bg-white border border-gray-300 hover:border-gold-500 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-right"></i></button>
                                 </div>
-                                <!-- Legenda kolorów -->
-                                <div class="flex flex-wrap items-center gap-2 text-[10px] font-semibold">
-                                    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">Zielony: Dużo wolnych</span>
-                                    <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300">Żółty: Mało wolnych</span>
-                                    <span class="px-2 py-0.5 rounded bg-red-100 text-red-800 border border-red-300">Czerwony: Brak / Ostatnie</span>
+                                <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold">
+                                    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">Dużo wolnych</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300">Średnio</span>
+                                    <span class="px-2 py-0.5 rounded bg-red-100 text-red-800 border border-red-300">Mało / Brak</span>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-7 gap-1.5 text-center text-[10px] font-bold text-gray-400 uppercase mb-2">
-                                <div>Pon</div><div>Wt</div><div>Śr</div><div>Czw</div><div>Pt</div><div>Sob</div><div>Ndz</div>
+                            <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 uppercase mb-1.5">
+                                <div>Pn</div><div>Wt</div><div>Śr</div><div>Cz</div><div>Pt</div><div>Sb</div><div>Nd</div>
                             </div>
-                            <div id="admin-calendar-grid" class="grid grid-cols-7 gap-1.5"></div>
+                            <div id="admin-calendar-grid" class="grid grid-cols-7 gap-1 sm:gap-1.5"></div>
                         </div>
 
-                        <!-- Szczegóły wybranego dnia (1 kolumna) -->
-                        <div class="bg-cream-50 border border-gray-200 rounded-2xl p-4 flex flex-col justify-between space-y-4">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between border-b border-gray-200 pb-3">
-                                    <div>
-                                        <span class="text-[10px] uppercase font-bold text-gold-600">Podgląd dnia</span>
-                                        <h4 id="admin-selected-day-title" class="font-brand font-bold text-base text-gray-900">Wybierz dzień</h4>
+                        <!-- Szczegóły wybranego dnia: Edycja godzin tego dnia + Edycja czasu trwania wizyt -->
+                        <div class="bg-cream-50 border border-gray-200 rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between space-y-4 min-w-0">
+                            <div class="space-y-3.5">
+                                <div class="border-b border-gray-200 pb-3 space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <span class="text-[10px] uppercase font-bold text-gold-600">Zarządzanie dniem</span>
+                                            <h4 id="admin-selected-day-title" class="font-brand font-bold text-base text-gray-900">Wybierz dzień</h4>
+                                        </div>
+                                        <button onclick="toggleBlockSelectedDay()" id="admin-block-day-btn" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-red-100 text-red-700 transition">
+                                            Urlop / Wolne
+                                        </button>
                                     </div>
-                                    <button onclick="toggleBlockSelectedDay()" id="admin-block-day-btn" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-gray-200 hover:bg-red-100 hover:text-red-700 transition">
-                                        Zablokuj dzień (Urlop)
-                                    </button>
+
+                                    <!-- Indywidualne godziny pracy TYLKO na ten wybrany dzień -->
+                                    <div class="bg-white p-2.5 rounded-xl border border-gray-200 space-y-1.5 text-xs">
+                                        <div class="flex items-center justify-between">
+                                            <span class="font-bold text-gray-700 text-[11px]">Godziny pracy w tym dniu:</span>
+                                            <span id="admin-day-custom-badge" class="text-[10px] font-bold text-purple-700 bg-purple-100 px-1.5 py-0.5 rounded hidden">Wyjątek dnia</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5">
+                                            <input type="time" id="admin-day-start" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-bold w-full">
+                                            <span>–</span>
+                                            <input type="time" id="admin-day-end" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-bold w-full">
+                                            <button onclick="saveCustomDayHours()" class="px-2.5 py-1 rounded-lg bg-gold-500 text-white font-bold text-[11px] shrink-0">Zapisz</button>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- Lista wizyt w tym dniu -->
+                                <!-- Lista wizyt w tym dniu z możliwością zmiany czasu trwania i statusu -->
                                 <div>
-                                    <h5 class="text-xs font-bold text-gray-700 mb-2">Zaplanowane wizyty w tym dniu:</h5>
-                                    <div id="admin-day-bookings-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+                                    <h5 class="text-xs font-bold text-gray-700 mb-2">Wizyty w tym dniu (zmiana czasu przelicza kalendarz):</h5>
+                                    <div id="admin-day-bookings-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1"></div>
                                 </div>
                             </div>
 
-                            <!-- Ręczne dodawanie wizyty (np. klient dzwoni przez telefon) -->
+                            <!-- Ręczne dodawanie wizyty telefonicznej -->
                             <div class="pt-3 border-t border-gray-200 space-y-2">
-                                <span class="text-[11px] font-bold text-gray-800 block"><i class="fa-solid fa-phone-volume text-gold-600 mr-1"></i> Szybka rezerwacja telefoniczna:</span>
+                                <span class="text-[11px] font-bold text-gray-800 block"><i class="fa-solid fa-phone-volume text-gold-600 mr-1"></i> Dodaj wizytę telefoniczną:</span>
                                 <select id="admin-quick-service" class="w-full bg-white border border-gray-300 rounded-lg p-1.5 text-xs"></select>
                                 <div class="grid grid-cols-2 gap-2">
                                     <select id="admin-quick-time" class="bg-white border border-gray-300 rounded-lg p-1.5 text-xs"></select>
-                                    <input type="text" id="admin-quick-client" placeholder="Imię klienta / Tel" class="bg-white border border-gray-300 rounded-lg p-1.5 text-xs">
+                                    <input type="text" id="admin-quick-client" placeholder="Imię i tel." class="bg-white border border-gray-300 rounded-lg p-1.5 text-xs">
                                 </div>
                                 <button onclick="addManualAdminBooking()" class="w-full py-2 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs transition">
-                                    Dodaj do kalendarza
+                                    Dodaj i potwierdź
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ZAKŁADKA 2: DNI I GODZINY PRACY -->
-                <div id="admin-section-schedule" class="admin-sec hidden space-y-4">
-                    <div class="max-w-2xl space-y-4">
-                        <div>
-                            <h4 class="font-bold text-gray-900 text-sm">Twój indywidualny grafik tygodniowy</h4>
-                            <p class="text-xs text-gray-500">Zaznacz dni, w których pracujesz oraz ustaw godziny otwarcia i zamknięcia.</p>
+                <!-- ZAKŁADKA 2: PLANOWANIE POSZCZEGÓLNYCH TYGODNI + DOMYŚLNY GRAFIK -->
+                <div id="admin-section-schedule" class="admin-sec hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        
+                        <!-- Planer konkretnego tygodnia (bo jeden tydzień różni się od drugiego) -->
+                        <div class="bg-cream-50 p-4 rounded-2xl border border-gold-500/40 space-y-4">
+                            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase text-gold-600">Elastyczny grafik</span>
+                                    <h4 class="font-bold text-gray-900 text-sm">Planer konkretnego tygodnia (Wyjątki)</h4>
+                                    <p class="text-[11px] text-gray-500">Ustaw inne godziny pracy dla wybranego tygodnia w roku.</p>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <button onclick="changeScheduleWeek(-7)" class="w-8 h-8 rounded-lg bg-white border border-gray-300 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <button onclick="changeScheduleWeek(7)" class="w-8 h-8 rounded-lg bg-white border border-gray-300 flex items-center justify-center text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div id="admin-week-range-label" class="text-xs font-bold text-gold-750 bg-gold-100 px-3 py-1.5 rounded-xl text-center"></div>
+                            <div id="admin-specific-week-editor" class="space-y-2"></div>
+                            <button onclick="saveSpecificWeekSchedule()" class="w-full py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs shadow">
+                                Zapisz godziny na ten tydzień
+                            </button>
                         </div>
-                        <div id="admin-schedule-editor" class="space-y-2.5"></div>
-                        <button onclick="saveAdminSchedule()" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs shadow">
-                            Zapisz godziny pracy
-                        </button>
+
+                        <!-- Bazowy grafik tygodniowy -->
+                        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-4">
+                            <div class="border-b border-gray-200 pb-3">
+                                <span class="text-[10px] font-bold uppercase text-gray-400">Szablon bazowy</span>
+                                <h4 class="font-bold text-gray-900 text-sm">Domyślne godziny pracy (co tydzień)</h4>
+                                <p class="text-[11px] text-gray-500">Obowiązują w każdym tygodniu, w którym nie ustawiono wyjątku obok.</p>
+                            </div>
+                            <div id="admin-schedule-editor" class="space-y-2"></div>
+                            <button onclick="saveAdminSchedule()" class="w-full py-2.5 rounded-xl bg-gray-800 hover:bg-black text-white font-bold text-xs shadow">
+                                Zapisz domyślny szablon tygodniowy
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- ZAKŁADKA 3: CENNIK I CZAS TRWANIA USŁUG -->
+                <!-- ZAKŁADKA 3: CENNIK I DOMYŚLNY CZAS USŁUG -->
                 <div id="admin-section-services" class="admin-sec hidden space-y-6">
                     <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
                         <h4 class="font-bold text-gray-900 text-sm">Dodaj nową usługę</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
                             <input type="text" id="new-srv-name" placeholder="Nazwa usługi" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
                             <input type="text" id="new-srv-price" placeholder="Cena (np. 120 zł)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
-                            <select id="new-srv-dur" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
-                                <option value="30">Czas: 30 min</option>
-                                <option value="45">Czas: 45 min</option>
-                                <option value="60" selected>Czas: 1h 00min (60 min)</option>
-                                <option value="75">Czas: 1h 15min (75 min)</option>
-                                <option value="90">Czas: 1h 30min (90 min)</option>
-                                <option value="120">Czas: 2h 00min (120 min)</option>
-                                <option value="150">Czas: 2h 30min (150 min)</option>
-                                <option value="180">Czas: 3h 00min (180 min)</option>
-                            </select>
+                            <input type="number" id="new-srv-dur" value="60" step="15" min="15" placeholder="Czas w min (np. 45)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
                             <select id="new-srv-cat" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
                                 <option value="arek">Arek (Barber)</option>
                                 <option value="agata">Agata (Damski)</option>
@@ -522,13 +628,15 @@
                         <button onclick="addNewService()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Dodaj do cennika</button>
                     </div>
 
-                    <h4 class="font-bold text-gray-900 text-sm">Twoje usługi (możesz zmienić cenę oraz czas trwania w minutach)</h4>
-                    <div id="admin-services-list" class="space-y-2"></div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm mb-2">Edycja cen i domyślnego czasu strzyżenia/usługi (w minutach)</h4>
+                        <div id="admin-services-list" class="space-y-2"></div>
+                    </div>
                 </div>
 
                 <!-- ZAKŁADKA 4: GALERIA I HASŁO -->
                 <div id="admin-section-gallery" class="admin-sec hidden space-y-6">
-                    <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
                             <h4 class="font-bold text-gray-900 text-sm">Dodaj nowe zdjęcie do galerii</h4>
                             <input type="text" id="new-img-url" placeholder="Link do zdjęcia (https://...)" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
@@ -551,29 +659,29 @@
     <!-- MODAL OPINII GOOGLE -->
     <div id="reviews-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
-            <div class="p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
+            <div class="p-4 sm:p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
                 <div>
                     <span class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Zweryfikowane opinie klientów</span>
-                    <h3 class="font-brand text-lg font-bold text-gray-900">AMARO w Google & Booksy</h3>
+                    <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900">AMARO w Google & Booksy</h3>
                 </div>
                 <button onclick="closeReviewsModal()" class="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4">
-                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+            <div class="p-5 overflow-y-auto space-y-3.5">
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5">
                     <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Pani Żaneta</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
                     <p class="text-xs text-gray-600">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie i kondycję moich włosów.”</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5">
                     <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Pan Daniel</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
                     <p class="text-xs text-gray-600">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuję i serdecznie polecam.”</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5">
                     <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Pan Radosław</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
                     <p class="text-xs text-gray-600">„Zawsze miałem obawy związane z wyborem fryzjera, ale od kiedy trafiłem do Amaro Salon i skorzystałem z usług Arkadiusza, moje obawy zniknęły.”</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5">
                     <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Pani Małgorzata</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
                     <p class="text-xs text-gray-600">„Bardzo długo szukałam odpowiedniego miejsca w którym obsługa przyjmuje klientów z uśmiechem. W końcu znalazłam! Polecam!”</p>
                 </div>
@@ -583,23 +691,23 @@
 
     <!-- SZUFLADA MOJE WIZYTY -->
     <div id="my-bookings-drawer" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex justify-end">
-        <div class="bg-white border-l border-gray-200 w-full max-w-md h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl">
-            <div class="space-y-6">
+        <div class="bg-white border-l border-gray-200 w-full max-w-md h-full flex flex-col justify-between p-5 overflow-y-auto shadow-2xl">
+            <div class="space-y-5">
                 <div class="flex justify-between items-center border-b border-gray-200 pb-4">
-                    <h3 class="font-brand text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
                         <i class="fa-regular fa-calendar-check text-gold-600"></i> Moje Zarezerwowane Wizyty
                     </h3>
                     <button onclick="toggleMyBookings()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:text-gray-900 flex items-center justify-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <div id="my-bookings-list" class="space-y-4"></div>
+                <div id="my-bookings-list" class="space-y-3.5"></div>
             </div>
         </div>
     </div>
 
     <!-- TOAST -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-emerald-700 text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 text-xs sm:text-sm font-semibold max-w-sm">
+    <div id="toast" class="fixed bottom-4 right-4 left-4 sm:left-auto z-50 hidden bg-emerald-800 text-white px-4 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 text-xs sm:text-sm font-semibold sm:max-w-md">
         <i class="fa-solid fa-circle-check text-lg shrink-0"></i>
         <span id="toast-msg">Rezerwacja zapisana!</span>
     </div>
@@ -612,10 +720,9 @@
     </footer>
 
     <!-- ========================================================================= -->
-    <!-- SILNIK REZERWACJI, KALENDARZA I PANELU ADMINA (JAVASCRIPT)                -->
+    <!-- SILNIK APLIKACJI (JAVASCRIPT)                                             -->
     <!-- ========================================================================= -->
     <script>
-        // Domyślny grafik tygodniowy zgodny z amarosalon.pl (0=Ndz, 1=Pon, 2=Wt... 6=Sob)
         const defaultWeeklyHours = {
             1: { open: false, start: '10:00', end: '21:00', name: 'Poniedziałek' },
             2: { open: true,  start: '10:00', end: '21:00', name: 'Wtorek' },
@@ -626,12 +733,13 @@
             0: { open: false, start: '09:00', end: '14:00', name: 'Niedziela' }
         };
 
-        let staff = JSON.parse(localStorage.getItem('amaro_staff_v4')) || [
+        let staff = JSON.parse(localStorage.getItem('amaro_staff_v5')) || [
             { 
                 id: 'arek', name: 'Arek', role: 'Stylista męski / Barber', phone: '+48 737 308 832', email: 'arek@amarosalon.pl', pass: 'password', 
                 bio: 'Stylista męski, barber. Pasjonat fryzjerstwa. Nieustannie śledzi i jest na bieżąco z nowinkami technicznymi.', 
                 photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',
                 schedule: JSON.parse(JSON.stringify(defaultWeeklyHours)),
+                customDates: {}, // np. { '2026-10-22': { open: true, start: '12:00', end: '18:00' } }
                 blockedDates: []
             },
             { 
@@ -639,12 +747,15 @@
                 bio: 'Łączy pasję z profesjonalizmem. Dostosowuje propozycję fryzury do stylu życia, pielęgnacji i indywidualnych preferencji.', 
                 photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',
                 schedule: JSON.parse(JSON.stringify(defaultWeeklyHours)),
+                customDates: {},
                 blockedDates: []
             }
         ];
 
-        // Usługi z dokładnym czasem trwania w minutach (durationMin) przeciw nakładaniu się wizyt!
-        let services = JSON.parse(localStorage.getItem('amaro_services_v4')) || [
+        // Upewnij się, że starsze zapisy mają pole customDates
+        staff.forEach(s => { if (!s.customDates) s.customDates = {}; if (!s.blockedDates) s.blockedDates = []; });
+
+        let services = JSON.parse(localStorage.getItem('amaro_services_v5')) || [
             // By Arek
             { id: 50, category: 'arek', specialistId: 'arek', name: 'Strzyżenie męskie', durationMin: 45, price: '65 – 70 zł', desc: 'Precyzyjne strzyżenie męskie dopasowane do kształtu głowy i stylu.' },
             { id: 51, category: 'arek', specialistId: 'arek', name: 'Strzyżenie brody', durationMin: 30, price: '50 zł', desc: 'Trymowanie, konturowanie i pielęgnacja zarostu.' },
@@ -669,7 +780,7 @@
             { id: 22, category: 'spa', specialistId: 'agata', name: 'Zabieg S.O.S. / Clean-up + Action', durationMin: 60, price: '120 zł', desc: 'Natychmiastowy ratunek i oczyszczenie dla włosów i skóry głowy.' }
         ];
 
-        let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v4')) || [
+        let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v5')) || [
             { url: 'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg', label: 'Arek – Strefa Barber' },
             { url: 'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg', label: 'Agata Płonkowska – Strefa Damska' },
             { url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80', label: 'Precyzyjny Fade & Broda' },
@@ -677,17 +788,18 @@
         ];
 
         let bookingHorizonDays = parseInt(localStorage.getItem('amaro_horizon_days')) || 30;
-        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v4')) || [];
+        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v5')) || [];
 
         let currentCategory = 'all';
         let selectedService = null;
         let selectedStaff = 'arek';
         let selectedDate = '';
         let selectedTime = '';
+        let clientExtraMinutes = 0;
 
-        // Stan kalendarza klienta i admina
         let clientCalDate = new Date();
         let adminCalDate = new Date();
+        let adminWeekPlanStart = getMonday(new Date());
         let currentAdminUser = null;
         let adminSelectedDateIso = toIsoDate(new Date());
 
@@ -697,6 +809,15 @@
             const mo = String(d.getMonth() + 1).padStart(2, '0');
             const da = String(d.getDate()).padStart(2, '0');
             return `${yr}-${mo}-${da}`;
+        }
+
+        function getMonday(d) {
+            const dt = new Date(d);
+            const day = dt.getDay();
+            const diff = dt.getDate() - day + (day === 0 ? -6 : 1);
+            dt.setDate(diff);
+            dt.setHours(0,0,0,0);
+            return dt;
         }
 
         function timeToMinutes(t) {
@@ -718,11 +839,17 @@
             return `${m} min`;
         }
 
-        // --- SILNIK OBLICZANIA WOLNYCH SLOTÓW I ZAPOBIEGANIA NAKŁADANIU SIĘ ---
+        // --- SILNIK GRAFIKU (UWZGLĘDNIA WYJĄTKI NA KONKRETNE DATY I TYGODNIE!) ---
         function getDayScheduleForStaff(staffId, dateIso) {
             const st = staff.find(s => s.id === staffId);
             if (!st) return { open: false };
-            if (st.blockedDates && st.blockedDates.includes(dateIso)) return { open: false, blocked: true };
+            if (st.blockedDates && st.blockedDates.includes(dateIso)) {
+                return { open: false, blocked: true, start: '10:00', end: '18:00' };
+            }
+            // Sprawdź czy dla tej konkretnej daty ustawiono indywidualne godziny
+            if (st.customDates && st.customDates[dateIso]) {
+                return { ...st.customDates[dateIso], custom: true };
+            }
             const d = new Date(dateIso + 'T12:00:00');
             const dayOfWeek = d.getDay();
             return st.schedule[dayOfWeek] || { open: false };
@@ -734,14 +861,14 @@
             const startMin = timeToMinutes(sched.start);
             const endMin = timeToMinutes(sched.end);
             const slots = [];
-            for (let m = startMin; m + 30 <= endMin; m += 30) {
+            for (let m = startMin; m + 15 <= endMin; m += 30) {
                 slots.push(minutesToTime(m));
             }
             return slots;
         }
 
-        // Sprawdza, czy usługa o długości `durationMin` rozpoczęta o `startTime` nie koliduje z inną wizytą ani końcem pracy
-        function isSlotAvailable(staffId, dateIso, startTime, durationMin) {
+        // Sprawdza nakładanie się z dokładnością do minuty (z możliwością pominięcia edytowanej wizyty excludeBookingId)
+        function isSlotAvailable(staffId, dateIso, startTime, durationMin, excludeBookingId = null) {
             const sched = getDayScheduleForStaff(staffId, dateIso);
             if (!sched.open) return false;
 
@@ -749,15 +876,12 @@
             const endMin = startMin + durationMin;
             const workEndMin = timeToMinutes(sched.end);
 
-            // Nie pozwól umówić wizyty, która skończyłaby się po zamknięciu salonu
             if (endMin > workEndMin) return false;
 
-            // Sprawdź kolizję z istniejącymi rezerwacjami tego specjalisty w tym dniu
-            const dayBookings = bookings.filter(b => b.staffId === staffId && b.date === dateIso);
+            const dayBookings = bookings.filter(b => b.staffId === staffId && b.date === dateIso && b.id !== excludeBookingId);
             for (const b of dayBookings) {
                 const bStart = timeToMinutes(b.time);
                 const bEnd = bStart + (b.durationMin || 60);
-                // Warunek nakładania się przedziałów: [startMin, endMin) oraz [bStart, bEnd)
                 if (startMin < bEnd && endMin > bStart) {
                     return false;
                 }
@@ -777,13 +901,37 @@
             renderGallery();
             renderHoursDisplay();
             updateBookingBadge();
+            updateNextFreeBadges();
 
-            // Wczytaj zapamiętane dane klienta
             if (localStorage.getItem('amaro_client_name')) {
                 document.getElementById('client-name').value = localStorage.getItem('amaro_client_name');
                 document.getElementById('client-phone').value = localStorage.getItem('amaro_client_phone') || '';
             }
         });
+
+        function updateNextFreeBadges() {
+            ['arek', 'agata'].forEach(stId => {
+                const el = document.getElementById(`next-free-${stId}`);
+                if (!el) return;
+                const today = new Date();
+                for (let i = 0; i <= 14; i++) {
+                    const d = new Date(today);
+                    d.setDate(today.getDate() + i);
+                    const iso = toIsoDate(d);
+                    const slots = getAvailableSlotsForService(stId, iso, 45);
+                    if (slots.length > 0) {
+                        const label = i === 0 ? 'Dziś' : (i === 1 ? 'Jutro' : iso.slice(5));
+                        el.innerHTML = `<i class="fa-solid fa-bolt"></i> Wolne: ${label} ${slots[0]}`;
+                        break;
+                    }
+                }
+            });
+        }
+
+        function openFastFinder() {
+            const firstSrv = services.find(s => s.specialistId === selectedStaff) || services[0];
+            openBookingModal(firstSrv.id);
+        }
 
         function renderHoursDisplay() {
             const st = staff.find(s => s.id === selectedStaff) || staff[0];
@@ -803,12 +951,12 @@
             const agataBtn = document.getElementById('zone-btn-agata');
 
             if (zone === 'arek') {
-                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-4 text-left group";
-                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
+                arekBtn.className = "zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-3.5 text-left group w-full min-w-0";
+                agataBtn.className = "zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-3.5 text-left group opacity-75 hover:opacity-100 w-full min-w-0";
                 setCategory('arek');
             } else {
-                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-4 text-left group";
-                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
+                agataBtn.className = "zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-3.5 text-left group w-full min-w-0";
+                arekBtn.className = "zone-tab p-3.5 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-3.5 text-left group opacity-75 hover:opacity-100 w-full min-w-0";
                 setCategory('agata');
             }
             renderHoursDisplay();
@@ -819,8 +967,8 @@
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 btn.className = btn.dataset.cat === cat 
-                    ? 'cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-white transition whitespace-nowrap shadow-sm'
-                    : 'cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap';
+                    ? 'cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gold-500 text-white transition whitespace-nowrap shadow-sm shrink-0'
+                    : 'cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap shrink-0';
             });
             renderServices();
         }
@@ -843,18 +991,18 @@
                 const specObj = staff.find(st => st.id === s.specialistId);
                 const specName = specObj ? specObj.name : 'AMARO';
                 return `
-                <div class="bg-white hover:border-gold-500/60 p-4 sm:p-5 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                    <div class="space-y-1">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600">${specName}</span>
-                        <h3 class="font-brand font-bold text-gray-900 text-base group-hover:text-gold-600 transition">${s.name}</h3>
-                        <p class="text-xs text-gray-500 leading-relaxed">${s.desc}</p>
+                <div class="bg-white hover:border-gold-500/60 p-4 sm:p-5 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 group w-full min-w-0">
+                    <div class="space-y-1 min-w-0">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block">${specName}</span>
+                        <h3 class="font-brand font-bold text-gray-900 text-sm sm:text-base group-hover:text-gold-600 transition break-words">${s.name}</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed break-words">${s.desc}</p>
                     </div>
                     <div class="flex sm:flex-col items-center sm:items-end justify-between gap-3 shrink-0 border-t sm:border-t-0 border-gray-100 pt-3 sm:pt-0">
                         <div class="text-left sm:text-right">
                             <span class="text-base sm:text-lg font-brand font-bold text-gold-600 block leading-none">${s.price}</span>
-                            <span class="text-[11px] text-gray-400 mt-1 block"><i class="fa-regular fa-clock mr-1"></i>${formatDuration(s.durationMin)}</span>
+                            <span class="text-[11px] text-gray-400 mt-1 block"><i class="fa-regular fa-clock mr-1"></i>Domyślnie: ${formatDuration(s.durationMin)}</span>
                         </div>
-                        <button onclick="openBookingModal(${s.id})" class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs transition shadow-md shadow-gold-500/10">
+                        <button onclick="openBookingModal(${s.id})" class="px-4 sm:px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs transition shadow-md shadow-gold-500/10 shrink-0">
                             Wybierz termin
                         </button>
                     </div>
@@ -864,11 +1012,11 @@
 
         function renderTeamSection() {
             document.getElementById('team-list').innerHTML = staff.map(m => `
-                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col sm:flex-row items-center gap-5 p-5 shadow-sm">
-                    <img src="${m.photo}" alt="${m.name}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-gold-500/30 shrink-0">
-                    <div class="space-y-1.5 text-center sm:text-left w-full">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2.5 py-0.5 rounded-full">${m.role}</span>
-                        <h3 class="font-brand text-lg font-bold text-gray-900">${m.name}</h3>
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 shadow-sm min-w-0">
+                    <img src="${m.photo}" alt="${m.name}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-gold-500/30 shrink-0">
+                    <div class="space-y-1 text-center sm:text-left min-w-0 flex-1">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2.5 py-0.5 rounded-full inline-block">${m.role}</span>
+                        <h3 class="font-brand text-base sm:text-lg font-bold text-gray-900">${m.name}</h3>
                         <p class="text-xs text-gray-500 leading-relaxed">${m.bio}</p>
                         <a href="tel:${m.phone}" class="text-xs font-semibold text-gold-600 pt-1 inline-block hover:underline"><i class="fa-solid fa-phone mr-1"></i> ${m.phone}</a>
                     </div>
@@ -880,36 +1028,60 @@
             document.getElementById('gallery-grid').innerHTML = galleryPhotos.map(img => `
                 <div class="group relative rounded-2xl overflow-hidden border border-gray-200 aspect-square bg-white shadow-sm">
                     <img src="${img.url}" alt="${img.label}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
-                        <span class="text-xs font-semibold text-white">${img.label}</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5 sm:p-3">
+                        <span class="text-[11px] sm:text-xs font-semibold text-white">${img.label}</span>
                     </div>
                 </div>
             `).join('');
         }
 
         // =========================================================================
-        // KALENDARZ KLIENTA W MODALU REZERWACJI
+        // KALENDARZ KLIENTA + PERSONALIZACJA DŁUGOŚCI WŁOSÓW
         // =========================================================================
+        function getEffectiveClientDuration() {
+            if (!selectedService) return 60;
+            return selectedService.durationMin + clientExtraMinutes;
+        }
+
+        function setExtraTime(mins) {
+            clientExtraMinutes = mins;
+            [0, 15, 30].forEach(val => {
+                const btn = document.getElementById(`extra-time-${val}`);
+                if (btn) {
+                    btn.className = val === mins
+                        ? 'extra-time-btn py-2 px-2 rounded-xl border font-bold bg-gold-500 text-white border-gold-500 text-xs transition'
+                        : 'extra-time-btn py-2 px-2 rounded-xl border font-semibold bg-white text-gray-700 border-gray-200 text-xs transition';
+                }
+            });
+            const totalMin = getEffectiveClientDuration();
+            document.getElementById('computed-duration-badge').textContent = `Czas: ${formatDuration(totalMin)}`;
+            document.getElementById('modal-total-price').textContent = `${selectedService.price} (${formatDuration(totalMin)})`;
+            selectedTime = '';
+            renderClientCalendar();
+            renderModalTimes();
+        }
+
         function openBookingModal(serviceId) {
             selectedService = services.find(s => s.id === serviceId);
             selectedStaff = selectedService.specialistId;
+            clientExtraMinutes = 0;
             clientCalDate = new Date();
             selectedDate = '';
             selectedTime = '';
             document.getElementById('booking-error').classList.add('hidden');
 
             document.getElementById('modal-service-name').textContent = selectedService.name;
-            document.getElementById('modal-service-meta').textContent = `Czas trwania: ${formatDuration(selectedService.durationMin)} • Cena: ${selectedService.price}`;
-            document.getElementById('modal-total-price').textContent = `${selectedService.price} (${formatDuration(selectedService.durationMin)})`;
-            document.getElementById('client-horizon-info').textContent = `(Zapisy otwarte na ${bookingHorizonDays} dni w przód)`;
+            document.getElementById('modal-service-meta').textContent = `Domyślny czas: ${formatDuration(selectedService.durationMin)} • Cena: ${selectedService.price}`;
+            document.getElementById('client-horizon-info').textContent = `(do ${bookingHorizonDays} dni w przód)`;
 
-            // Automatycznie znajdź pierwszy wolny dzień dla klienta
+            setExtraTime(0);
+
             const today = new Date();
             for (let i = 0; i <= bookingHorizonDays; i++) {
                 const testD = new Date(today);
                 testD.setDate(today.getDate() + i);
                 const iso = toIsoDate(testD);
-                const avail = getAvailableSlotsForService(selectedStaff, iso, selectedService.durationMin);
+                const avail = getAvailableSlotsForService(selectedStaff, iso, getEffectiveClientDuration());
                 if (avail.length > 0) {
                     selectedDate = iso;
                     clientCalDate = new Date(testD.getFullYear(), testD.getMonth(), 1);
@@ -929,11 +1101,11 @@
 
         function renderModalStaff() {
             document.getElementById('modal-staff-list').innerHTML = staff.map(m => `
-                <button onclick="selectStaff('${m.id}')" class="p-3 rounded-2xl border text-left transition flex items-center gap-3 ${selectedStaff === m.id ? 'bg-gold-500/10 border-gold-500 text-gray-900 shadow-sm' : 'bg-gray-50 border-gray-200 text-gray-600'}">
-                    <img src="${m.photo}" class="w-10 h-10 rounded-full object-cover border border-gold-500/40">
-                    <div>
-                        <span class="text-sm font-bold block text-gray-900">${m.name.split(' ')[0]}</span>
-                        <span class="text-[10px] text-gray-500 block">${m.role}</span>
+                <button onclick="selectStaff('${m.id}')" class="p-2.5 rounded-2xl border text-left transition flex items-center gap-2.5 min-w-0 ${selectedStaff === m.id ? 'bg-gold-500/10 border-gold-500 text-gray-900 shadow-sm' : 'bg-gray-50 border-gray-200 text-gray-600'}">
+                    <img src="${m.photo}" class="w-9 h-9 rounded-full object-cover border border-gold-500/40 shrink-0">
+                    <div class="min-w-0">
+                        <span class="text-xs sm:text-sm font-bold block text-gray-900 truncate">${m.name.split(' ')[0]}</span>
+                        <span class="text-[10px] text-gray-500 block truncate">${m.role}</span>
                     </div>
                 </button>
             `).join('');
@@ -959,7 +1131,7 @@
             document.getElementById('client-cal-month-label').textContent = `${monthNames[month]} ${year}`;
 
             const firstDay = new Date(year, month, 1).getDay();
-            const startOffset = (firstDay + 6) % 7; // Poniedziałek = 0
+            const startOffset = (firstDay + 6) % 7;
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
             const today = new Date();
@@ -967,25 +1139,23 @@
             const maxDate = new Date(today);
             maxDate.setDate(today.getDate() + bookingHorizonDays);
 
+            const dur = getEffectiveClientDuration();
             let html = '';
-            for (let i = 0; i < startOffset; i++) {
-                html += `<div></div>`;
-            }
+            for (let i = 0; i < startOffset; i++) html += `<div></div>`;
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const d = new Date(year, month, day);
                 const iso = toIsoDate(d);
                 const isPastOrBeyond = d < today || d > maxDate;
-                const availSlots = isPastOrBeyond ? [] : getAvailableSlotsForService(selectedStaff, iso, selectedService.durationMin);
+                const availSlots = isPastOrBeyond ? [] : getAvailableSlotsForService(selectedStaff, iso, dur);
                 const totalBase = getAllBaseSlotsForDay(selectedStaff, iso).length;
-
                 const isSelected = selectedDate === iso;
 
                 if (isPastOrBeyond || totalBase === 0 || availSlots.length === 0) {
                     html += `
-                        <button disabled class="p-2 rounded-xl border border-gray-100 bg-gray-100/60 text-gray-300 text-xs flex flex-col items-center justify-center cursor-not-allowed">
+                        <button disabled class="py-1.5 px-1 rounded-xl border border-gray-100 bg-gray-100/60 text-gray-300 text-xs flex flex-col items-center justify-center cursor-not-allowed">
                             <span>${day}</span>
-                            <span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-0.5"></span>
                         </button>
                     `;
                 } else {
@@ -995,9 +1165,9 @@
                     else if (ratio <= 0.55) dotColor = 'bg-amber-500';
 
                     html += `
-                        <button onclick="selectDate('${iso}')" class="p-2 rounded-xl border transition flex flex-col items-center justify-center ${isSelected ? 'bg-gold-500 text-white border-gold-500 font-bold shadow-md' : 'bg-white border-gray-200 text-gray-800 hover:border-gold-500'}">
+                        <button onclick="selectDate('${iso}')" class="py-1.5 px-1 rounded-xl border transition flex flex-col items-center justify-center ${isSelected ? 'bg-gold-500 text-white border-gold-500 font-bold shadow-md' : 'bg-white border-gray-200 text-gray-800 hover:border-gold-500'}">
                             <span class="text-xs">${day}</span>
-                            <span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : dotColor} mt-1" title="Wolnych terminów: ${availSlots.length}"></span>
+                            <span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : dotColor} mt-0.5" title="Wolnych: ${availSlots.length}"></span>
                         </button>
                     `;
                 }
@@ -1014,20 +1184,20 @@
 
         function renderModalTimes() {
             const container = document.getElementById('modal-time-list');
-            document.getElementById('selected-date-display').textContent = selectedDate ? `Wybrana data: ${selectedDate}` : '';
+            const dur = getEffectiveClientDuration();
+            document.getElementById('selected-date-display').textContent = selectedDate ? `Data: ${selectedDate}` : '';
 
             if (!selectedDate) {
                 container.innerHTML = `<div class="p-4 text-center text-xs text-gray-400 bg-gray-50 rounded-xl">Wybierz dostępny dzień w kalendarzu powyżej.</div>`;
                 return;
             }
 
-            const avail = getAvailableSlotsForService(selectedStaff, selectedDate, selectedService.durationMin);
+            const avail = getAvailableSlotsForService(selectedStaff, selectedDate, dur);
             if (avail.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-xs text-red-500 bg-red-50 rounded-xl">Brak wolnych terminów o wystarczającej długości (${formatDuration(selectedService.durationMin)}) w tym dniu.</div>`;
+                container.innerHTML = `<div class="p-4 text-center text-xs text-red-500 bg-red-50 rounded-xl">Brak wolnego okienka o długości ${formatDuration(dur)} w tym dniu. Wybierz inny dzień.</div>`;
                 return;
             }
 
-            // Podział na pory dnia (UX Booksy)
             const morning = avail.filter(t => timeToMinutes(t) < 720);
             const afternoon = avail.filter(t => timeToMinutes(t) >= 720 && timeToMinutes(t) < 1020);
             const evening = avail.filter(t => timeToMinutes(t) >= 1020);
@@ -1037,12 +1207,12 @@
                 return `
                     <div class="space-y-1.5">
                         <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5"><i class="fa-regular ${icon} text-gold-600"></i> ${label}</span>
-                        <div class="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                        <div class="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
                             ${list.map(time => {
-                                const endStr = minutesToTime(timeToMinutes(time) + selectedService.durationMin);
+                                const endStr = minutesToTime(timeToMinutes(time) + dur);
                                 return `<button onclick="selectTime('${time}')" class="py-2 px-1 rounded-xl border text-xs font-semibold transition flex flex-col items-center ${selectedTime === time ? 'bg-gold-500 text-white border-gold-500 font-bold shadow-sm' : 'bg-gray-50 border-gray-200 text-gray-800 hover:border-gold-500'}">
                                     <span>${time}</span>
-                                    <span class="text-[9px] opacity-70">do ${endStr}</span>
+                                    <span class="text-[9px] opacity-75">do ${endStr}</span>
                                 </button>`;
                             }).join('')}
                         </div>
@@ -1064,15 +1234,18 @@
         function confirmBooking() {
             const name = document.getElementById('client-name').value.trim();
             const phone = document.getElementById('client-phone').value.trim();
-            const note = document.getElementById('client-note').value.trim();
+            const silent = document.getElementById('client-silent-visit').checked;
+            let note = document.getElementById('client-note').value.trim();
+            if (silent) note = (note ? note + ' • ' : '') + 'Cicha wizyta';
+
             const errorEl = document.getElementById('booking-error');
+            const dur = getEffectiveClientDuration();
 
             if (!selectedDate || !selectedTime) { errorEl.textContent = 'Wybierz dzień oraz godzinę wizyty.'; errorEl.classList.remove('hidden'); return; }
             if (!name || !phone) { errorEl.textContent = 'Podaj swoje imię oraz numer telefonu.'; errorEl.classList.remove('hidden'); return; }
 
-            // Podwójna weryfikacja nakładania przed zapisem
-            if (!isSlotAvailable(selectedStaff, selectedDate, selectedTime, selectedService.durationMin)) {
-                errorEl.textContent = 'Ten termin został właśnie zajęty lub nakłada się z inną wizytą. Wybierz inną godzinę.';
+            if (!isSlotAvailable(selectedStaff, selectedDate, selectedTime, dur)) {
+                errorEl.textContent = 'Wybrany termin nakłada się na inną wizytę. Wybierz inną godzinę.';
                 errorEl.classList.remove('hidden');
                 renderModalTimes();
                 return;
@@ -1086,27 +1259,122 @@
                 id: Date.now(),
                 serviceName: selectedService.name,
                 price: selectedService.price,
-                durationMin: selectedService.durationMin,
+                durationMin: dur,
                 staffId: selectedStaff,
                 staffName: staffObj.name,
                 date: selectedDate,
                 time: selectedTime,
                 clientName: name,
                 clientPhone: phone,
-                note: note
+                note: note,
+                status: 'pending' // Zarezerwowana – oczekuje na zatwierdzenie przez fryzjera!
             };
 
             bookings.unshift(newBooking);
-            localStorage.setItem('amaro_bookings_v4', JSON.stringify(bookings));
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
 
             document.getElementById('client-note').value = '';
+            document.getElementById('client-silent-visit').checked = false;
             closeBookingModal();
             updateBookingBadge();
-            showToast(`Zarezerwowano: ${selectedService.name} u ${staffObj.name} (${selectedDate}, godz. ${selectedTime})`);
+            updateNextFreeBadges();
+            showToast(`Wysłano rezerwację do ${staffObj.name} (${selectedDate}, godz. ${selectedTime}). Status: Oczekuje na potwierdzenie salonu.`);
         }
 
         // =========================================================================
-        // PANEL ADMINISTRATORA I MIESIĘCZNA MAPA CIEPŁA (HEATMAP)
+        // GENERATOR FEJKOWYCH WIZYT (SYMULATOR OBŁOŻENIA DLA ARKA I AGATY)
+        // =========================================================================
+        function generateFakeBookings() {
+            const sampleMaleClients = [
+                { name: 'Michał Kowalski', phone: '501 234 567' },
+                { name: 'Dawid Nowak', phone: '602 345 678' },
+                { name: 'Kamil Wiśniewski', phone: '789 456 123' },
+                { name: 'Piotr Zieliński', phone: '512 987 654' },
+                { name: 'Bartosz Wójcik', phone: '609 876 543' },
+                { name: 'Łukasz Krawczyk', phone: '505 111 222' }
+            ];
+            const sampleFemaleClients = [
+                { name: 'Anna Mazur', phone: '503 444 555' },
+                { name: 'Karolina Woźniak', phone: '608 777 888' },
+                { name: 'Magdalena Dąbrowska', phone: '721 333 999' },
+                { name: 'Paulina Kozłowska', phone: '515 666 777' },
+                { name: 'Natalia Jankowska', phone: '691 222 333' },
+                { name: 'Aleksandra Wojciechowska', phone: '509 888 111' }
+            ];
+
+            // Usuń poprzednie fejkowe wizyty przed wygenerowaniem nowych
+            bookings = bookings.filter(b => !b.isFake);
+
+            const today = new Date();
+            let addedCount = 0;
+
+            // Generujemy na kolejne 18 dni z różnym obłożeniem (dużo/średnio/mało)
+            for (let dayOffset = 0; dayOffset < 18; dayOffset++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + dayOffset);
+                const iso = toIsoDate(d);
+
+                ['arek', 'agata'].forEach(stId => {
+                    const sched = getDayScheduleForStaff(stId, iso);
+                    if (!sched.open) return;
+
+                    const myServices = services.filter(s => s.specialistId === stId);
+                    // Różne obłożenie zależnie od dnia (np. co 3 dzień bardzo obłożony - czerwony, co 2 średni - żółty)
+                    let targetBookings = (dayOffset % 4 === 1) ? 9 : ((dayOffset % 3 === 0) ? 5 : 2);
+
+                    for (let attempt = 0; attempt < targetBookings * 2; attempt++) {
+                        const srv = myServices[Math.floor(Math.random() * myServices.length)];
+                        const avail = getAvailableSlotsForService(stId, iso, srv.durationMin);
+                        if (avail.length === 0) break;
+
+                        const pickedTime = avail[Math.floor(Math.random() * avail.length)];
+                        const clientPool = stId === 'arek' ? sampleMaleClients : sampleFemaleClients;
+                        const cl = clientPool[Math.floor(Math.random() * clientPool.length)];
+                        const stObj = staff.find(s => s.id === stId);
+
+                        bookings.push({
+                            id: Date.now() + Math.floor(Math.random() * 1000000) + addedCount,
+                            serviceName: srv.name,
+                            price: srv.price,
+                            durationMin: srv.durationMin,
+                            staffId: stId,
+                            staffName: stObj.name,
+                            date: iso,
+                            time: pickedTime,
+                            clientName: cl.name,
+                            clientPhone: cl.phone,
+                            note: dayOffset < 2 ? 'Nowe zgłoszenie online' : 'Wizyta testowa',
+                            status: (dayOffset < 2 && addedCount % 3 === 0) ? 'pending' : 'confirmed',
+                            isFake: true
+                        });
+                        addedCount++;
+                        if (bookings.filter(b => b.staffId === stId && b.date === iso).length >= targetBookings) break;
+                    }
+                });
+            }
+
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            renderAdminPendingBox();
+            updateBookingBadge();
+            updateNextFreeBadges();
+            showToast(`Wygenerowano ${addedCount} realistycznych wizyt dla Arka i Agaty o różnym obłożeniu dni!`);
+        }
+
+        function clearFakeBookings() {
+            bookings = bookings.filter(b => !b.isFake);
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            renderAdminPendingBox();
+            updateBookingBadge();
+            updateNextFreeBadges();
+            showToast('Wyczyszczono wszystkie wizyty testowe.');
+        }
+
+        // =========================================================================
+        // PANEL ADMINISTRATORA: ZATWIERDZANIE WIZYT, ZMIANA CZASU I KALENDARZ
         // =========================================================================
         function toggleAdminModal() { document.getElementById('admin-login-modal').classList.toggle('hidden'); }
 
@@ -1123,19 +1391,31 @@
                 openAdminDashboard();
             } else {
                 const err = document.getElementById('admin-login-error');
-                err.textContent = 'Nieprawidłowe hasło! (Domyślne hasło to: password)';
+                err.textContent = 'Nieprawidłowe hasło! (Domyślne to: password)';
                 err.classList.remove('hidden');
             }
         }
 
-        function openAdminDashboard() {
-            document.getElementById('admin-panel-title').textContent = `Zalogowano jako: ${currentAdminUser.name}`;
-            document.getElementById('admin-horizon-select').value = String(bookingHorizonDays);
-            adminCalDate = new Date();
-            adminSelectedDateIso = toIsoDate(new Date());
+        function switchAdminProfile(staffId) {
+            currentAdminUser = staff.find(s => s.id === staffId);
+            renderAdminPendingBox();
             renderAdminCalendar();
             renderAdminSelectedDayDetails();
             renderAdminScheduleEditor();
+            renderSpecificWeekEditor();
+            renderAdminServices();
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('admin-switch-staff').value = currentAdminUser.id;
+            document.getElementById('admin-horizon-select').value = String(bookingHorizonDays);
+            adminCalDate = new Date();
+            adminSelectedDateIso = toIsoDate(new Date());
+            renderAdminPendingBox();
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            renderAdminScheduleEditor();
+            renderSpecificWeekEditor();
             renderAdminServices();
             document.getElementById('admin-dashboard-modal').classList.remove('hidden');
         }
@@ -1143,11 +1423,95 @@
         function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
 
         function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.className = "admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap");
+            document.querySelectorAll('.admin-tab').forEach(t => t.className = "admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900 whitespace-nowrap shrink-0");
             document.querySelectorAll('.admin-sec').forEach(s => s.classList.add('hidden'));
 
-            document.getElementById(`admin-tab-${tabName}`).className = "admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap";
+            document.getElementById(`admin-tab-${tabName}`).className = "admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap shrink-0";
             document.getElementById(`admin-section-${tabName}`).classList.remove('hidden');
+        }
+
+        function renderAdminPendingBox() {
+            if (!currentAdminUser) return;
+            const pending = bookings.filter(b => b.staffId === currentAdminUser.id && b.status === 'pending');
+            const box = document.getElementById('admin-pending-alert-box');
+            const list = document.getElementById('admin-pending-list');
+            const tabBadge = document.getElementById('tab-pending-count');
+
+            if (pending.length === 0) {
+                box.classList.add('hidden');
+                tabBadge.classList.add('hidden');
+                return;
+            }
+
+            box.classList.remove('hidden');
+            tabBadge.textContent = pending.length;
+            tabBadge.classList.remove('hidden');
+
+            list.innerHTML = pending.map(b => {
+                const endT = minutesToTime(timeToMinutes(b.time) + (b.durationMin || 60));
+                return `
+                    <div class="bg-white p-3 rounded-xl border border-amber-300 flex justify-between items-center gap-2 text-xs shadow-sm">
+                        <div class="min-w-0">
+                            <span class="font-bold text-amber-800 block">${b.date} • ${b.time}–${endT} (${b.durationMin}m)</span>
+                            <span class="font-bold text-gray-900 truncate block">${b.serviceName}</span>
+                            <span class="text-[11px] text-gray-500 block">${b.clientName} (${b.clientPhone})</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button onclick="approveBooking(${b.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] hover:bg-emerald-700">
+                                Zatwierdź
+                            </button>
+                            <button onclick="selectAdminDay('${b.date}')" class="px-2 py-1.5 rounded-lg bg-gray-100 text-gray-700 font-bold text-[11px]" title="Pokaż w kalendarzu">
+                                Podgląd
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function approveBooking(id) {
+            const b = bookings.find(x => x.id === id);
+            if (b) {
+                b.status = 'confirmed';
+                localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
+                renderAdminPendingBox();
+                renderAdminCalendar();
+                renderAdminSelectedDayDetails();
+                updateBookingBadge();
+                showToast(`Zatwierdzono wizytę dla: ${b.clientName}`);
+            }
+        }
+
+        function approveAllPending() {
+            bookings.forEach(b => {
+                if (b.staffId === currentAdminUser.id && b.status === 'pending') b.status = 'confirmed';
+            });
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
+            renderAdminPendingBox();
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            updateBookingBadge();
+            showToast('Zatwierdzono wszystkie oczekujące wizyty!');
+        }
+
+        // Edycja czasu trwania konkretnej wizyty przez fryzjera (wpływa na dostępne godziny w kalendarzu!)
+        function changeBookingDuration(bookingId, newDurationStr) {
+            const newDur = parseInt(newDurationStr);
+            const b = bookings.find(x => x.id === bookingId);
+            if (!b) return;
+
+            if (!isSlotAvailable(b.staffId, b.date, b.time, newDur, b.id)) {
+                alert(`Nie można wydłużyć tej wizyty do ${newDur} min, ponieważ nachodziłaby na kolejną wizytę lub wykraczała poza godziny pracy!`);
+                renderAdminSelectedDayDetails();
+                return;
+            }
+
+            b.durationMin = newDur;
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            updateNextFreeBadges();
+            showToast(`Zmieniono czas trwania wizyty (${b.clientName}) na ${formatDuration(newDur)}. Kalendarz został przeliczony!`);
         }
 
         function updateBookingHorizon() {
@@ -1180,37 +1544,39 @@
                 const iso = toIsoDate(d);
                 const sched = getDayScheduleForStaff(currentAdminUser.id, iso);
                 const baseSlots = getAllBaseSlotsForDay(currentAdminUser.id, iso);
-                const freeSlots = getAvailableSlotsForService(currentAdminUser.id, iso, 30); // Liczba 30-minutowych wolnych okienek
-                const dayBookingsCount = bookings.filter(b => b.staffId === currentAdminUser.id && b.date === iso).length;
+                const freeSlots = getAvailableSlotsForService(currentAdminUser.id, iso, 30);
+                const dayBookings = bookings.filter(b => b.staffId === currentAdminUser.id && b.date === iso);
+                const hasPending = dayBookings.some(b => b.status === 'pending');
                 const isSelected = adminSelectedDateIso === iso;
 
                 let colorClass = 'bg-gray-100 text-gray-400 border-gray-200';
-                let badgeText = 'Zamknięte';
+                let badgeText = 'Wolne';
 
                 if (sched.blocked) {
                     colorClass = 'bg-gray-200 text-gray-500 border-gray-300';
                     badgeText = 'Urlop';
                 } else if (sched.open && baseSlots.length > 0) {
                     const ratio = freeSlots.length / baseSlots.length;
-                    badgeText = `${freeSlots.length} wolnych`;
-                    if (freeSlots.length === 0 || ratio <= 0.2) {
+                    badgeText = `${freeSlots.length} sl.`;
+                    if (freeSlots.length === 0 || ratio <= 0.25) {
                         colorClass = 'bg-red-100 text-red-900 border-red-300 hover:bg-red-200';
-                    } else if (ratio <= 0.55) {
+                    } else if (ratio <= 0.6) {
                         colorClass = 'bg-amber-100 text-amber-900 border-amber-300 hover:bg-amber-200';
                     } else {
                         colorClass = 'bg-emerald-100 text-emerald-900 border-emerald-300 hover:bg-emerald-200';
                     }
                 }
 
-                const ringClass = isSelected ? 'ring-2 ring-gold-600 font-bold scale-[1.03]' : '';
+                const ringClass = isSelected ? 'ring-2 ring-gold-600 font-bold scale-[1.02]' : '';
 
                 html += `
-                    <button onclick="selectAdminDay('${iso}')" class="p-2 rounded-xl border transition flex flex-col items-center justify-between min-h-[64px] ${colorClass} ${ringClass}">
-                        <div class="w-full flex justify-between items-center text-xs">
+                    <button onclick="selectAdminDay('${iso}')" class="p-1.5 sm:p-2 rounded-xl border transition flex flex-col items-center justify-between min-h-[54px] sm:min-h-[64px] relative ${colorClass} ${ringClass}">
+                        ${hasPending ? `<span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-red-600 ring-2 ring-white"></span>` : ''}
+                        <div class="w-full flex justify-between items-center text-[11px] sm:text-xs">
                             <span class="font-bold">${day}</span>
-                            ${dayBookingsCount > 0 ? `<span class="px-1.5 py-0.2 rounded-full bg-black/15 text-[9px] font-bold">${dayBookingsCount} wiz.</span>` : ''}
+                            ${dayBookings.length > 0 ? `<span class="px-1 rounded bg-black/10 text-[9px] font-bold hidden sm:inline">${dayBookings.length}w</span>` : ''}
                         </div>
-                        <span class="text-[10px] font-semibold mt-1 leading-tight">${badgeText}</span>
+                        <span class="text-[9px] sm:text-[10px] font-semibold mt-1 truncate max-w-full">${badgeText}</span>
                     </button>
                 `;
             }
@@ -1225,13 +1591,22 @@
         }
 
         function renderAdminSelectedDayDetails() {
-            document.getElementById('admin-selected-day-title').textContent = `Dzień: ${adminSelectedDateIso}`;
+            document.getElementById('admin-selected-day-title').textContent = `${adminSelectedDateIso}`;
+            const sched = getDayScheduleForStaff(currentAdminUser.id, adminSelectedDateIso);
             const isBlocked = currentAdminUser.blockedDates && currentAdminUser.blockedDates.includes(adminSelectedDateIso);
+
+            document.getElementById('admin-day-start').value = sched.start || '10:00';
+            document.getElementById('admin-day-end').value = sched.end || '21:00';
+
+            const customBadge = document.getElementById('admin-day-custom-badge');
+            if (sched.custom) customBadge.classList.remove('hidden');
+            else customBadge.classList.add('hidden');
+
             const blockBtn = document.getElementById('admin-block-day-btn');
-            blockBtn.textContent = isBlocked ? 'Odblokuj ten dzień' : 'Zablokuj dzień (Urlop)';
+            blockBtn.textContent = isBlocked ? 'Odblokuj dzień' : 'Zablokuj dzień (Urlop)';
             blockBtn.className = isBlocked 
-                ? 'px-3 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition'
-                : 'px-3 py-1.5 rounded-xl text-[11px] font-bold bg-red-100 text-red-700 hover:bg-red-200 transition';
+                ? 'px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 transition'
+                : 'px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-red-100 text-red-700 transition';
 
             const dayBookings = bookings
                 .filter(b => b.staffId === currentAdminUser.id && b.date === adminSelectedDateIso)
@@ -1239,32 +1614,64 @@
 
             const listEl = document.getElementById('admin-day-bookings-list');
             if (dayBookings.length === 0) {
-                listEl.innerHTML = `<div class="p-4 text-center text-xs text-gray-400 bg-white rounded-xl border border-gray-200">Brak zapisanych klientów w tym dniu.</div>`;
+                listEl.innerHTML = `<div class="p-4 text-center text-xs text-gray-400 bg-white rounded-xl border border-gray-200">Brak zapisanych wizyt w tym dniu.</div>`;
             } else {
                 listEl.innerHTML = dayBookings.map(b => {
-                    const endT = minutesToTime(timeToMinutes(b.time) + (b.durationMin || 60));
+                    const dur = b.durationMin || 60;
+                    const endT = minutesToTime(timeToMinutes(b.time) + dur);
+                    const isPending = b.status === 'pending';
+                    const statusBadge = isPending
+                        ? `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">Zarezerwowana (Oczekuje)</span>`
+                        : `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Potwierdzona przez salon</span>`;
+
                     return `
-                        <div class="p-3 bg-white rounded-xl border border-gray-200 flex justify-between items-center gap-2 text-xs shadow-sm">
-                            <div>
-                                <span class="font-bold text-gold-600">${b.time} – ${endT}</span>
-                                <span class="font-bold text-gray-900 block">${b.serviceName}</span>
-                                <span class="text-[11px] text-gray-500">${b.clientName} • <a href="tel:${b.clientPhone}" class="underline">${b.clientPhone}</a></span>
+                        <div class="p-3 bg-white rounded-xl border ${isPending ? 'border-amber-400' : 'border-gray-200'} space-y-2 text-xs shadow-sm">
+                            <div class="flex justify-between items-start gap-2">
+                                <div>
+                                    <span class="font-bold text-gold-600">${b.time} – ${endT}</span>
+                                    <span class="font-bold text-gray-900 block">${b.serviceName}</span>
+                                    <span class="text-[11px] text-gray-500">${b.clientName} • <a href="tel:${b.clientPhone}" class="underline">${b.clientPhone}</a></span>
+                                    ${b.note ? `<span class="text-[10px] text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded block mt-1">${b.note}</span>` : ''}
+                                </div>
+                                ${statusBadge}
                             </div>
-                            <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails();" class="px-2.5 py-1 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-bold text-[11px]">
-                                Odwołaj
-                            </button>
+                            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-100">
+                                <div class="flex items-center gap-1 text-[11px]">
+                                    <span class="text-gray-500">Czas:</span>
+                                    <select onchange="changeBookingDuration(${b.id}, this.value)" class="bg-gray-50 border border-gray-300 rounded-lg px-1.5 py-1 text-[11px] font-bold text-gray-900">
+                                        ${[30, 45, 60, 75, 90, 120, 150, 180, 210].map(m => `<option value="${m}" ${dur === m ? 'selected' : ''}>${formatDuration(m)}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    ${isPending ? `<button onclick="approveBooking(${b.id})" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-[11px]">Zatwierdź</button>` : ''}
+                                    <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox();" class="px-2 py-1 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-bold text-[11px]">
+                                        Odwołaj
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     `;
                 }).join('');
             }
 
-            // Wypełnij szybki formularz dodawania ręcznego
             const mySrv = services.filter(s => s.specialistId === currentAdminUser.id);
             document.getElementById('admin-quick-service').innerHTML = mySrv.map(s => `<option value="${s.id}">${s.name} (${formatDuration(s.durationMin)})</option>`).join('');
             const freeSlots = getAvailableSlotsForService(currentAdminUser.id, adminSelectedDateIso, 30);
             document.getElementById('admin-quick-time').innerHTML = freeSlots.length > 0
                 ? freeSlots.map(t => `<option value="${t}">${t}</option>`).join('')
                 : `<option value="">Brak wolnych</option>`;
+        }
+
+        function saveCustomDayHours() {
+            const st = document.getElementById('admin-day-start').value;
+            const en = document.getElementById('admin-day-end').value;
+            if (!currentAdminUser.customDates) currentAdminUser.customDates = {};
+            currentAdminUser.customDates[adminSelectedDateIso] = { open: true, start: st, end: en };
+            localStorage.setItem('amaro_staff_v5', JSON.stringify(staff));
+            renderAdminCalendar();
+            renderAdminSelectedDayDetails();
+            updateNextFreeBadges();
+            showToast(`Zapisano indywidualne godziny (${st}–${en}) na dzień ${adminSelectedDateIso}!`);
         }
 
         function toggleBlockSelectedDay() {
@@ -1277,9 +1684,10 @@
                 currentAdminUser.blockedDates.push(adminSelectedDateIso);
                 showToast(`Zablokowano dzień ${adminSelectedDateIso} (Urlop)`);
             }
-            localStorage.setItem('amaro_staff_v4', JSON.stringify(staff));
+            localStorage.setItem('amaro_staff_v5', JSON.stringify(staff));
             renderAdminCalendar();
             renderAdminSelectedDayDetails();
+            updateNextFreeBadges();
         }
 
         function addManualAdminBooking() {
@@ -1288,7 +1696,7 @@
             const client = document.getElementById('admin-quick-client').value.trim() || 'Klient telefoniczny';
             const srv = services.find(s => s.id === srvId);
 
-            if (!srv || !time) { alert('Wybierz usługę i wolną godzinę!'); return; }
+            if (!srv || !time) { alert('Wybierz usługę i godzinę!'); return; }
             if (!isSlotAvailable(currentAdminUser.id, adminSelectedDateIso, time, srv.durationMin)) {
                 alert('Wybrana usługa nie zmieści się w tym okienku czasowym (nakłada się na inną wizytę)!');
                 return;
@@ -1297,32 +1705,88 @@
             bookings.unshift({
                 id: Date.now(), serviceName: srv.name, price: srv.price, durationMin: srv.durationMin,
                 staffId: currentAdminUser.id, staffName: currentAdminUser.name,
-                date: adminSelectedDateIso, time: time, clientName: client, clientPhone: 'Rezerwacja tel.'
+                date: adminSelectedDateIso, time: time, clientName: client, clientPhone: 'Tel.', status: 'confirmed'
             });
-            localStorage.setItem('amaro_bookings_v4', JSON.stringify(bookings));
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
             document.getElementById('admin-quick-client').value = '';
             renderAdminCalendar();
             renderAdminSelectedDayDetails();
             updateBookingBadge();
-            showToast('Dodano rezerwację do kalendarza!');
+            updateNextFreeBadges();
+            showToast('Dodano i potwierdzono rezerwację telefoniczną!');
         }
 
-        // --- EDYTOR GODZIN PRACY W PANELU ADMINA ---
+        // =========================================================================
+        // PLANER KONKRETNYCH TYGODNI (W ZAKŁADCE GRAFIK)
+        // =========================================================================
+        function changeScheduleWeek(daysDelta) {
+            adminWeekPlanStart.setDate(adminWeekPlanStart.getDate() + daysDelta);
+            renderSpecificWeekEditor();
+        }
+
+        function renderSpecificWeekEditor() {
+            if (!currentAdminUser) return;
+            const endWeek = new Date(adminWeekPlanStart);
+            endWeek.setDate(adminWeekPlanStart.getDate() + 6);
+            document.getElementById('admin-week-range-label').textContent = `Tydzień: ${toIsoDate(adminWeekPlanStart)}  —  ${toIsoDate(endWeek)}`;
+
+            const dayNames = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+            let html = '';
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(adminWeekPlanStart);
+                d.setDate(adminWeekPlanStart.getDate() + i);
+                const iso = toIsoDate(d);
+                const sched = getDayScheduleForStaff(currentAdminUser.id, iso);
+
+                html += `
+                    <div class="flex flex-wrap items-center justify-between bg-white p-2.5 rounded-xl border ${sched.custom ? 'border-gold-500' : 'border-gray-200'} gap-2 text-xs">
+                        <label class="flex items-center gap-2 font-bold text-gray-900">
+                            <input type="checkbox" id="spec-open-${iso}" ${sched.open ? 'checked' : ''} class="rounded text-gold-500">
+                            <span>${dayNames[d.getDay()]} <span class="text-gray-400 font-normal">(${iso.slice(5)})</span></span>
+                        </label>
+                        <div class="flex items-center gap-1.5">
+                            <input type="time" id="spec-start-${iso}" value="${sched.start || '10:00'}" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-semibold">
+                            <span>–</span>
+                            <input type="time" id="spec-end-${iso}" value="${sched.end || '21:00'}" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-semibold">
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('admin-specific-week-editor').innerHTML = html;
+        }
+
+        function saveSpecificWeekSchedule() {
+            if (!currentAdminUser.customDates) currentAdminUser.customDates = {};
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(adminWeekPlanStart);
+                d.setDate(adminWeekPlanStart.getDate() + i);
+                const iso = toIsoDate(d);
+                const isOpen = document.getElementById(`spec-open-${iso}`).checked;
+                const st = document.getElementById(`spec-start-${iso}`).value;
+                const en = document.getElementById(`spec-end-${iso}`).value;
+                currentAdminUser.customDates[iso] = { open: isOpen, start: st, end: en };
+            }
+            localStorage.setItem('amaro_staff_v5', JSON.stringify(staff));
+            renderSpecificWeekEditor();
+            renderAdminCalendar();
+            updateNextFreeBadges();
+            showToast('Zapisano indywidualny grafik na wybrany tydzień!');
+        }
+
         function renderAdminScheduleEditor() {
             const order = [1, 2, 3, 4, 5, 6, 0];
             document.getElementById('admin-schedule-editor').innerHTML = order.map(dayIdx => {
                 const sc = currentAdminUser.schedule[dayIdx];
                 return `
-                    <div class="flex flex-wrap items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200 gap-2 text-xs">
-                        <label class="flex items-center gap-2 font-bold text-gray-900 w-36">
+                    <div class="flex flex-wrap items-center justify-between bg-white p-2.5 rounded-xl border border-gray-200 gap-2 text-xs">
+                        <label class="flex items-center gap-2 font-bold text-gray-900">
                             <input type="checkbox" id="sched-open-${dayIdx}" ${sc.open ? 'checked' : ''} class="rounded text-gold-500">
                             <span>${sc.name}</span>
                         </label>
-                        <div class="flex items-center gap-2">
-                            <span>Od:</span>
-                            <input type="time" id="sched-start-${dayIdx}" value="${sc.start}" class="bg-white border border-gray-300 rounded-lg p-1.5 text-xs font-semibold">
-                            <span>Do:</span>
-                            <input type="time" id="sched-end-${dayIdx}" value="${sc.end}" class="bg-white border border-gray-300 rounded-lg p-1.5 text-xs font-semibold">
+                        <div class="flex items-center gap-1.5">
+                            <input type="time" id="sched-start-${dayIdx}" value="${sc.start}" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-semibold">
+                            <span>–</span>
+                            <input type="time" id="sched-end-${dayIdx}" value="${sc.end}" class="bg-gray-50 border border-gray-300 rounded-lg p-1 text-xs font-semibold">
                         </div>
                     </div>
                 `;
@@ -1336,22 +1800,25 @@
                 currentAdminUser.schedule[dayIdx].start = document.getElementById(`sched-start-${dayIdx}`).value;
                 currentAdminUser.schedule[dayIdx].end = document.getElementById(`sched-end-${dayIdx}`).value;
             });
-            localStorage.setItem('amaro_staff_v4', JSON.stringify(staff));
+            localStorage.setItem('amaro_staff_v5', JSON.stringify(staff));
             renderHoursDisplay();
             renderAdminCalendar();
-            showToast('Zapisano nowy grafik pracy!');
+            updateNextFreeBadges();
+            showToast('Zapisano domyślny szablon tygodniowy!');
         }
 
-        // --- EDYCJA CENNIKA W PANELU ADMINA ---
+        // --- EDYCJA CENNIKA I DOMYŚLNEGO CZASU STRZYŻENIA ---
         function renderAdminServices() {
             const container = document.getElementById('admin-services-list');
             const myServices = services.filter(s => s.specialistId === currentAdminUser.id);
             container.innerHTML = myServices.map(s => `
                 <div class="flex flex-wrap items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs gap-2">
                     <span class="font-bold text-gray-900">${s.name}</span>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="dur-edit-${s.id}" value="${s.durationMin}" step="15" min="15" class="bg-white border border-gray-300 rounded-lg p-1.5 w-16 text-xs font-semibold" title="Czas w minutach">
-                        <span class="text-gray-400">min</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="flex items-center gap-1">
+                            <input type="number" id="dur-edit-${s.id}" value="${s.durationMin}" step="15" min="15" class="bg-white border border-gray-300 rounded-lg p-1.5 w-16 text-xs font-bold">
+                            <span class="text-gray-500">min</span>
+                        </div>
                         <input type="text" id="price-edit-${s.id}" value="${s.price}" class="bg-white border border-gray-300 rounded-lg p-1.5 w-28 text-xs font-bold text-gold-600">
                         <button onclick="updateServicePrice(${s.id})" class="px-3 py-1.5 rounded-lg bg-gold-500 text-white font-bold">Zapisz</button>
                         <button onclick="deleteService(${s.id})" class="px-2.5 py-1.5 rounded-lg bg-red-100 text-red-600 font-bold"><i class="fa-solid fa-trash"></i></button>
@@ -1362,15 +1829,16 @@
 
         function updateServicePrice(id) {
             const newPrice = document.getElementById(`price-edit-${id}`).value;
-            const newDur = parseInt(document.getElementById(`dur-edit-${id}`).value) || 60;
+            const newDur = parseInt(document.getElementById(`dur-edit-${id}`).value) || 45;
             const srv = services.find(s => s.id === id);
             if (srv) {
                 srv.price = newPrice;
                 srv.durationMin = newDur;
-                localStorage.setItem('amaro_services_v4', JSON.stringify(services));
+                localStorage.setItem('amaro_services_v5', JSON.stringify(services));
                 renderServices();
                 renderAdminServices();
-                showToast('Zaktualizowano usługę!');
+                updateNextFreeBadges();
+                showToast('Zapisano nową cenę i domyślny czas usługi!');
             }
         }
 
@@ -1386,7 +1854,7 @@
                 id: Date.now(), category, specialistId: currentAdminUser.id,
                 name, durationMin, price, desc: 'Profesjonalna usługa w salonie AMARO.'
             });
-            localStorage.setItem('amaro_services_v4', JSON.stringify(services));
+            localStorage.setItem('amaro_services_v5', JSON.stringify(services));
             renderServices();
             renderAdminServices();
             showToast('Dodano nową usługę!');
@@ -1396,7 +1864,7 @@
 
         function deleteService(id) {
             services = services.filter(s => s.id !== id);
-            localStorage.setItem('amaro_services_v4', JSON.stringify(services));
+            localStorage.setItem('amaro_services_v5', JSON.stringify(services));
             renderServices();
             renderAdminServices();
             showToast('Usunięto usługę.');
@@ -1406,7 +1874,7 @@
             const newPass = document.getElementById('admin-new-pass').value.trim();
             if (!newPass) { alert('Wpisz nowe hasło!'); return; }
             currentAdminUser.pass = newPass;
-            localStorage.setItem('amaro_staff_v4', JSON.stringify(staff));
+            localStorage.setItem('amaro_staff_v5', JSON.stringify(staff));
             document.getElementById('admin-new-pass').value = '';
             showToast('Hasło zostało zmienione!');
         }
@@ -1416,7 +1884,7 @@
             const label = document.getElementById('new-img-label').value.trim();
             if (!url || !label) { alert('Podaj link i opis zdjęcia!'); return; }
             galleryPhotos.unshift({ url, label });
-            localStorage.setItem('amaro_gallery_v4', JSON.stringify(galleryPhotos));
+            localStorage.setItem('amaro_gallery_v5', JSON.stringify(galleryPhotos));
             renderGallery();
             showToast('Dodano zdjęcie do galerii!');
             document.getElementById('new-img-url').value = '';
@@ -1428,8 +1896,20 @@
         // =========================================================================
         function updateBookingBadge() {
             const badge = document.getElementById('booking-badge');
-            if (bookings.length > 0) { badge.textContent = bookings.length; badge.classList.remove('hidden'); }
+            const myRealBookings = bookings.filter(b => !b.isFake);
+            const count = myRealBookings.length > 0 ? myRealBookings.length : bookings.length;
+
+            if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
             else { badge.classList.add('hidden'); }
+
+            const pendingTotal = bookings.filter(b => b.status === 'pending').length;
+            const adminBadge = document.getElementById('admin-pending-badge');
+            if (pendingTotal > 0) {
+                adminBadge.textContent = pendingTotal;
+                adminBadge.classList.remove('hidden');
+            } else {
+                adminBadge.classList.add('hidden');
+            }
         }
 
         function toggleMyBookings() {
@@ -1438,7 +1918,7 @@
             if (!drawer.classList.contains('hidden')) {
                 document.getElementById('my-bookings-list').innerHTML = bookings.length === 0 ? 
                     `<div class="text-center py-12 text-gray-400 text-sm">Brak zaplanowanych wizyt.</div>` :
-                    bookings.map(b => {
+                    bookings.slice(0, 20).map(b => {
                         const dur = b.durationMin || 60;
                         const endT = minutesToTime(timeToMinutes(b.time) + dur);
                         const calTitle = encodeURIComponent(`Wizyta w AMARO: ${b.serviceName} (${b.staffName})`);
@@ -1448,22 +1928,26 @@
                         const endIso = b.date.replace(/-/g, '') + 'T' + endT.replace(':', '') + '00';
                         const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=${startIso}/${endIso}&details=${calDetails}&location=${calLocation}`;
 
+                        const statusHtml = b.status === 'pending'
+                            ? `<span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">Zarezerwowana (Oczekuje na potwierdzenie)</span>`
+                            : `<span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-check mr-1"></i>Potwierdzona przez salon</span>`;
+
                         return `
                         <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2.5 shadow-sm">
-                            <div class="flex justify-between items-start">
-                                <div><span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Potwierdzona</span>
-                                <h4 class="font-brand font-bold text-gray-900 text-sm mt-1">${b.serviceName}</h4></div>
-                                <span class="font-brand font-bold text-gold-600 text-sm">${b.price}</span>
+                            <div class="flex justify-between items-start gap-2">
+                                <div>${statusHtml}
+                                <h4 class="font-brand font-bold text-gray-900 text-sm mt-1.5">${b.serviceName}</h4></div>
+                                <span class="font-brand font-bold text-gold-600 text-sm shrink-0">${b.price}</span>
                             </div>
                             <div class="text-xs text-gray-600 space-y-1">
-                                <div><i class="fa-regular fa-calendar text-gold-600 w-4"></i> ${b.date} • godz. <strong>${b.time} – ${endT}</strong></div>
+                                <div><i class="fa-regular fa-calendar text-gold-600 w-4"></i> ${b.date} • godz. <strong>${b.time} – ${endT}</strong> (${formatDuration(dur)})</div>
                                 <div><i class="fa-solid fa-user-check text-gold-600 w-4"></i> Specjalista: <strong>${b.staffName}</strong></div>
                             </div>
                             <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-gray-200">
                                 <a href="${googleCalendarUrl}" target="_blank" class="text-xs font-bold text-gold-600 hover:underline flex items-center gap-1">
                                     <i class="fa-solid fa-calendar-plus"></i> Dodaj do Kalendarza Google
                                 </a>
-                                <button onclick="cancelBooking(${b.id})" class="text-xs text-red-600 hover:underline font-medium">Odwołaj wizytę</button>
+                                <button onclick="cancelBooking(${b.id})" class="text-xs text-red-600 hover:underline font-medium">Odwołaj</button>
                             </div>
                         </div>
                     `}).join('');
@@ -1472,11 +1956,12 @@
 
         function cancelBooking(id) {
             bookings = bookings.filter(b => b.id !== id);
-            localStorage.setItem('amaro_bookings_v4', JSON.stringify(bookings));
+            localStorage.setItem('amaro_bookings_v5', JSON.stringify(bookings));
             if (!document.getElementById('my-bookings-drawer').classList.contains('hidden')) {
                 toggleMyBookings(); toggleMyBookings();
             }
             updateBookingBadge();
+            updateNextFreeBadges();
             showToast('Wizyta została odwołana, a termin zwolniony.');
         }
 
