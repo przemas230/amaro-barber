@@ -52,9 +52,9 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
             <a href="#kontakt" class="hover:text-gold-600">Kontakt</a>
         </nav>
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <button onclick="toggleAdminModal()" class="relative px-2.5 sm:px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group">
+            <button onclick="handleAdminHeaderClick()" class="relative px-2.5 sm:px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 group">
                 <i class="fa-solid fa-user-shield text-gold-600 group-hover:text-white"></i>
-                <span class="hidden sm:inline">Panel Admina</span>
+                <span class="hidden sm:inline" id="admin-header-btn-label">Panel Admina</span>
                 <span id="admin-pending-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center shadow animate-pulse">0</span>
             </button>
             <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
@@ -366,20 +366,19 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
 
         <div class="flex border-b border-gray-200 bg-gray-50 px-3 pt-2 gap-1.5 overflow-x-auto no-scrollbar shrink-0 justify-between items-center">
             <div class="flex gap-1.5 overflow-x-auto no-scrollbar">
-                <button onclick="switchAdminTab('calendar')" id="admin-tab-calendar" class="admin-tab px-3 py-2 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap shrink-0">
+                <button onclick="switchAdminTab('calendar')" id="admin-tab-calendar" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200 whitespace-nowrap shrink-0">
                     Kalendarz & Zatwierdzanie <span id="tab-pending-count" class="ml-1 px-1.5 rounded-full bg-red-600 text-white text-[10px] hidden">0</span>
                 </button>
-                <button onclick="switchAdminTab('schedule')" id="admin-tab-schedule" class="admin-tab px-3 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
+                <button onclick="switchAdminTab('schedule')" id="admin-tab-schedule" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
                     Grafik & Przerwy (Buffer)
                 </button>
-                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="admin-tab px-3 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
+                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
                     Cennik i Czas
                 </button>
-                <button onclick="switchAdminTab('gallery')" id="admin-tab-gallery" class="admin-tab px-3 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
+                <button onclick="switchAdminTab('gallery')" id="admin-tab-gallery" class="admin-tab px-3.5 py-2 rounded-t-xl text-xs font-bold text-gray-600 whitespace-nowrap shrink-0">
                     Galeria i Hasło
                 </button>
             </div>
-            <!-- Przełącznik współpracy / widoku całego salonu -->
             <div class="hidden sm:flex items-center gap-1.5 pr-2 text-xs">
                 <label class="flex items-center gap-1 text-gray-600 font-semibold cursor-pointer">
                     <input type="checkbox" id="admin-collab-mode" onchange="toggleCollabMode(this.checked)" class="rounded text-gold-500">
@@ -403,7 +402,7 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
                 <div id="admin-collision-alert" class="hidden bg-red-50 border-2 border-red-300 rounded-2xl p-3.5 space-y-2">
                     <h4 class="text-xs font-bold text-red-900 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-red-600"></i> Wykryto konflikt czasowy!</h4>
                     <p id="admin-collision-msg" class="text-xs text-red-700"></p>
-                    <div class="flex items-center gap-2 pt-1">
+                    <div class="flex flex-wrap items-center gap-2 pt-1">
                         <button onclick="autoResolveCollision()" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold">Przesuń kolejnego klienta automatycznie</button>
                         <button onclick="document.getElementById('admin-collision-alert').classList.add('hidden')" class="px-3 py-1.5 rounded-lg bg-gray-200 text-gray-700 text-xs font-bold">Ignoruj / Rozwiąż ręcznie</button>
                     </div>
@@ -565,9 +564,9 @@ html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; 
             <button onclick="closeReviewsModal()" class="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="p-3 bg-gray-50 border-b border-gray-200 flex gap-2 overflow-x-auto no-scrollbar text-xs">
-            <button onclick="filterReviews('all')" id="rev-btn-all" class="px-3 py-1.5 rounded-xl bg-gold-500 text-white font-bold whitespace-nowrap">Wszystkie</button>
-            <button onclick="filterReviews('agata')" id="rev-btn-agata" class="px-3 py-1.5 rounded-xl bg-white border text-gray-700 whitespace-nowrap">U Agaty (Damskie)</button>
-            <button onclick="filterReviews('arek')" id="rev-btn-arek" class="px-3 py-1.5 rounded-xl bg-white border text-gray-700 whitespace-nowrap">U Arka (Barber)</button>
+            <button onclick="filterReviews('all')" id="rev-btn-all" class="px-3.5 py-1.5 rounded-xl bg-gold-500 text-white font-bold whitespace-nowrap">Wszystkie</button>
+            <button onclick="filterReviews('agata')" id="rev-btn-agata" class="px-3.5 py-1.5 rounded-xl bg-white border text-gray-700 whitespace-nowrap">U Agaty (Damskie)</button>
+            <button onclick="filterReviews('arek')" id="rev-btn-arek" class="px-3.5 py-1.5 rounded-xl bg-white border text-gray-700 whitespace-nowrap">U Arka (Barber)</button>
         </div>
         <div class="p-4 overflow-y-auto space-y-3 text-xs" id="reviews-list-container"></div>
     </div>
@@ -649,7 +648,7 @@ let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v7')) || [
 
 let reviewsData = [
     {name:'Pani Żaneta', rating:5, text:'„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie i kondycję moich włosów.”', staff:'agata'},
-    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuję i serdecznie polecam.”', staff:'arek'},
+    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuje i serdecznie polecam.”', staff:'arek'},
     {name:'Pan Radosław', rating:5, text:'„Zawsze miałem obawy związane z wyborem fryzjera, ale od kiedy trafiłem do Amaro Salon i skorzystałem z usług Arkadiusza, moje obawy zniknęły.”', staff:'arek'},
     {name:'Pani Małgorzata', rating:5, text:'„Bardzo długo szukałam odpowiedniego miejsca w którym obsługa przyjmuje klientów z uśmiechem. W końcu znalazłam! Polecam!”', staff:'agata'},
     {name:'Karolina S.', rating:5, text:'„Najlepsze sombre w Lublinie! Agata ma niesamowity talent do koloryzacji, włosy są lśniące i zdrowe.”', staff:'agata'},
@@ -945,6 +944,14 @@ function clearFakeBookings(){
     showToast('Usunięto wizyty testowe.');
 }
 
+function handleAdminHeaderClick(){
+    if(currentAdminUser){
+        openAdminDashboard();
+    } else {
+        toggleAdminModal();
+    }
+}
+
 function toggleAdminModal(){ document.getElementById('admin-login-modal').classList.toggle('hidden'); }
 function handleAdminLogin(){
     const u=document.getElementById('admin-user-select').value, p=document.getElementById('admin-pass-input').value, st=staff.find(s=>s.id===u);
@@ -957,9 +964,10 @@ function handleAdminLogin(){
     }
 }
 
+function switchAdminProfile(id){ currentAdminUser=staff.find(s=>s.id===id); localStorage.setItem('amaro_active_admin', id); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminScheduleEditor(); renderSpecificWeekEditor(); renderAdminServices(); }
 function openAdminDashboard(){
     if(!currentAdminUser) currentAdminUser = staff[0];
-    document.getElementById('admin-current-staff-label').textContent = `${currentAdminUser.name} (${currentAdminUser.role})`;
+    document.getElementById('admin-switch-staff').value = currentAdminUser.id;
     document.getElementById('admin-horizon-select').value=String(bookingHorizonDays);
     document.getElementById('admin-buffer-input').value=String(bufferTimeMinutes);
     adminCalDate=new Date(); adminSelectedDateIso=toIsoDate(new Date());
@@ -1012,10 +1020,8 @@ function changeBookingDuration(id, val){
     const dur=parseInt(val), b=bookings.find(x=>x.id===id);
     if(!b) return;
     
-    // Sprawdź czy wydłużenie wizyty powoduje kolizję z kolejną
     if(!isSlotAvailable(b.staffId,b.date,b.time,dur,b.id)){
         pendingCollisionBookingId = { id: b.id, newDur: dur };
-        const nextB = bookings.find(x=>x.staffId===b.staffId && x.date===b.date && x.id!==b.id && timeToMinutes(x.time) >= timeToMinutes(b.time));
         const alertBox = document.getElementById('admin-collision-alert');
         const msgEl = document.getElementById('admin-collision-msg');
         msgEl.textContent = `Wizyta klienta ${b.clientName} po wydłużeniu do ${formatDuration(dur)} nachodzi na kolejne zaplanowane godziny!`;
@@ -1035,7 +1041,6 @@ function autoResolveCollision(){
     if(!b) return;
     b.durationMin = newDur;
 
-    // Znajdź następną wizytę tego samego dnia i przesuń ją o brakujący czas
     const bEndMin = timeToMinutes(b.time) + newDur + bufferTimeMinutes;
     const nextB = bookings.filter(x=>x.staffId===b.staffId && x.date===b.date && x.id!==b.id).sort((p,q)=>timeToMinutes(p.time)-timeToMinutes(q.time))[0];
     
@@ -1236,9 +1241,9 @@ function toggleMyBookings(){
             const gUrl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('AMARO: '+b.serviceName)}&dates=${b.date.replace(/-/g,'')+'T'+b.time.replace(':','')+'00'}/${b.date.replace(/-/g,'')+'T'+endT.replace(':','')+'00'}&location=${encodeURIComponent('Ul. Kryształowa 28a, Lublin')}`;
             return `<div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-200 space-y-2 text-xs">
                 <div class="flex justify-between items-start"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-700'}">${pend?'Zarezerwowana (Oczekuje)':'Potwierdzona przez salon'}</span><span class="font-bold text-gold-600">${b.price}</span></div>
-                <div class="font-bold text-gray-900">${b.serviceName}</div>
+                <div class="font-brand font-bold text-gray-900">${b.serviceName}</div>
                 <div class="text-gray-600">${b.date} • <strong>${b.time}–${endT}</strong> (${b.staffName})</div>
-                <div class="pt-2 border-t flex justify-between"><a href="${gUrl}" target="_blank" class="text-gold-600 font-bold hover:underline">Kalendarz Google</a><button onclick="cancelBooking(${b.id})" class="text-red-600">Odwołaj</button></div>
+                <div class="pt-2 border-t flex justify-between"><a href="${gUrl}" target="_blank" class="text-gold-600 font-bold hover:underline">Kalendarz Google</a><button onclick="cancelBooking(${b.id})" class="text-red-600 font-medium">Odwołaj</button></div>
             </div>`;
         }).join('');
     }
@@ -1249,12 +1254,12 @@ function openReviewsModal(){ document.getElementById('reviews-modal').classList.
 function closeReviewsModal(){ document.getElementById('reviews-modal').classList.add('hidden'); }
 function showToast(m){ const t=document.getElementById('toast'); document.getElementById('toast-msg').textContent=m; t.classList.remove('hidden'); setTimeout(()=>t.classList.add('hidden'),4000); }
 
-function downloadSourceAsFile(filename){
+function downloadMasterCode(){
     const content = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = filename;
+    a.download = 'index.html';
     a.click();
 }
 </script>
