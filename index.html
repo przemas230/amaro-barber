@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" id="app-html">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -34,7 +34,6 @@
 
 <script>
 tailwind.config = {
-    darkMode: 'class',
     theme: {
         extend: {
             colors: {
@@ -49,10 +48,11 @@ tailwind.config = {
 </script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
-html, body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; }
+html, body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; transition: background-color 0.6s ease, color 0.6s ease; }
 body.modal-open { overflow: hidden !important; position: fixed !important; width: 100% !important; height: 100% !important; }
 .font-brand { font-family: 'Cinzel', serif; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: inherit; }
 ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -61,25 +61,25 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 <body id="app-body" class="min-h-screen flex flex-col w-full overflow-x-hidden selection:bg-gold-500 selection:text-white bg-[#fcfbfa] text-[#1a1a1a]">
 
 <!-- NAWIGACJA -->
-<header id="app-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full transition-colors duration-300">
+<header id="app-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full transition-all duration-500">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex justify-between items-center gap-2">
         <a href="#" class="flex items-center gap-2 shrink-0">
             <div class="w-9 h-9 rounded-full bg-gold-500 flex items-center justify-center text-white font-bold text-base shadow-md"><i class="fa-solid fa-scissors"></i></div>
             <div>
-                <span class="font-brand text-base sm:text-xl tracking-wider font-bold block leading-none" id="nav-brand-title">AMARO</span>
+                <span class="font-brand text-base sm:text-xl tracking-wider font-bold block leading-none transition-colors duration-500" id="nav-brand-title">AMARO</span>
                 <span class="text-[9px] tracking-[0.18em] text-gold-600 font-semibold uppercase block">Salon & Barber Lublin</span>
             </div>
         </a>
-        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600" id="nav-links">
-            <a href="#strefy" class="hover:text-gold-600">Strefy</a>
-            <a href="#uslugi" class="hover:text-gold-600">Cennik</a>
-            <a href="#zespol" class="hover:text-gold-600">Zespół</a>
-            <a href="#galeria" class="hover:text-gold-600">Galeria</a>
-            <a href="#opinie" class="hover:text-gold-600">Opinie</a>
-            <a href="#kontakt" class="hover:text-gold-600">Kontakt</a>
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium transition-colors duration-500" id="nav-links">
+            <a href="#strefy" class="hover:text-gold-500 transition">Strefy</a>
+            <a href="#uslugi" class="hover:text-gold-500 transition">Cennik</a>
+            <a href="#zespol" class="hover:text-gold-500 transition">Zespół</a>
+            <a href="#galeria" class="hover:text-gold-500 transition">Galeria</a>
+            <a href="#opinie" class="hover:text-gold-500 transition">Opinie</a>
+            <a href="#kontakt" class="hover:text-gold-500 transition">Kontakt</a>
         </nav>
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <button onclick="handleGoogleUserLogin()" id="google-user-login-btn" class="px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
+            <button onclick="handleGoogleUserLogin()" id="google-user-login-btn" class="px-2.5 sm:px-3 py-2 rounded-xl bg-white hover:bg-gray-100 border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
                 <i class="fa-brands fa-google text-red-500"></i>
                 <span class="hidden sm:inline" id="google-user-label">Google</span>
             </button>
@@ -98,14 +98,14 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 </header>
 
 <!-- PRZEŁĄCZNIKI STREF -->
-<section id="strefy" class="bg-gradient-to-b from-cream-100 to-white py-5 border-b border-gray-200 w-full transition-colors duration-300">
+<section id="strefy" class="py-5 border-b border-gray-200 w-full transition-all duration-500" id="zones-section">
     <div class="max-w-7xl mx-auto px-3 sm:px-6">
         <div class="text-center max-w-xl mx-auto mb-4">
             <span class="text-[10px] font-bold tracking-widest text-gold-600 uppercase">Wybierz swój świat w AMARO</span>
-            <h2 class="font-brand text-lg sm:text-2xl font-bold text-gray-900">Do którego specjalisty chcesz się zapisać?</h2>
+            <h2 class="font-brand text-lg sm:text-2xl font-bold transition-colors duration-550">Do którego specjalisty chcesz się zapisać?</h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
-            <button onclick="switchZone('arek')" id="zone-btn-arek" class="p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-3.5 text-left w-full min-w-0">
+            <button onclick="switchZone('arek')" id="zone-btn-arek" class="zone-card p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0">
                 <img src="https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg" alt="Arek" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gold-500/40 shrink-0">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
@@ -116,7 +116,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                     <p class="text-xs text-gray-500 truncate">Stylista męski, broda, fade i klasyczne cięcia</p>
                 </div>
             </button>
-            <button onclick="switchZone('agata')" id="zone-btn-agata" class="p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-3.5 text-left opacity-80 hover:opacity-100 w-full min-w-0">
+            <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-card p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-80 hover:opacity-100 w-full min-w-0">
                 <img src="https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg" alt="Agata" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gray-300 shrink-0">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
@@ -132,38 +132,38 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 </section>
 
 <!-- HERO -->
-<section class="bg-white border-b border-gray-200 w-full">
+<section class="border-b border-gray-200 w-full transition-all duration-500" id="hero-section">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-8 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div class="space-y-3.5 text-center md:text-left min-w-0">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-750 text-xs font-semibold">
                 <i class="fa-solid fa-award"></i> 3x Laureat „Orły Fryzjerstwa” (Ocena 9,2/10)
             </div>
-            <h1 class="font-brand text-2xl sm:text-4xl font-bold text-gray-900 leading-tight">Rozkwitnij w naszym salonie AMARO</h1>
-            <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+            <h1 class="font-brand text-2xl sm:text-4xl font-bold leading-tight">Rozkwitnij w naszym salonie AMARO</h1>
+            <p class="text-xs sm:text-sm leading-relaxed opacity-85">
                 Dajemy włosom siłę, a Tobie inspirację. Pracujemy na renomowanych kosmetykach włoskiej firmy <strong>Farmagan</strong> oraz australijskich <strong>Pure i Juuce</strong> (olejek arganowy, keratyna kaszmirowa, kwas hialuronowy).
             </p>
             <div class="pt-1 flex flex-wrap justify-center md:justify-start gap-2.5">
                 <a href="#uslugi" class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs sm:text-sm transition shadow-md">Wybierz usługę</a>
-                <button onclick="openFastFinder()" class="px-4 py-2.5 rounded-xl bg-cream-100 hover:bg-cream-200 text-gray-900 border border-gold-500/40 font-bold text-xs sm:text-sm transition flex items-center gap-1.5">
+                <button onclick="openFastFinder()" class="px-4 py-2.5 rounded-xl border border-gold-500/40 font-bold text-xs sm:text-sm transition flex items-center gap-1.5 hero-btn-sec">
                     <i class="fa-solid fa-bolt text-gold-600"></i> Pierwszy wolny termin
                 </button>
             </div>
         </div>
-        <div class="bg-cream-100 p-4 sm:p-6 rounded-3xl border border-gold-500/30 grid grid-cols-2 gap-3 text-center min-w-0">
-            <div class="p-3 bg-white rounded-2xl border border-gray-200 shadow-sm">
+        <div class="p-4 sm:p-6 rounded-3xl border border-gold-500/30 shadow-inner grid grid-cols-2 gap-3 text-center min-w-0 hero-card-box transition-all duration-500">
+            <div class="p-3 rounded-2xl border shadow-sm hero-stat-card">
                 <span class="text-xl sm:text-2xl font-brand font-bold text-gold-600 block">5.0/5</span>
-                <span class="text-[11px] font-semibold text-gray-700 block">Ocena Booksy</span>
+                <span class="text-[11px] font-semibold block mt-1">Ocena Booksy</span>
             </div>
-            <div class="p-3 bg-white rounded-2xl border border-gray-200 shadow-sm">
+            <div class="p-3 rounded-2xl border shadow-sm hero-stat-card">
                 <span class="text-xl sm:text-2xl font-brand font-bold text-gold-600 block">4.8/5</span>
-                <span class="text-[11px] font-semibold text-gray-700 block">Ocena Google</span>
+                <span class="text-[11px] font-semibold block mt-1">Ocena Google</span>
             </div>
-            <div class="col-span-2 p-3 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between gap-2">
+            <div class="col-span-2 p-3 rounded-2xl border shadow-sm flex items-center justify-between gap-2 hero-stat-card">
                 <div class="flex items-center gap-2 min-w-0 text-left">
                     <i class="fa-solid fa-trophy text-gold-500 text-lg shrink-0"></i>
                     <div class="min-w-0">
-                        <span class="text-xs font-bold text-gray-900 block truncate">5+ lat na rynku • Orły Fryzjerstwa</span>
-                        <span class="text-[11px] text-gray-500 block truncate">Ul. Kryształowa 28a, Lublin</span>
+                        <span class="text-xs font-bold block truncate">5+ lat na rynku • Orły Fryzjerstwa</span>
+                        <span class="text-[11px] opacity-75 block truncate">Ul. Kryształowa 28a, Lublin</span>
                     </div>
                 </div>
                 <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline shrink-0">Wszystkie opinie →</button>
@@ -177,14 +177,14 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
     <div class="lg:col-span-2 space-y-10 w-full min-w-0">
         <!-- CENNIK -->
         <section id="uslugi" class="space-y-4 w-full min-w-0">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-3" style="border-color: rgba(197,160,89,0.3);">
                 <div>
-                    <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Cennik i Rezerwacja Online</h2>
-                    <p class="text-xs text-gray-500">System automatycznie pilnuje czasu trwania usług i buforów przerwy</p>
+                    <h2 class="font-brand text-xl sm:text-2xl font-bold">Cennik i Rezerwacja Online</h2>
+                    <p class="text-xs opacity-75">System automatycznie pilnuje czasu trwania usług i buforów przerwy</p>
                 </div>
                 <div class="relative w-full sm:w-56 shrink-0">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                    <input type="text" id="search-input" oninput="renderServices()" placeholder="Szukaj usługi..." class="bg-white border border-gray-300 rounded-xl pl-8 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:border-gold-500 w-full shadow-sm">
+                    <input type="text" id="search-input" oninput="renderServices()" placeholder="Szukaj usługi..." class="border rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none focus:border-gold-500 w-full shadow-sm search-input-box">
                 </div>
             </div>
             <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar w-full" id="category-tabs">
@@ -197,35 +197,35 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
         </section>
 
         <!-- ZESPÓŁ -->
-        <section id="zespol" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
-            <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Nasz Zespół</h2>
+        <section id="zespol" class="space-y-4 pt-6 border-t" style="border-color: rgba(197,160,89,0.3);">
+            <h2 class="font-brand text-xl sm:text-2xl font-bold">Nasz Zespół</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="team-list"></div>
         </section>
 
         <!-- GALERIA -->
-        <section id="galeria" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
+        <section id="galeria" class="space-y-4 pt-6 border-t" style="border-color: rgba(197,160,89,0.3);">
             <div class="flex justify-between items-center">
-                <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Metamorfoz (Przed i Po)</h2>
-                <span class="text-xs text-gold-600 font-bold">Z ochroną prywatności</span>
+                <h2 class="font-brand text-xl sm:text-2xl font-bold">Galeria Metamorfoz (Przed i Po)</h2>
+                <span class="text-xs text-gold-600 font-bold">Kliknij zdjęcie, aby powiększyć</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="gallery-grid"></div>
         </section>
 
         <!-- OPINIE -->
-        <section id="opinie" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
+        <section id="opinie" class="space-y-4 pt-6 border-t" style="border-color: rgba(197,160,89,0.3);">
             <div class="flex justify-between items-center">
-                <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Opinie klientów</h2>
+                <h2 class="font-brand text-xl sm:text-2xl font-bold">Opinie klientów</h2>
                 <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline">Wszystkie opinie →</button>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                <div class="p-4 rounded-2xl border shadow-sm space-y-2 content-card-box">
                     <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-gray-700 text-xs italic">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
+                    <p class="text-xs italic opacity-85">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
                     <span class="text-xs font-bold text-gold-600 block">— Pani Żaneta</span>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                <div class="p-4 rounded-2xl border shadow-sm space-y-2 content-card-box">
                     <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-gray-700 text-xs italic">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
+                    <p class="text-xs italic opacity-85">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
                     <span class="text-xs font-bold text-gold-600 block">— Pan Daniel</span>
                 </div>
             </div>
@@ -234,27 +234,27 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
     <!-- KONTAKT I MAPA -->
     <aside id="kontakt" class="space-y-6 w-full min-w-0">
-        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-md lg:sticky lg:top-20 space-y-4 w-full">
+        <div class="p-5 sm:p-6 rounded-3xl border shadow-md lg:sticky lg:top-20 space-y-4 w-full content-card-box">
             <div>
-                <h3 class="font-brand font-bold text-gray-900 text-lg">AMARO Lublin</h3>
-                <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot text-gold-500 mr-1"></i> Ul. Kryształowa 28a, 20-583 Lublin</p>
+                <h3 class="font-brand font-bold text-lg">AMARO Lublin</h3>
+                <p class="text-xs opacity-75 mt-0.5"><i class="fa-solid fa-location-dot text-gold-500 mr-1"></i> Ul. Kryształowa 28a, 20-583 Lublin</p>
             </div>
-            <div class="rounded-2xl overflow-hidden border border-gray-200 h-40 bg-gray-100 w-full">
+            <div class="rounded-2xl overflow-hidden border h-40 bg-gray-100 w-full">
                 <iframe class="w-full h-full" frameborder="0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=Kryszta%C5%82owa%2028a,%20Lublin&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
             </div>
             <button onclick="navigateFromCurrentLocation()" class="w-full py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow">
                 <i class="fa-solid fa-location-arrow"></i> Prowadź z mojej lokalizacji (GPS)
             </button>
             <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Godziny otwarcia</h4>
-                <ul class="space-y-1.5 text-xs text-gray-700" id="hours-list-display"></ul>
+                <h4 class="text-xs font-bold uppercase tracking-wider opacity-70 mb-2">Godziny otwarcia</h4>
+                <ul class="space-y-1.5 text-xs" id="hours-list-display"></ul>
             </div>
-            <div class="space-y-2 pt-2 border-t border-gray-200 text-xs">
-                <div class="p-2.5 bg-cream-100 rounded-xl border border-gray-200 flex justify-between">
+            <div class="space-y-2 pt-2 border-t text-xs" style="border-color: rgba(197,160,89,0.2);">
+                <div class="p-2.5 rounded-xl border flex justify-between content-subcard">
                     <span class="font-bold">Agata Płonkowska</span>
                     <a href="tel:+48736998192" class="text-gold-600 font-bold hover:underline">+48 736 998 192</a>
                 </div>
-                <div class="p-2.5 bg-cream-100 rounded-xl border border-gray-200 flex justify-between">
+                <div class="p-2.5 rounded-xl border flex justify-between content-subcard">
                     <span class="font-bold">Arek (Barber)</span>
                     <a href="tel:+48737308832" class="text-gold-600 font-bold hover:underline">+48 737 308 832</a>
                 </div>
@@ -265,8 +265,8 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
 <!-- MODAL REZERWACJI KLIENTA -->
 <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white border border-gray-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[94vh] relative">
-        <button onclick="closeBookingModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-cream-200 text-gray-700 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
+    <div class="bg-white text-gray-900 border border-gray-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[94vh] relative">
+        <button onclick="closeBookingModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-gray-200 text-gray-800 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
 
         <div class="p-3.5 sm:p-4 bg-cream-100 border-b border-gray-200 flex items-center gap-2 shrink-0 pr-12">
             <div class="min-w-0">
@@ -292,7 +292,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                 <div id="modal-staff-list" class="grid grid-cols-2 gap-2"></div>
             </div>
 
-            <div class="bg-cream-50 p-3 rounded-2xl border border-gold-500/30 space-y-2">
+            <div class="bg-cream-50 p-3 rounded-2xl border border-gray-200 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-wand-magic-sparkles text-gold-600 mr-1"></i> Długość/gęstość włosów:</span>
                     <span id="computed-duration-badge" class="text-[11px] font-bold text-gold-750 bg-gold-100 px-2 py-0.5 rounded-full">Czas: 45 min</span>
@@ -340,7 +340,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                     <input type="text" id="client-name" placeholder="Imię i nazwisko *" class="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-xs sm:text-sm w-full">
                     <input type="tel" id="client-phone" placeholder="Numer telefonu *" class="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-xs sm:text-sm w-full">
                 </div>
-                <input type="email" id="client-email" placeholder="Adres E-mail (np. klienta@domena.pl)" class="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-xs sm:text-sm">
+                <input type="email" id="client-email" placeholder="Adres E-mail (opcjonalnie)" class="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-xs sm:text-sm">
                 <label class="flex items-center gap-2 text-xs text-gray-700 bg-gray-50 p-2 rounded-xl border border-gray-200 cursor-pointer">
                     <input type="checkbox" id="client-silent-visit" class="rounded text-gold-500">
                     <span><i class="fa-solid fa-volume-xmark text-gold-600 mr-1"></i> <strong>Cicha wizyta</strong> – strefa relaksu bez rozmów</span>
@@ -364,7 +364,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
 <!-- LOGOWANIE ADMINA -->
 <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-gray-200 rounded-3xl max-w-sm w-full p-5 space-y-3.5 shadow-2xl relative">
+    <div class="bg-white text-gray-900 border border-gray-200 rounded-3xl max-w-sm w-full p-5 space-y-3.5 shadow-2xl relative">
         <button onclick="toggleAdminModal()" class="absolute top-3.5 right-3.5 w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
         <div class="border-b border-gray-200 pb-2.5 pr-8">
             <h3 class="font-brand text-base font-bold text-gray-900">Panel Administratora</h3>
@@ -389,7 +389,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
 <!-- PANEL ADMINISTRATORA -->
 <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-1.5 sm:p-4">
-    <div class="bg-white border border-gray-200 rounded-2xl sm:rounded-3xl max-w-6xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[96vh] relative">
+    <div class="bg-white text-gray-900 border border-gray-200 rounded-2xl sm:rounded-3xl max-w-6xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[96vh] relative">
         <button onclick="closeAdminDashboard()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white text-gray-500 border border-gray-300 flex items-center justify-center z-20 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
 
         <div class="p-3 sm:p-4 bg-cream-100 border-b border-gray-200 flex flex-wrap justify-between items-center gap-2 shrink-0 pr-14">
@@ -618,6 +618,17 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                         <button onclick="handleAdminBeforeAfterUpload()" class="px-4 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs">Wgraj parę Przed/Po</button>
                     </div>
                 </div>
+
+                <!-- USTAWIENIA MOTYWU DLA FRYZJERA -->
+                <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
+                    <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-palette text-gold-600 mr-1"></i> Wybór motywu dla Twojej strefy</h4>
+                    <p class="text-xs text-gray-600">Wybierz, jaki motyw ma się włączać na całej stronie, gdy użytkownicy wybierają Twoją strefę:</p>
+                    <select id="admin-theme-selector" onchange="updateStaffThemeSetting(this.value)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs font-bold text-gray-900 w-full">
+                        <option value="light">Jasny motyw (Classic Cream & Gold)</option>
+                        <option value="dark">Ciemny motyw (Midnight Black & Gold)</option>
+                    </select>
+                </div>
+
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
                     <h4 class="font-bold text-gray-900 text-sm">Zmień hasło do panelu</h4>
                     <input type="password" id="admin-new-pass" placeholder="Nowe hasło" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
@@ -630,7 +641,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
 <!-- MODAL OPINII -->
 <div id="reviews-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
+    <div class="bg-white text-gray-900 border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
         <button onclick="closeReviewsModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-cream-200 text-gray-700 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
 
         <div class="p-4 bg-cream-100 border-b border-gray-200 pr-12 shrink-0">
@@ -654,7 +665,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
     </div>
 </div>
 
-<!-- LIGHTBOX (FLOATING WINDOW) DLA ZDJĘĆ GALERII -->
+<!-- LIGHTBOX -->
 <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
     <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/40"><i class="fa-solid fa-xmark"></i></button>
     <div class="max-w-4xl w-full grid grid-cols-1 sm:grid-cols-2 gap-4 text-center" onclick="event.stopPropagation()">
@@ -671,7 +682,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 
 <!-- MOJE WIZYTY DRAWER -->
 <div id="my-bookings-drawer" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex justify-end">
-    <div class="bg-white border-l border-gray-200 w-full max-w-md h-full flex flex-col justify-between p-5 overflow-y-auto shadow-2xl relative">
+    <div class="bg-white text-gray-900 border-l border-gray-200 w-full max-w-md h-full flex flex-col justify-between p-5 overflow-y-auto shadow-2xl relative">
         <button onclick="toggleMyBookings()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 text-gray-700 border border-gray-300 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
         <div class="space-y-4 pr-10">
             <div class="border-b border-gray-200 pb-3">
@@ -689,7 +700,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 </div>
 
 <!-- FOOTER -->
-<footer class="bg-white border-t border-gray-200 py-5 text-center text-xs text-gray-500 w-full mt-auto">
+<footer class="bg-white border-t border-gray-200 py-5 text-center text-xs text-gray-500 w-full mt-auto transition-colors duration-500" id="app-footer">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
         <p>© Salon fryzjerski AMARO • Ul. Kryształowa 28a, 20-583 Lublin</p>
         <div class="flex items-center gap-4">
@@ -714,7 +725,7 @@ let staff = JSON.parse(localStorage.getItem('amaro_staff_v115')) || [
     {id:'arek',name:'Arek',role:'Stylista męski / Barber',phone:'+48 737 308 832',pass:'password',bio:'Stylista męski, barber. Pasjonat fryzjerstwa.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',theme:'dark',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]},
     {id:'agata',name:'Agata Płonkowska',role:'Fryzjer Damski',phone:'+48 736 998 192',pass:'password',bio:'Łączy pasję z profesjonalizmem w strefie damskiej.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',theme:'light',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]}
 ];
-staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; if(!s.theme) s.theme='light'; });
+staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; if(!s.theme) s.theme = s.id==='arek'?'dark':'light'; });
 
 let services = JSON.parse(localStorage.getItem('amaro_services_v115')) || [
     {id:50,category:'arek',specialistId:'arek',name:'Strzyżenie męskie',durationMin:45,freqWeeks:3,price:'65 – 70 zł',desc:'Precyzyjne strzyżenie męskie i stylizacja.'},
@@ -741,7 +752,6 @@ let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v115')) || [
     {before: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80', label: 'Sombre & Wygładzenie (Agata)'}
 ];
 
-// GENEROWANA BAZA PONAD 400 OPINII GOOGLE & BOOKSY (SCALONA DLA WYNIKU)
 let reviewsData = [];
 const baseNames = ['Anna', 'Katarzyna', 'Magdalena', 'Agnieszka', 'Karolina', 'Marta', 'Monika', 'Joanna', 'Barbara', 'Piotr', 'Michał', 'Tomasz', 'Kamil', 'Łukasz', 'Marcin', 'Paweł', 'Grzegorz', 'Adam', 'Mateusz', 'Daniel'];
 const baseSurnames = ['Kowalska', 'Wiśniewska', 'Wójcik', 'Kowalczyk', 'Kamińska', 'Lewandowska', 'Zielińska', 'Szymańska', 'Woźniak', 'Dąbrowska', 'Kozłowska', 'Mazur', 'Krawczyk', 'Piotrowska', 'Grabowska', 'Nowak', 'Wójcik', 'Ziółkowski', 'Rutkowski', 'Walczak'];
@@ -831,27 +841,93 @@ window.addEventListener('DOMContentLoaded', ()=>{
         loggedInGoogleUser = JSON.parse(savedGoogleUser);
         updateGoogleUserUI();
     }
-    applyStaffTheme();
+    applyGlobalTheme(selectedStaff);
 });
 
-function applyStaffTheme(){
+// DYNAMICZNA ZMIANA MOTYWU CAŁEJ STRONY (AGATA = JASNY / AREK = CIEMNY LUB W/G USTAWIEŃ)
+function applyGlobalTheme(staffId){
+    const st = staff.find(s => s.id === staffId) || staff[0];
+    const theme = st.theme || (st.id === 'arek' ? 'dark' : 'light');
+
     const body = document.getElementById('app-body');
     const header = document.getElementById('app-header');
     const brand = document.getElementById('nav-brand-title');
-    
-    // Domyślnie Agata to jasny, Arek ciemny (chyba że zmienili w ustawieniach)
-    const activeTheme = currentAdminUser ? currentAdminUser.theme : 'light';
-    
-    if(activeTheme === 'dark'){
+    const heroSec = document.getElementById('hero-section');
+    const zonesSec = document.getElementById('strefy');
+    const footer = document.getElementById('app-footer');
+
+    if(theme === 'dark'){
         body.style.backgroundColor = '#0a0a0a';
         body.style.color = '#f5f5f5';
-        header.className = "sticky top-0 z-40 bg-dark-900/95 backdrop-blur-md border-b border-white/10 shadow-sm w-full transition-colors duration-300";
+        header.className = "sticky top-0 z-40 bg-dark-900/95 backdrop-blur-md border-b border-white/10 shadow-sm w-full transition-all duration-500";
         if(brand) brand.style.color = '#ffffff';
+        if(zonesSec) zonesSec.className = "bg-gradient-to-b from-dark-800 to-dark-900 py-5 border-b border-white/10 w-full transition-all duration-500";
+        if(heroSec) heroSec.className = "bg-dark-800 border-b border-white/10 w-full transition-all duration-500";
+        if(footer) footer.className = "bg-dark-900 border-t border-white/10 py-5 text-center text-xs text-gray-400 w-full mt-auto transition-colors duration-500";
+        
+        document.querySelectorAll('.content-card-box').forEach(el => {
+            el.style.backgroundColor = '#121212';
+            el.style.borderColor = 'rgba(255,255,255,0.1)';
+            el.style.color = '#f5f5f5';
+        });
+        document.querySelectorAll('.content-subcard').forEach(el => {
+            el.style.backgroundColor = '#1a1a1a';
+            el.style.borderColor = 'rgba(255,255,255,0.1)';
+        });
+        document.querySelectorAll('.hero-card-box').forEach(el => {
+            el.style.backgroundColor = '#1a1a1a';
+            el.style.borderColor = 'rgba(197,160,89,0.3)';
+        });
+        document.querySelectorAll('.hero-stat-card').forEach(el => {
+            el.style.backgroundColor = '#121212';
+            el.style.borderColor = 'rgba(255,255,255,0.1)';
+            el.style.color = '#ffffff';
+        });
+        document.querySelectorAll('.hero-btn-sec').forEach(el => {
+            el.style.backgroundColor = '#1a1a1a';
+            el.style.color = '#ffffff';
+        });
+        document.querySelectorAll('.search-input-box').forEach(el => {
+            el.style.backgroundColor = '#121212';
+            el.style.borderColor = 'rgba(255,255,255,0.2)';
+            el.style.color = '#ffffff';
+        });
     } else {
         body.style.backgroundColor = '#fcfbfa';
         body.style.color = '#1a1a1a';
-        header.className = "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full transition-colors duration-300";
+        header.className = "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full transition-all duration-500";
         if(brand) brand.style.color = '#1a1a1a';
+        if(zonesSec) zonesSec.className = "bg-gradient-to-b from-cream-100 to-white py-5 border-b border-gray-200 w-full transition-all duration-500";
+        if(heroSec) heroSec.className = "bg-white border-b border-gray-200 w-full transition-all duration-500";
+        if(footer) footer.className = "bg-white border-t border-gray-200 py-5 text-center text-xs text-gray-500 w-full mt-auto transition-colors duration-500";
+        
+        document.querySelectorAll('.content-card-box').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.borderColor = '#e5e7eb';
+            el.style.color = '#1a1a1a';
+        });
+        document.querySelectorAll('.content-subcard').forEach(el => {
+            el.style.backgroundColor = '#f7f5f0';
+            el.style.borderColor = '#e5e7eb';
+        });
+        document.querySelectorAll('.hero-card-box').forEach(el => {
+            el.style.backgroundColor = '#f7f5f0';
+            el.style.borderColor = 'rgba(197,160,89,0.3)';
+        });
+        document.querySelectorAll('.hero-stat-card').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.borderColor = '#e5e7eb';
+            el.style.color = '#1a1a1a';
+        });
+        document.querySelectorAll('.hero-btn-sec').forEach(el => {
+            el.style.backgroundColor = '#f7f5f0';
+            el.style.color = '#1a1a1a';
+        });
+        document.querySelectorAll('.search-input-box').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.borderColor = '#d1d5db';
+            el.style.color = '#1a1a1a';
+        });
     }
 }
 
@@ -932,14 +1008,15 @@ function renderHoursDisplay(){
     const st = staff.find(s=>s.id===selectedStaff)||staff[0];
     document.getElementById('hours-list-display').innerHTML = [1,2,3,4,5,6,0].map(i=>{
         const sc=st.schedule[i];
-        return `<li class="flex justify-between py-1 border-b border-gray-100"><span>${sc.name}</span>${sc.open?`<span class="font-semibold text-gray-900">${sc.start}–${sc.end}</span>`:`<span class="text-gray-400">Zamknięte</span>`}</li>`;
+        return `<li class="flex justify-between py-1 border-b border-gray-100"><span>${sc.name}</span>${sc.open?`<span class="font-semibold">${sc.start}–${sc.end}</span>`:`<span class="text-gray-400">Zamknięte</span>`}</li>`;
     }).join('');
 }
 
 function switchZone(zone){
     selectedStaff = zone;
-    document.getElementById('zone-btn-arek').className = zone==='arek' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
-    document.getElementById('zone-btn-agata').className = zone==='agata' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
+    applyGlobalTheme(zone);
+    document.getElementById('zone-btn-arek').className = zone==='arek' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
+    document.getElementById('zone-btn-agata').className = zone==='agata' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
     setCategory(zone); renderHoursDisplay();
     document.getElementById('uslugi').scrollIntoView({behavior:'smooth'});
 }
@@ -957,7 +1034,7 @@ function renderServices(){
     const list = services.filter(s=>(currentCategory==='all'||s.category===currentCategory)&&(s.name.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q)));
     document.getElementById('services-list').innerHTML = list.length===0 ? `<div class="p-6 text-center text-gray-400 bg-white rounded-2xl border">Brak usług.</div>` : list.map(s=>{
         const st = staff.find(x=>x.id===s.specialistId);
-        return `<div class="bg-white hover:border-gold-500 p-4 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full min-w-0">
+        return `<div class="bg-white hover:border-gold-500 p-4 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full min-w-0 text-gray-900">
             <div class="space-y-0.5 min-w-0">
                 <span class="text-[10px] font-bold uppercase text-gold-600 block">${st?st.name:'AMARO'}</span>
                 <h3 class="font-brand font-bold text-gray-900 text-sm sm:text-base break-words">${s.name}</h3>
@@ -976,7 +1053,7 @@ function renderServices(){
 
 function renderTeamSection(){
     document.getElementById('team-list').innerHTML = staff.map(m=>`
-        <div class="bg-white rounded-2xl border border-gray-200 flex items-center gap-4 p-4 shadow-sm min-w-0">
+        <div class="bg-white rounded-2xl border border-gray-200 flex items-center gap-4 p-4 shadow-sm min-w-0 text-gray-900">
             <img src="${m.photo}" alt="${m.name}" class="w-20 h-20 rounded-2xl object-cover border-2 border-gold-500/30 shrink-0">
             <div class="space-y-1 min-w-0 flex-1">
                 <span class="text-[10px] font-bold uppercase text-gold-600 bg-gold-500/10 px-2 py-0.5 rounded">${m.role}</span>
@@ -989,7 +1066,7 @@ function renderTeamSection(){
 
 function renderGallery(){
     document.getElementById('gallery-grid').innerHTML = galleryPhotos.map((item, idx)=>`
-        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm space-y-2 cursor-pointer group" onclick="openLightbox(${idx})">
+        <div class="bg-white text-gray-900 p-3 rounded-2xl border border-gray-200 shadow-sm space-y-2 cursor-pointer group" onclick="openLightbox(${idx})">
             <div class="grid grid-cols-2 gap-2">
                 <div class="relative rounded-xl overflow-hidden bg-gray-100 aspect-square">
                     <img src="${item.before}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
@@ -1157,15 +1234,12 @@ function renderModalTimes(){
 function selectTime(t){ selectedTime=t; renderModalTimes(); }
 
 function confirmBooking(){
-    const name=document.getElementById('client-name').value.trim();
-    const phone=document.getElementById('client-phone').value.trim();
-    const email=document.getElementById('client-email').value.trim();
+    const name=document.getElementById('client-name').value.trim(), phone=document.getElementById('client-phone').value.trim(), email=document.getElementById('client-email').value.trim();
     const silent=document.getElementById('client-silent-visit').checked;
     let note=document.getElementById('client-note').value.trim();
     if(silent) note=(note?note+' • ':'')+'Cicha wizyta';
     const err=document.getElementById('booking-error'), dur=getEffectiveClientDuration();
     
-    // Walidacja masek numeru telefonu oraz e-maila
     const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3,6}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -1229,7 +1303,7 @@ function handleAdminLogin(){
         currentAdminUser=st;
         localStorage.setItem('amaro_active_admin', st.id);
         document.getElementById('admin-pass-input').value=''; toggleAdminModal(); openAdminDashboard();
-        applyStaffTheme();
+        applyGlobalTheme(st.id);
     } else {
         const e=document.getElementById('admin-login-error'); e.textContent='Błędne hasło (wpisz: password)'; e.classList.remove('hidden');
     }
@@ -1239,14 +1313,14 @@ function handleAdminLogout(){
     currentAdminUser = null;
     localStorage.removeItem('amaro_active_admin');
     closeAdminDashboard();
-    applyStaffTheme();
+    applyGlobalTheme(selectedStaff);
     showToast('Wylogowano z panelu administratora.');
 }
 
 function switchAdminProfile(id){ 
     currentAdminUser=staff.find(s=>s.id===id); 
     localStorage.setItem('amaro_active_admin', id); 
-    applyStaffTheme();
+    applyGlobalTheme(id);
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminCrmList(); renderAdminScheduleEditor(); renderSpecificWeekEditor(); renderAdminServices(); 
 }
 
@@ -1255,6 +1329,7 @@ function openAdminDashboard(){
     document.getElementById('admin-current-staff-label').textContent = `${currentAdminUser.name} (${currentAdminUser.role})`;
     document.getElementById('admin-horizon-select').value=String(bookingHorizonDays);
     document.getElementById('admin-buffer-input').value=String(bufferTimeMinutes);
+    document.getElementById('admin-theme-selector').value = currentAdminUser.theme || 'light';
     adminCalDate=new Date(); adminSelectedDateIso=toIsoDate(new Date());
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminScheduleEditor(); renderSpecificWeekEditor(); renderAdminServices();
     toggleBodyScroll(true);
@@ -1263,6 +1338,15 @@ function openAdminDashboard(){
 function closeAdminDashboard(){ 
     document.getElementById('admin-dashboard-modal').classList.add('hidden'); 
     toggleBodyScroll(false);
+}
+
+function updateStaffThemeSetting(newTheme){
+    if(currentAdminUser){
+        currentAdminUser.theme = newTheme;
+        localStorage.setItem('amaro_staff_v125', JSON.stringify(staff));
+        applyGlobalTheme(currentAdminUser.id);
+        showToast(`Zmieniono motyw dla ${currentAdminUser.name} na ${newTheme === 'dark' ? 'Ciemny' : 'Jasny'}`);
+    }
 }
 
 function toggleCollabMode(active){
@@ -1287,7 +1371,6 @@ function switchAdminTab(tab){
     if(tab==='services') renderAdminServices();
 }
 
-// CRM KLIENCI / RE-ENGAGEMENT
 function renderAdminCrmList(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     const relevantB = bookings.filter(b => !targetStaffId || b.staffId === targetStaffId);
@@ -1474,7 +1557,7 @@ function renderAdminSelectedDayDetails(){
                         const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
                         const clientHistory = bookings.filter(x => x.clientPhone === b.clientPhone && x.id !== b.id);
                         
-                        // POPRZEDNIE WIZYTY ZACZYNAJĄ SIĘ OD NOWEJ LINII Z CZESTOTLIWOSCIA
+                        // POPRZEDNIE WIZYTY ZACZYNAJĄ SIĘ OD NOWEJ LINII
                         const historyHtml = clientHistory.length > 0 
                             ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong><br>${clientHistory.map(h => `• ${h.date} - ${h.serviceName} (${h.price})`).join('<br>')}<br><span class="text-gray-500 font-semibold">Średni cykl wizyt: co ${b.freqWeeks || 4} tygodnie</span></div>`
                             : `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-gray-400">Pierwsza wizyta tego klienta. [Zalecany cykl: co ${b.freqWeeks || 4} tyg.]</div>`;
@@ -1496,7 +1579,7 @@ function renderAdminSelectedDayDetails(){
                                         ${[30,45,60,75,90,120,150,180].map(m=>`<option value="${m}" ${dur===m?'selected':''}>Czas: ${formatDuration(m)}</option>`).join('')}
                                     </select>
                                     <div class="flex gap-1 flex-wrap">
-                                        ${pend?`<button onclick="editAndApproveBooking(${b.id})" class="px-2.5 py-1 rounded bg-gold-600 text-white font-bold text-[10px]" title="Edytuj czas i zatwierdź">Edytuj i zatwierdź</button><button onclick="approveBooking(${b.id})" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
+                                        ${pend?`<button onclick="editAndApproveBooking(${b.id})" class="px-2.5 py-1 rounded bg-gold-600 text-white font-bold text-[10px]" title="Edytuj czas i zatwierdź">Edytuj i zatwierdź</button><button onclick="approveBooking(${b.id})" class="px-2 py-1 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
                                         <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox();" class="px-2 py-1 rounded bg-red-50 text-red-600 font-bold text-[10px]">Usuń</button>
                                     </div>
                                 </div>
@@ -1537,7 +1620,7 @@ function saveClientNote(phone, note){
 function saveCustomDayHours(){
     const st=document.getElementById('admin-day-start').value, en=document.getElementById('admin-day-end').value;
     currentAdminUser.customDates[adminSelectedDateIso]={open:true,start:st,end:en};
-    localStorage.setItem('amaro_staff_v112',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zapisano godziny ${st}–${en} na ${adminSelectedDateIso}`);
 }
@@ -1545,7 +1628,7 @@ function saveCustomDayHours(){
 function toggleBlockSelectedDay(){
     const idx=currentAdminUser.blockedDates.indexOf(adminSelectedDateIso);
     if(idx>-1) currentAdminUser.blockedDates.splice(idx,1); else currentAdminUser.blockedDates.push(adminSelectedDateIso);
-    localStorage.setItem('amaro_staff_v112',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
 }
 
@@ -1556,7 +1639,7 @@ function addManualAdminBooking(){
     if(!isSlotAvailable(srv.specialistId,adminSelectedDateIso,time,srv.durationMin)){ alert('Kolizja czasu!'); return; }
     const stObj = staff.find(s=>s.id===srv.specialistId);
     bookings.unshift({id:Date.now(),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,freqWeeks:srv.freqWeeks||4,staffId:srv.specialistId,staffName:stObj.name,date:adminSelectedDateIso,time,clientName:cl,clientPhone:'Tel.',clientEmail:'',status:'confirmed'});
-    localStorage.setItem('amaro_bookings_v112',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v115',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Dodano rezerwację telefoniczną!');
 }
@@ -1580,7 +1663,7 @@ function saveSpecificWeekSchedule(){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d);
         currentAdminUser.customDates[iso]={open:document.getElementById(`spec-open-${iso}`).checked,start:document.getElementById(`spec-start-${iso}`).value,end:document.getElementById(`spec-end-${iso}`).value};
     }
-    localStorage.setItem('amaro_staff_v112',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
+    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
 }
 
 function renderAdminScheduleEditor(){
@@ -1598,7 +1681,7 @@ function saveAdminSchedule(){
         currentAdminUser.schedule[i].start=document.getElementById(`sched-start-${i}`).value;
         currentAdminUser.schedule[i].end=document.getElementById(`sched-end-${i}`).value;
     });
-    localStorage.setItem('amaro_staff_v112',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
+    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
 function renderAdminServices(){
@@ -1631,16 +1714,16 @@ function renderAdminServices(){
 
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
-    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v112',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
+    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
 }
 function addNewService(){
     const name=document.getElementById('new-srv-name').value.trim(), price=document.getElementById('new-srv-price').value.trim(), dur=parseInt(document.getElementById('new-srv-dur').value)||60, cat=document.getElementById('new-srv-cat').value;
     if(!name||!price) return;
     services.push({id:Date.now(),category:cat,specialistId:cat==='arek'?'arek':'agata',name,durationMin:dur,freqWeeks:4,price,desc:'Usługa w salonie AMARO.'});
-    localStorage.setItem('amaro_services_v112',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
+    localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
 }
-function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v112',JSON.stringify(services)); renderServices(); renderAdminServices(); }
-function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v112',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
+function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); }
+function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
 
 // WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNĄ CENZURĄ OCZU
 function handleAdminBeforeAfterUpload(){
@@ -1694,7 +1777,7 @@ function saveAndRenderPair(beforeSrc, afterSrc){
     const labelInput = document.getElementById('upload-before-after-label');
     const lbl = labelInput.value.trim() || 'Metamorfoza AMARO';
     galleryPhotos.unshift({ before: beforeSrc, after: afterSrc, label: lbl });
-    localStorage.setItem('amaro_gallery_v112', JSON.stringify(galleryPhotos));
+    localStorage.setItem('amaro_gallery_v115', JSON.stringify(galleryPhotos));
     renderGallery();
     document.getElementById('upload-before-file').value = '';
     document.getElementById('upload-after-file').value = '';
@@ -1727,7 +1810,7 @@ function toggleMyBookings(){
         toggleBodyScroll(false);
     }
 }
-function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v112',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
+function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v115',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
 function navigateFromCurrentLocation(){ window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin')}`,'_blank'); }
 function openReviewsModal(){ 
     renderReviewsFiltered('all', null);
