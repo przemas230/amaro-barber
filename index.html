@@ -50,7 +50,7 @@ tailwind.config = {
 html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fcfbfa; color: #1a1a1a; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; }
 body.modal-open { overflow: hidden; height: 100vh; }
 .font-brand { font-family: 'Cinzel', serif; }
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #f7f5f0; }
 ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -201,10 +201,13 @@ body.modal-open { overflow: hidden; height: 100vh; }
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="team-list"></div>
         </section>
 
-        <!-- GALERIA -->
+        <!-- GALERIA (ZEWNĘTRZNA GALERIA PRZED I PO) -->
         <section id="galeria" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
-            <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Realizacji</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="gallery-grid"></div>
+            <div class="flex justify-between items-center">
+                <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Metamorfoz (Przed i Po)</h2>
+                <span class="text-xs text-gold-600 font-bold">Z ochroną prywatności</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="gallery-grid"></div>
         </section>
 
         <!-- OPINIE -->
@@ -279,17 +282,8 @@ body.modal-open { overflow: hidden; height: 100vh; }
             </div>
 
             <div class="bg-cream-50 p-3 rounded-2xl border border-gray-200 space-y-2">
-                <span class="text-xs font-bold text-gray-800 block"><i class="fa-solid fa-images text-gold-600 mr-1"></i> Ostatnie metamorfozy (Przed i Po):</span>
-                <div class="grid grid-cols-2 gap-2 text-[10px]">
-                    <div class="bg-white p-1.5 rounded-xl border text-center">
-                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80" class="w-full h-24 object-cover rounded-lg mb-1">
-                        <span class="font-bold text-gold-700">Efekt Przed / Po (Arek)</span>
-                    </div>
-                    <div class="bg-white p-1.5 rounded-xl border text-center">
-                        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80" class="w-full h-24 object-cover rounded-lg mb-1">
-                        <span class="font-bold text-gold-700">Metamorfoza (Agata)</span>
-                    </div>
-                </div>
+                <span class="text-xs font-bold text-gray-800 block"><i class="fa-solid fa-images text-gold-600 mr-1"></i> Podgląd metamorfoz (Przed i Po):</span>
+                <div class="grid grid-cols-2 gap-2 text-[10px]" id="modal-before-after-preview"></div>
             </div>
 
             <div>
@@ -600,16 +594,28 @@ body.modal-open { overflow: hidden; height: 100vh; }
                 <div id="admin-services-list" class="space-y-2"></div>
             </div>
 
-            <!-- TAB 4: GALERIA I HASŁO -->
+            <!-- TAB 4: GALERIA I HASŁO (Z OPCJĄ WGRYWANIA PRZED I PO ORAZ CENZURĄ) -->
             <div id="admin-section-gallery" class="admin-sec hidden space-y-4">
-                <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
-                    <h4 class="font-bold text-gray-900 text-sm">Dodaj zdjęcie do galerii (lub Przeciągnij / Wybierz plik)</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input type="file" id="admin-upload-img-file" accept="image/*" class="bg-white border border-gray-300 rounded-xl p-1.5 text-xs">
-                        <input type="text" id="admin-upload-img-label" placeholder="Podpis (np. Metamorfoza Przed / Po)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
-                        <button onclick="handleAdminPhotoUpload()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Wgraj zdjęcie z telefonu</button>
+                <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-camera-retro text-gold-600 mr-1"></i> Wgraj metamorfozę (Przed i Po z cenzurą twarzy)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Zdjęcie PRZED:</label>
+                            <input type="file" id="upload-before-file" accept="image/*" class="bg-white border border-gray-300 rounded-xl p-1.5 w-full text-xs">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Zdjęcie PO:</label>
+                            <input type="file" id="upload-after-file" accept="image/*" class="bg-white border border-gray-300 rounded-xl p-1.5 w-full text-xs">
+                        </div>
                     </div>
-                    <p class="text-[10px] text-gray-500">Zdjęcie zostanie automatycznie zapisane w bazie lokalnej (lub w chmurze Firebase Storage po konfiguracji).</p>
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                        <input type="text" id="upload-before-after-label" placeholder="Opis (np. Strzyżenie Fade + Broda)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs flex-1">
+                        <label class="flex items-center gap-1.5 text-xs text-gray-700 bg-white px-3 py-2 rounded-xl border border-gray-300 cursor-pointer">
+                            <input type="checkbox" id="upload-censor-eyes" class="rounded text-gold-500" checked>
+                            <span>Automatycznie zasłoń oczy (Prywatność)</span>
+                        </label>
+                        <button onclick="handleAdminBeforeAfterUpload()" class="px-4 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs">Wgraj parę Przed/Po</button>
+                    </div>
                 </div>
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
                     <h4 class="font-bold text-gray-900 text-sm">Zmień hasło do panelu</h4>
@@ -714,11 +720,10 @@ let services = JSON.parse(localStorage.getItem('amaro_services_v98')) || [
     {id:22,category:'spa',specialistId:'agata',name:'Zabieg S.O.S. / Clean-up + Action',durationMin:60,freqWeeks:4,price:'120 zł',desc:'Regeneracja ekspresowa.'}
 ];
 
+// Galeria metamorfoz Przed i Po
 let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v98')) || [
-    {url:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',label:'Arek – Strefa Barber'},
-    {url:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',label:'Agata Płonkowska'},
-    {url:'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80',label:'Barber & Fade'},
-    {url:'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80',label:'Koloryzacja & SPA'}
+    {before: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80', label: 'Strzyżenie Fade (Arek)'},
+    {before: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80', label: 'Sombre & Wygładzenie (Agata)'}
 ];
 
 let reviewsData = [
@@ -910,7 +915,7 @@ function renderServices(){
             <div class="flex sm:flex-col items-center sm:items-end justify-between gap-2 shrink-0 border-t sm:border-t-0 border-gray-100 pt-2.5 sm:pt-0">
                 <div class="text-left sm:text-right">
                     <span class="text-base font-brand font-bold text-gold-600 block">${s.price}</span>
-                    <span class="text-[11px] text-gray-400 block"><i class="fa-regular fa-clock mr-1"></i>${formatDuration(s.durationMin)} (co ${s.freqWeeks} tyg.)</span>
+                    <span class="text-[11px] text-gray-400 block"><i class="fa-regular fa-clock mr-1"></i>${formatDuration(s.durationMin)}</span>
                 </div>
                 <button onclick="openBookingModal(${s.id})" class="px-4 py-2 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs shadow-sm shrink-0">Wybierz termin</button>
             </div>
@@ -932,10 +937,19 @@ function renderTeamSection(){
 }
 
 function renderGallery(){
-    document.getElementById('gallery-grid').innerHTML = galleryPhotos.map(img=>`
-        <div class="group relative rounded-2xl overflow-hidden border border-gray-200 aspect-square bg-white shadow-sm">
-            <img src="${img.url}" alt="${img.label}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5"><span class="text-[11px] font-semibold text-white">${img.label}</span></div>
+    document.getElementById('gallery-grid').innerHTML = galleryPhotos.map(item=>`
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+                <div class="relative rounded-xl overflow-hidden bg-gray-100 aspect-square">
+                    <img src="${item.before}" class="w-full h-full object-cover">
+                    <span class="absolute bottom-1 left-1 bg-black/70 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">PRZED</span>
+                </div>
+                <div class="relative rounded-xl overflow-hidden bg-gray-100 aspect-square">
+                    <img src="${item.after}" class="w-full h-full object-cover">
+                    <span class="absolute bottom-1 left-1 bg-gold-600 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">PO</span>
+                </div>
+            </div>
+            <p class="text-xs font-bold text-gray-900 text-center truncate">${item.label}</p>
         </div>`).join('');
 }
 
@@ -988,6 +1002,17 @@ function openBookingModal(serviceId){
     document.getElementById('modal-service-meta').textContent = `Domyślnie: ${formatDuration(selectedService.durationMin)} • ${selectedService.price}`;
     document.getElementById('client-horizon-info').textContent = `(do ${bookingHorizonDays} dni w przód)`;
     setExtraTime(0);
+
+    // Podgląd Przed i Po w modalu rezerwacji
+    const previewEl = document.getElementById('modal-before-after-preview');
+    if(galleryPhotos.length > 0){
+        const item = galleryPhotos[0];
+        previewEl.innerHTML = `
+            <div class="bg-white p-1 rounded-lg border text-center"><img src="${item.before}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PRZED</span></div>
+            <div class="bg-white p-1 rounded-lg border text-center"><img src="${item.after}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PO</span></div>
+        `;
+    }
+
     if(loggedInGoogleUser){
         document.getElementById('client-name').value = loggedInGoogleUser.name;
         document.getElementById('client-email').value = loggedInGoogleUser.email;
@@ -1086,7 +1111,7 @@ function generateFakeBookings(){
     const fC=[{n:'Anna M.',p:'503 444 555',e:'anna@gmail.com'},{n:'Karolina W.',p:'608 777 888',e:'karolina@wp.pl'},{n:'Magda D.',p:'721 333 999',e:'magda@onet.pl'},{n:'Paulina K.',p:'515 666 777',e:'paulina@gmail.com'}];
     bookings = bookings.filter(b=>!b.isFake);
     const today=new Date(); let cnt=0;
-    for(let off=-10;off<10;off++){ // generujemy też przeszłe wizyty do testu CRM archiwalnych klientów!
+    for(let off=-10;off<10;off++){
         const d=new Date(today); d.setDate(today.getDate()+off); const iso=toIsoDate(d);
         ['arek','agata'].forEach(stId=>{
             if(off>=0 && !getDayScheduleForStaff(stId,iso).open) return;
@@ -1181,13 +1206,11 @@ function renderAdminCrmList(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     const relevantB = bookings.filter(b => !targetStaffId || b.staffId === targetStaffId);
     
-    // Grupowanie po numerze telefonu klienta
     const clientMap = {};
     relevantB.forEach(b => {
         if(!clientMap[b.clientPhone]){
             clientMap[b.clientPhone] = { name: b.clientName, phone: b.clientPhone, email: b.clientEmail, lastVisit: b.date, freqWeeks: b.freqWeeks || 4, serviceName: b.serviceName };
         } else {
-            // weź nowszą datę
             if(new Date(b.date) > new Date(clientMap[b.clientPhone].lastVisit)){
                 clientMap[b.clientPhone].lastVisit = b.date;
                 clientMap[b.clientPhone].serviceName = b.serviceName;
@@ -1482,25 +1505,67 @@ function addNewService(){
 function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v98',JSON.stringify(services)); renderServices(); renderAdminServices(); }
 function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v98',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
 
-function handleAdminPhotoUpload(){
-    const fileInput = document.getElementById('admin-upload-img-file');
-    const labelInput = document.getElementById('admin-upload-img-label');
-    if(fileInput.files && fileInput.files[0]){
-        const reader = new FileReader();
-        reader.onload = function(e){
-            const base64Img = e.target.result;
-            const lbl = labelInput.value.trim() || 'Metamorfoza Salon AMARO';
-            galleryPhotos.unshift({ url: base64Img, label: lbl });
-            localStorage.setItem('amaro_gallery_v98', JSON.stringify(galleryPhotos));
-            renderGallery();
-            fileInput.value = '';
-            labelInput.value = '';
-            showToast('Wgrano i zapisano nowe zdjęcie w bazie!');
+// WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNĄ CENZURĄ OCZU
+function handleAdminBeforeAfterUpload(){
+    const beforeInput = document.getElementById('upload-before-file');
+    const afterInput = document.getElementById('upload-after-file');
+    const labelInput = document.getElementById('upload-before-after-label');
+    const censorCheck = document.getElementById('upload-censor-eyes').checked;
+
+    if(beforeInput.files && beforeInput.files[0] && afterInput.files && afterInput.files[0]){
+        const readerBefore = new FileReader();
+        readerBefore.onload = function(eBefore){
+            const beforeImgSrc = eBefore.target.result;
+            const readerAfter = new FileReader();
+            readerAfter.onload = function(eAfter){
+                let afterImgSrc = eAfter.target.result;
+
+                // Jeśli włączona cenzura oczu, nakładamy na górną część twarzy elegancki pasek w Canvas
+                if(censorCheck){
+                    const img = new Image();
+                    img.onload = function(){
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        
+                        // Pasek cenzurujący na oczy (ok. 30-45% wysokości obrazu)
+                        ctx.fillStyle = '#1a1a1a';
+                        ctx.fillRect(0, img.height * 0.32, img.width, img.height * 0.12);
+                        
+                        // Napis cenzury dla prywatności
+                        ctx.fillStyle = '#c5a059';
+                        ctx.font = `${Math.max(12, img.width * 0.03)}px sans-serif`;
+                        ctx.textAlign = 'center';
+                        ctx.fillText('AMARO PRIVACY PROTECTED', img.width / 2, img.height * 0.39);
+
+                        afterImgSrc = canvas.toDataURL('image/jpeg', 0.85);
+                        saveAndRenderPair(beforeImgSrc, afterImgSrc);
+                    };
+                    img.src = afterImgSrc;
+                } else {
+                    saveAndRenderPair(beforeImgSrc, afterImgSrc);
+                }
+            };
+            readerAfter.readAsDataURL(afterInput.files[0]);
         };
-        reader.readAsDataURL(fileInput.files[0]);
+        readerBefore.readAsDataURL(beforeInput.files[0]);
     } else {
-        alert('Wybierz plik zdjęcia z pamięci telefonu!');
+        alert('Wybierz oba pliki (zdjęcie PRZED oraz PO) z pamięci telefonu!');
     }
+}
+
+function saveAndRenderPair(beforeSrc, afterSrc){
+    const labelInput = document.getElementById('upload-before-after-label');
+    const lbl = labelInput.value.trim() || 'Metamorfoza AMARO';
+    galleryPhotos.unshift({ before: beforeSrc, after: afterSrc, label: lbl });
+    localStorage.setItem('amaro_gallery_v98', JSON.stringify(galleryPhotos));
+    renderGallery();
+    document.getElementById('upload-before-file').value = '';
+    document.getElementById('upload-after-file').value = '';
+    labelInput.value = '';
+    showToast('Wgrano metamorfozę Przed i Po z opcją cenzury!');
 }
 
 function updateBookingBadge(){
