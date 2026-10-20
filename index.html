@@ -201,7 +201,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="team-list"></div>
         </section>
 
-        <!-- GALERIA (ZEWNĘTRZNA GALERIA PRZED I PO) -->
+        <!-- GALERIA -->
         <section id="galeria" class="space-y-4 pt-6 border-t border-gray-200 w-full min-w-0">
             <div class="flex justify-between items-center">
                 <h2 class="font-brand text-xl sm:text-2xl font-bold text-gray-900">Galeria Metamorfoz (Przed i Po)</h2>
@@ -386,7 +386,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
     </div>
 </div>
 
-<!-- PANEL ADMINISTRATORA (Z ZAKŁADKĄ CRM KLIENTÓW I FREQ) -->
+<!-- PANEL ADMINISTRATORA -->
 <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-1.5 sm:p-4">
     <div class="bg-white border border-gray-200 rounded-2xl sm:rounded-3xl max-w-6xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[96vh] relative">
         <button onclick="closeAdminDashboard()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white text-gray-500 border border-gray-300 flex items-center justify-center z-20 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
@@ -439,7 +439,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
         </div>
 
         <div class="p-3 sm:p-5 overflow-y-auto space-y-5 flex-grow bg-white">
-            <!-- TAB 1: KALENDARZ -->
+            <!-- TAB 1: KALENDARZ (PODZIELONY NA PORY DNIA) -->
             <div id="admin-section-calendar" class="admin-sec space-y-4">
                 <div id="admin-pending-alert-box" class="hidden bg-amber-50 border-2 border-amber-300 rounded-2xl p-3.5 space-y-2.5">
                     <div class="flex items-center justify-between gap-2">
@@ -510,8 +510,8 @@ body.modal-open { overflow: hidden; height: 100vh; }
                                 </div>
                             </div>
                             <div>
-                                <h5 class="text-[11px] font-bold text-gray-700 mb-1.5">Wizyty w tym dniu:</h5>
-                                <div id="admin-day-bookings-list" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+                                <h5 class="text-[11px] font-bold text-gray-700 mb-1.5">Wizyty w tym dniu (z podziałem na pory):</h5>
+                                <div id="admin-day-bookings-list" class="space-y-3 max-h-72 overflow-y-auto pr-1"></div>
                             </div>
                         </div>
 
@@ -594,7 +594,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
                 <div id="admin-services-list" class="space-y-2"></div>
             </div>
 
-            <!-- TAB 4: GALERIA I HASŁO (Z OPCJĄ WGRYWANIA PRZED I PO ORAZ CENZURĄ) -->
+            <!-- TAB 4: GALERIA I HASŁO -->
             <div id="admin-section-gallery" class="admin-sec hidden space-y-4">
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
                     <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-camera-retro text-gold-600 mr-1"></i> Wgraj metamorfozę (Przed i Po z cenzurą twarzy)</h4>
@@ -627,7 +627,7 @@ body.modal-open { overflow: hidden; height: 100vh; }
     </div>
 </div>
 
-<!-- MODAL OPINII (NAPRAWIONE PRZEWIJANIE + FILTRY 1-5 GWIAZDEK) -->
+<!-- MODAL OPINII -->
 <div id="reviews-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
         <button onclick="closeReviewsModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-cream-200 text-gray-700 border border-gray-300 flex items-center justify-center z-10 shadow-sm"><i class="fa-solid fa-xmark text-base"></i></button>
@@ -694,13 +694,13 @@ const defaultWeeklyHours = {
     0:{open:false,start:'09:00',end:'14:00',name:'Niedziela'}
 };
 
-let staff = JSON.parse(localStorage.getItem('amaro_staff_v98')) || [
+let staff = JSON.parse(localStorage.getItem('amaro_staff_v10')) || [
     {id:'arek',name:'Arek',role:'Stylista męski / Barber',phone:'+48 737 308 832',pass:'password',bio:'Stylista męski, barber. Pasjonat fryzjerstwa.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]},
     {id:'agata',name:'Agata Płonkowska',role:'Fryzjer Damski',phone:'+48 736 998 192',pass:'password',bio:'Łączy pasję z profesjonalizmem w strefie damskiej.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]}
 ];
 staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; });
 
-let services = JSON.parse(localStorage.getItem('amaro_services_v98')) || [
+let services = JSON.parse(localStorage.getItem('amaro_services_v10')) || [
     {id:50,category:'arek',specialistId:'arek',name:'Strzyżenie męskie',durationMin:45,freqWeeks:3,price:'65 – 70 zł',desc:'Precyzyjne strzyżenie męskie i stylizacja.'},
     {id:51,category:'arek',specialistId:'arek',name:'Strzyżenie brody',durationMin:30,freqWeeks:2,price:'50 zł',desc:'Trymowanie, konturowanie i pielęgnacja zarostu.'},
     {id:52,category:'arek',specialistId:'arek',name:'Combo broda + włosy',durationMin:75,freqWeeks:3,price:'100 zł',desc:'Kompleksowe strzyżenie włosów oraz brody.'},
@@ -720,15 +720,14 @@ let services = JSON.parse(localStorage.getItem('amaro_services_v98')) || [
     {id:22,category:'spa',specialistId:'agata',name:'Zabieg S.O.S. / Clean-up + Action',durationMin:60,freqWeeks:4,price:'120 zł',desc:'Regeneracja ekspresowa.'}
 ];
 
-// Galeria metamorfoz Przed i Po
-let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v98')) || [
+let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v10')) || [
     {before: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80', label: 'Strzyżenie Fade (Arek)'},
     {before: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80', label: 'Sombre & Wygładzenie (Agata)'}
 ];
 
 let reviewsData = [
     {name:'Pani Żaneta', rating:5, text:'„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie i kondycję moich włosów.”', staff:'agata'},
-    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuję i serdecznie polecam.”', staff:'arek'},
+    {name:'Pan Daniel', rating:5, text:'„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuje i serdecznie polecam.”', staff:'arek'},
     {name:'Pan Radosław', rating:5, text:'„Zawsze miałem obawy związane z wyborem fryzjera, ale od kiedy trafiłem do Amaro Salon i skorzystałem z usług Arkadiusza, moje obawy zniknęły.”', staff:'arek'},
     {name:'Pani Małgorzata', rating:5, text:'„Bardzo długo szukałam odpowiedniego miejsca w którym obsługa przyjmuje klientów z uśmiechem. W końcu znalazłam! Polecam!”', staff:'agata'},
     {name:'Karolina S.', rating:5, text:'„Najlepsze sombre w Lublinie! Agata ma niesamowity talent do koloryzacji, włosy są lśniące i zdrowe.”', staff:'agata'},
@@ -740,7 +739,7 @@ let reviewsData = [
 
 let bookingHorizonDays = parseInt(localStorage.getItem('amaro_horizon_days')) || 30;
 let bufferTimeMinutes = parseInt(localStorage.getItem('amaro_buffer_time')) || 5;
-let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v98')) || [];
+let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v10')) || [];
 let clientPrivateNotes = JSON.parse(localStorage.getItem('amaro_client_notes')) || {};
 
 let currentCategory = 'all', selectedService = null, selectedStaff = 'arek', selectedDate = '', selectedTime = '', clientExtraMinutes = 0;
@@ -1003,7 +1002,6 @@ function openBookingModal(serviceId){
     document.getElementById('client-horizon-info').textContent = `(do ${bookingHorizonDays} dni w przód)`;
     setExtraTime(0);
 
-    // Podgląd Przed i Po w modalu rezerwacji
     const previewEl = document.getElementById('modal-before-after-preview');
     if(galleryPhotos.length > 0){
         const item = galleryPhotos[0];
@@ -1101,7 +1099,7 @@ function confirmBooking(){
     const stObj=staff.find(s=>s.id===selectedStaff);
     localStorage.setItem('amaro_client_name',name); localStorage.setItem('amaro_client_phone',phone); localStorage.setItem('amaro_client_email',email);
     bookings.unshift({id:Date.now(),serviceName:selectedService.name,price:selectedService.price,durationMin:dur,freqWeeks:selectedService.freqWeeks||4,staffId:selectedStaff,staffName:stObj.name,date:selectedDate,time:selectedTime,clientName:name,clientPhone:phone,clientEmail:email,note,status:'pending'});
-    localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     closeBookingModal(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Zarezerwowano u ${stObj.name} (${selectedDate} ${selectedTime}). Oczekuje na potwierdzenie salonu.`);
 }
@@ -1126,13 +1124,13 @@ function generateFakeBookings(){
             }
         });
     }
-    localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); renderAdminCrmList(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Wygenerowano ${cnt} testowych wizyt (w tym archiwalne do CRM)!`);
 }
 
 function clearFakeBookings(){
-    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); renderAdminCrmList(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Usunięto wizyty testowe.');
 }
@@ -1270,11 +1268,11 @@ function renderAdminPendingBox(){
             <button onclick="approveBooking(${b.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shrink-0">Zatwierdź</button>
         </div>`).join('');
 }
-function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
+function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
 function approveAllPending(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     bookings.forEach(b=>{ if((!targetStaffId || b.staffId===targetStaffId) && b.status==='pending') b.status='confirmed'; });
-    localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Zatwierdzono wszystkie!');
 }
 
@@ -1291,7 +1289,7 @@ function changeBookingDuration(id, val){
         return;
     }
 
-    b.durationMin=dur; localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    b.durationMin=dur; localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zmieniono czas wizyty na ${formatDuration(dur)}.`);
 }
@@ -1317,7 +1315,7 @@ function autoResolveCollision(){
         }
     }
 
-    localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     document.getElementById('admin-collision-alert').classList.add('hidden');
     pendingCollisionBookingId = null;
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
@@ -1360,6 +1358,7 @@ function renderAdminCalendar(){
 }
 function selectAdminDay(iso){ adminSelectedDateIso=iso; renderAdminCalendar(); renderAdminSelectedDayDetails(); }
 
+// ULEPSZONY WIDOK WIZYT W DNIU: PODZIELONY NA PORY DNIA (RANO / POPOŁUDNIE / WIECZÓR)
 function renderAdminSelectedDayDetails(){
     document.getElementById('admin-selected-day-title').textContent=adminSelectedDateIso;
     const sched=getDayScheduleForStaff(currentAdminUser.id,adminSelectedDateIso);
@@ -1370,36 +1369,57 @@ function renderAdminSelectedDayDetails(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     const dayB=bookings.filter(b=>(!targetStaffId || b.staffId===targetStaffId)&&b.date===adminSelectedDateIso).sort((a,b)=>timeToMinutes(a.time)-timeToMinutes(b.time));
     
-    document.getElementById('admin-day-bookings-list').innerHTML = dayB.length===0 ? `<div class="p-3 text-center text-xs text-gray-400 bg-white rounded-xl border">Brak wizyt.</div>` : dayB.map(b=>{
-        const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
-        
-        const clientHistory = bookings.filter(x => x.clientPhone === b.clientPhone && x.id !== b.id);
-        const historyHtml = clientHistory.length > 0 
-            ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong> ${clientHistory.map(h => `${h.date} (${h.serviceName} - ${h.price})`).join(', ')}</div>`
-            : `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-gray-400">Pierwsza wizyta tego klienta w salonie.</div>`;
+    const container = document.getElementById('admin-day-bookings-list');
+    if(dayB.length === 0){
+        container.innerHTML = `<div class="p-3 text-center text-xs text-gray-400 bg-white rounded-xl border">Brak wizyt w tym dniu.</div>`;
+    } else {
+        const morning = dayB.filter(b => timeToMinutes(b.time) < 720);
+        const afternoon = dayB.filter(b => timeToMinutes(b.time) >= 720 && timeToMinutes(b.time) < 1020);
+        const evening = dayB.filter(b => timeToMinutes(b.time) >= 1020);
 
-        const savedNote = clientPrivateNotes[b.clientPhone] || '';
+        const renderGroup = (title, icon, list) => {
+            if(list.length === 0) return '';
+            return `
+                <div class="space-y-1.5">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-gold-700 bg-gold-50 px-2 py-0.5 rounded block"><i class="fa-regular ${icon} mr-1"></i> ${title} (${list.length})</span>
+                    ${list.map(b => {
+                        const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
+                        const clientHistory = bookings.filter(x => x.clientPhone === b.clientPhone && x.id !== b.id);
+                        const historyHtml = clientHistory.length > 0 
+                            ? `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-purple-700"><strong>Poprzednie wizyty (${clientHistory.length}):</strong> ${clientHistory.map(h => `${h.date} (${h.serviceName} - ${h.price})`).join(', ')}</div>`
+                            : `<div class="mt-1 pt-1 border-t border-gray-100 text-[10px] text-gray-400">Pierwsza wizyta tego klienta.</div>`;
+                        const savedNote = clientPrivateNotes[b.clientPhone] || '';
 
-        return `<div class="p-2.5 bg-white rounded-xl border ${pend?'border-amber-400':'border-gray-200'} space-y-1.5 text-xs">
-            <div class="flex justify-between items-start gap-1">
-                <div><span class="font-bold text-gold-600">${b.time}–${endT} [${b.staffName.split(' ')[0]}]</span><span class="font-bold block">${b.serviceName} (${b.price})</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone}) ${b.clientEmail ? '• '+b.clientEmail : ''}</span></div>
-                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-800'}">${pend?'Oczekuje':'Potwierdzona'}</span>
-            </div>
-            ${historyHtml}
-            <div class="mt-1">
-                <input type="text" placeholder="Prywatna notatka o kliencie..." value="${savedNote}" onchange="saveClientNote('${b.clientPhone}', this.value)" class="w-full bg-gray-50 border border-gray-200 rounded p-1 text-[10px] text-gray-700">
-            </div>
-            <div class="flex items-center justify-between pt-1.5 border-t border-gray-100">
-                <select onchange="changeBookingDuration(${b.id},this.value)" class="bg-gray-50 border rounded px-1.5 py-0.5 text-[11px] font-bold">
-                    ${[30,45,60,75,90,120,150,180].map(m=>`<option value="${m}" ${dur===m?'selected':''}>Czas: ${formatDuration(m)}</option>`).join('')}
-                </select>
-                <div class="flex gap-1">
-                    ${pend?`<button onclick="approveBooking(${b.id})" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
-                    <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox();" class="px-2 py-0.5 rounded bg-red-50 text-red-600 font-bold text-[10px]">Usuń</button>
+                        return `
+                            <div class="p-2.5 bg-white rounded-xl border ${pend?'border-amber-400':'border-gray-200'} space-y-1.5 text-xs shadow-sm">
+                                <div class="flex justify-between items-start gap-1">
+                                    <div><span class="font-bold text-gold-600">${b.time}–${endT} [${b.staffName.split(' ')[0]}]</span><span class="font-bold block">${b.serviceName} (${b.price})</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone}) ${b.clientEmail ? '• '+b.clientEmail : ''}</span></div>
+                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-800'}">${pend?'Oczekuje':'Potwierdzona'}</span>
+                                </div>
+                                ${historyHtml}
+                                <div class="mt-1">
+                                    <input type="text" placeholder="Prywatna notatka o kliencie..." value="${savedNote}" onchange="saveClientNote('${b.clientPhone}', this.value)" class="w-full bg-gray-50 border border-gray-200 rounded p-1 text-[10px] text-gray-700">
+                                </div>
+                                <div class="flex items-center justify-between pt-1.5 border-t border-gray-100">
+                                    <select onchange="changeBookingDuration(${b.id},this.value)" class="bg-gray-50 border rounded px-1.5 py-0.5 text-[11px] font-bold">
+                                        ${[30,45,60,75,90,120,150,180].map(m=>`<option value="${m}" ${dur===m?'selected':''}>Czas: ${formatDuration(m)}</option>`).join('')}
+                                    </select>
+                                    <div class="flex gap-1">
+                                        ${pend?`<button onclick="approveBooking(${b.id})" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-[10px]">Zatwierdź</button>`:''}
+                                        <button onclick="cancelBooking(${b.id}); renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox();" class="px-2 py-0.5 rounded bg-red-50 text-red-600 font-bold text-[10px]">Usuń</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
                 </div>
-            </div>
-        </div>`;
-    }).join('');
+            `;
+        };
+
+        container.innerHTML = renderGroup('Rano (do 12:00)', 'fa-sun', morning) +
+                              renderGroup('Popołudnie (12:00 – 17:00)', 'fa-clock', afternoon) +
+                              renderGroup('Wieczór (po 17:00)', 'fa-moon', evening);
+    }
 
     const myS=services.filter(s=>collabModeActive || s.specialistId===currentAdminUser.id);
     document.getElementById('admin-quick-service').innerHTML=myS.map(s=>`<option value="${s.id}">${s.name} [${s.specialistId}]</option>`).join('');
@@ -1416,7 +1436,7 @@ function saveClientNote(phone, note){
 function saveCustomDayHours(){
     const st=document.getElementById('admin-day-start').value, en=document.getElementById('admin-day-end').value;
     currentAdminUser.customDates[adminSelectedDateIso]={open:true,start:st,end:en};
-    localStorage.setItem('amaro_staff_v98',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v10',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zapisano godziny ${st}–${en} na ${adminSelectedDateIso}`);
 }
@@ -1424,7 +1444,7 @@ function saveCustomDayHours(){
 function toggleBlockSelectedDay(){
     const idx=currentAdminUser.blockedDates.indexOf(adminSelectedDateIso);
     if(idx>-1) currentAdminUser.blockedDates.splice(idx,1); else currentAdminUser.blockedDates.push(adminSelectedDateIso);
-    localStorage.setItem('amaro_staff_v98',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v10',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
 }
 
@@ -1435,7 +1455,7 @@ function addManualAdminBooking(){
     if(!isSlotAvailable(srv.specialistId,adminSelectedDateIso,time,srv.durationMin)){ alert('Kolizja czasu!'); return; }
     const stObj = staff.find(s=>s.id===srv.specialistId);
     bookings.unshift({id:Date.now(),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,freqWeeks:srv.freqWeeks||4,staffId:srv.specialistId,staffName:stObj.name,date:adminSelectedDateIso,time,clientName:cl,clientPhone:'Tel.',clientEmail:'',status:'confirmed'});
-    localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Dodano rezerwację telefoniczną!');
 }
@@ -1459,7 +1479,7 @@ function saveSpecificWeekSchedule(){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d);
         currentAdminUser.customDates[iso]={open:document.getElementById(`spec-open-${iso}`).checked,start:document.getElementById(`spec-start-${iso}`).value,end:document.getElementById(`spec-end-${iso}`).value};
     }
-    localStorage.setItem('amaro_staff_v98',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
+    localStorage.setItem('amaro_staff_v10',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
 }
 
 function renderAdminScheduleEditor(){
@@ -1477,7 +1497,7 @@ function saveAdminSchedule(){
         currentAdminUser.schedule[i].start=document.getElementById(`sched-start-${i}`).value;
         currentAdminUser.schedule[i].end=document.getElementById(`sched-end-${i}`).value;
     });
-    localStorage.setItem('amaro_staff_v98',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
+    localStorage.setItem('amaro_staff_v10',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
 function renderAdminServices(){
@@ -1494,16 +1514,16 @@ function renderAdminServices(){
 }
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
-    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v98',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
+    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v10',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
 }
 function addNewService(){
     const name=document.getElementById('new-srv-name').value.trim(), price=document.getElementById('new-srv-price').value.trim(), dur=parseInt(document.getElementById('new-srv-dur').value)||60, cat=document.getElementById('new-srv-cat').value;
     if(!name||!price) return;
     services.push({id:Date.now(),category:cat,specialistId:cat==='arek'?'arek':'agata',name,durationMin:dur,freqWeeks:4,price,desc:'Usługa w salonie AMARO.'});
-    localStorage.setItem('amaro_services_v98',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
+    localStorage.setItem('amaro_services_v10',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
 }
-function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v98',JSON.stringify(services)); renderServices(); renderAdminServices(); }
-function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v98',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
+function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v10',JSON.stringify(services)); renderServices(); renderAdminServices(); }
+function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v10',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
 
 // WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNĄ CENZURĄ OCZU
 function handleAdminBeforeAfterUpload(){
@@ -1520,7 +1540,6 @@ function handleAdminBeforeAfterUpload(){
             readerAfter.onload = function(eAfter){
                 let afterImgSrc = eAfter.target.result;
 
-                // Jeśli włączona cenzura oczu, nakładamy na górną część twarzy elegancki pasek w Canvas
                 if(censorCheck){
                     const img = new Image();
                     img.onload = function(){
@@ -1530,11 +1549,9 @@ function handleAdminBeforeAfterUpload(){
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0);
                         
-                        // Pasek cenzurujący na oczy (ok. 30-45% wysokości obrazu)
                         ctx.fillStyle = '#1a1a1a';
                         ctx.fillRect(0, img.height * 0.32, img.width, img.height * 0.12);
                         
-                        // Napis cenzury dla prywatności
                         ctx.fillStyle = '#c5a059';
                         ctx.font = `${Math.max(12, img.width * 0.03)}px sans-serif`;
                         ctx.textAlign = 'center';
@@ -1560,7 +1577,7 @@ function saveAndRenderPair(beforeSrc, afterSrc){
     const labelInput = document.getElementById('upload-before-after-label');
     const lbl = labelInput.value.trim() || 'Metamorfoza AMARO';
     galleryPhotos.unshift({ before: beforeSrc, after: afterSrc, label: lbl });
-    localStorage.setItem('amaro_gallery_v98', JSON.stringify(galleryPhotos));
+    localStorage.setItem('amaro_gallery_v10', JSON.stringify(galleryPhotos));
     renderGallery();
     document.getElementById('upload-before-file').value = '';
     document.getElementById('upload-after-file').value = '';
@@ -1593,7 +1610,7 @@ function toggleMyBookings(){
         toggleBodyScroll(false);
     }
 }
-function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v98',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
+function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v10',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
 function navigateFromCurrentLocation(){ window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin')}`,'_blank'); }
 function openReviewsModal(){ 
     renderReviewsFiltered('all', null);
