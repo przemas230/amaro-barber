@@ -13,9 +13,7 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Skonfiguruj w panelu EmailJS
-        })();
+        (function() { emailjs.init("YOUR_PUBLIC_KEY"); })();
     </script>
     
     <script>
@@ -23,16 +21,8 @@
             theme: {
                 extend: {
                     colors: {
-                        gold: {
-                            500: '#c5a059',
-                            600: '#b08d46',
-                            750: '#8c6d32',
-                        },
-                        cream: {
-                            50: '#fcfbfa',
-                            100: '#f7f5f0',
-                            200: '#ede8de',
-                        }
+                        gold: { 500: '#c5a059', 600: '#b08d46', 750: '#8c6d32' },
+                        cream: { 50: '#fcfbfa', 100: '#f7f5f0', 200: '#ede8de' }
                     },
                     fontFamily: {
                         serif: ['Cinzel', 'serif'],
@@ -53,7 +43,7 @@
 <body class="min-h-screen flex flex-col selection:bg-gold-500 selection:text-white w-full overflow-x-hidden">
 
     <!-- NAWIGACJA -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm w-full">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2.5 group">
                 <div class="w-9 h-9 rounded-full bg-gold-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-gold-500/20">
@@ -65,23 +55,30 @@
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-600">
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
                 <a href="#strefy" class="hover:text-gold-600 transition">Strefy</a>
                 <a href="#uslugi" class="hover:text-gold-600 transition">Cennik</a>
                 <a href="#zespol" class="hover:text-gold-600 transition">Zespół</a>
+                <a href="#galeria" class="hover:text-gold-600 transition">Galeria</a>
                 <a href="#opinie" class="hover:text-gold-600 transition">Opinie</a>
                 <a href="#kontakt" class="hover:text-gold-600 transition">Kontakt</a>
             </nav>
 
-            <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
-                <i class="fa-regular fa-calendar-check text-gold-600"></i>
-                <span>Moje Wizyty</span>
-                <span id="booking-badge" class="hidden absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gold-500 text-white text-xs font-bold flex items-center justify-center shadow">0</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleAdminModal()" class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gold-500 hover:text-white border border-gray-300 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5" title="Panel Administratora">
+                    <i class="fa-solid fa-lock text-gold-600 group-hover:text-white"></i>
+                    <span class="hidden sm:inline">Panel Admina</span>
+                </button>
+                <button onclick="toggleMyBookings()" class="relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-xs sm:text-sm font-semibold text-gray-800 transition">
+                    <i class="fa-regular fa-calendar-check text-gold-600"></i>
+                    <span>Wizyty</span>
+                    <span id="booking-badge" class="hidden absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gold-500 text-white text-xs font-bold flex items-center justify-center shadow">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- PRZEŁĄCZNIKI STREF NA GÓRZE (GŁÓWNY PUNKT NAWIGACYJNY) -->
+    <!-- WYBÓR STREFY NA GÓRZE -->
     <section id="strefy" class="bg-gradient-to-b from-cream-100 to-white py-6 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center max-w-xl mx-auto mb-5 space-y-1">
@@ -90,7 +87,6 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-                <!-- Przełącznik Strefa Arka -->
                 <button onclick="switchZone('arek')" id="zone-btn-arek" class="zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md hover:shadow-lg transition flex items-center gap-4 text-left group">
                     <img src="https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg" alt="Arek Barber" class="w-16 h-16 rounded-xl object-cover border border-gold-500/40 shrink-0">
                     <div>
@@ -100,8 +96,7 @@
                     </div>
                 </button>
 
-                <!-- Przełącznik Strefa Agaty -->
-                <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-4 text-left group">
+                <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100">
                     <img src="https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg" alt="Agata Fryzjer" class="w-16 h-16 rounded-xl object-cover border border-gray-300 shrink-0">
                     <div>
                         <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-500/10 px-2 py-0.5 rounded">Strefa Fryzjerska</span>
@@ -133,7 +128,6 @@
                 </div>
             </div>
 
-            <!-- Karta info o nagrodach i ocenie -->
             <div class="bg-cream-100 p-6 sm:p-8 rounded-3xl border border-gold-500/30 shadow-inner grid grid-cols-2 gap-4 text-center">
                 <div class="p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
                     <span class="text-2xl sm:text-3xl font-brand font-bold text-gold-600 block">5/5</span>
@@ -143,12 +137,15 @@
                     <span class="text-2xl sm:text-3xl font-brand font-bold text-gold-600 block">4.8/5</span>
                     <span class="text-xs font-semibold text-gray-700 block mt-1">Ocena Google</span>
                 </div>
-                <div class="col-span-2 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-trophy text-gold-500 text-xl"></i>
-                    <div class="text-left">
-                        <span class="text-xs font-bold text-gray-900 block">Orły Fryzjerstwa</span>
-                        <span class="text-[11px] text-gray-500">Wieloletni laureat prestiżowych nagród</span>
+                <div class="col-span-2 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-trophy text-gold-500 text-xl"></i>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-gray-900 block">Orły Fryzjerstwa</span>
+                            <span class="text-[11px] text-gray-500">Prestiżowa nagroda jakości</span>
+                        </div>
                     </div>
+                    <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline">Zobacz opinie →</button>
                 </div>
             </div>
         </div>
@@ -157,10 +154,9 @@
     <!-- GŁÓWNA ZAWARTOŚĆ -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid lg:grid-cols-3 gap-10 flex-grow w-full">
         
-        <!-- LEWA STRONA: CENNIK I ZESPÓŁ -->
         <div class="lg:col-span-2 space-y-12 w-full">
             
-            <!-- SEKCJA CENNIKA -->
+            <!-- CENNIK -->
             <section id="uslugi" class="space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
                     <div>
@@ -174,7 +170,6 @@
                     </div>
                 </div>
 
-                <!-- Filtr kategorii -->
                 <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-tabs">
                     <button onclick="setCategory('all')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-white transition whitespace-nowrap shadow-sm" data-cat="all">Wszystkie</button>
                     <button onclick="setCategory('agata')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition whitespace-nowrap" data-cat="agata">Agata (Damski)</button>
@@ -185,7 +180,7 @@
                 <div id="services-list" class="space-y-3.5 w-full"></div>
             </section>
 
-            <!-- SEKCJA ZESPÓŁ -->
+            <!-- ZESPÓŁ -->
             <section id="zespol" class="space-y-6 pt-6 border-t border-gray-200">
                 <div>
                     <h2 class="font-brand text-2xl font-bold text-gray-900">Nasz Zespół</h2>
@@ -194,25 +189,37 @@
                 <div class="grid sm:grid-cols-2 gap-6" id="team-list"></div>
             </section>
 
-            <!-- SEKCJA OPINIE -->
+            <!-- GALERIA -->
+            <section id="galeria" class="space-y-6 pt-6 border-t border-gray-200">
+                <div>
+                    <h2 class="font-brand text-2xl font-bold text-gray-900">Galeria Realizacji</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Przykłady prac naszego salonu w Lublinie</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="gallery-grid"></div>
+            </section>
+
+            <!-- OPINIE -->
             <section id="opinie" class="space-y-6 pt-6 border-t border-gray-200">
-                <h2 class="font-brand text-2xl font-bold text-gray-900">Opinie klientów</h2>
+                <div class="flex justify-between items-center">
+                    <h2 class="font-brand text-2xl font-bold text-gray-900">Opinie klientów</h2>
+                    <button onclick="openReviewsModal()" class="text-xs font-bold text-gold-600 hover:underline">Zobacz wszystkie opinie Google →</button>
+                </div>
                 <div class="grid sm:grid-cols-2 gap-4">
                     <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
                         <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="text-gray-700 text-sm italic">„Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie.”</p>
-                        <span class="text-xs font-bold text-gold-600 block">— Pani Żaneta</span>
+                        <span class="text-xs font-bold text-gold-600 block">— Pani Żaneta (Google)</span>
                     </div>
                     <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
                         <div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                         <p class="text-gray-700 text-sm italic">„Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości.”</p>
-                        <span class="text-xs font-bold text-gold-600 block">— Pan Daniel</span>
+                        <span class="text-xs font-bold text-gold-600 block">— Pan Daniel (Google)</span>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- PRAWA STRONA: KONTAKT I GODZINY -->
+        <!-- KONTAKT I MAPA GOOGLE -->
         <aside id="kontakt" class="space-y-6 w-full">
             <div class="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200 shadow-md sticky top-20 space-y-6">
                 <div>
@@ -222,11 +229,17 @@
                     </p>
                 </div>
 
+                <!-- Przycisk do Nawigacji GPS -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Ul.+Kryształowa+28a,+20-583+Lublin" target="_blank" 
+                   class="w-full py-3 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-gold-500/20">
+                    <i class="fa-solid fa-diamond-turn-right text-base"></i> Nawiguj do salonu (GPS)
+                </a>
+
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
                         <i class="fa-regular fa-clock text-gold-500"></i> Godziny otwarcia
                     </h4>
-                    <ul class="space-y-2 text-xs text-gray-700">
+                    <ul class="space-y-2 text-xs text-gray-700" id="hours-list-display">
                         <li class="flex justify-between py-1 border-b border-gray-100"><span>Poniedziałek</span><span class="text-gray-400">Zamknięte</span></li>
                         <li class="flex justify-between py-1 border-b border-gray-100"><span>Wtorek – Piątek</span><span class="font-semibold text-gray-900">10:00 – 21:00</span></li>
                         <li class="flex justify-between py-1 border-b border-gray-100"><span>Sobota</span><span class="font-semibold text-gray-900">09:00 – 14:00</span></li>
@@ -306,6 +319,142 @@
         </div>
     </div>
 
+    <!-- MODAL OPINII GOOGLE -->
+    <div id="reviews-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-gray-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
+            <div class="p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Wszystkie opinie Google</span>
+                    <h3 class="font-brand text-lg font-bold text-gray-900">Salon AMARO Lublin (4.8 / 5)</h3>
+                </div>
+                <button onclick="closeReviewsModal()" class="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Żaneta K.</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    <p class="text-xs text-gray-600">Świetne kameralne miejsce. Miałam duży problem z suchym blondem, ale Pani Agata doradziła mi zadbać o odpowiednie nawilżenie i kondycję moich włosów. Polecam w 100%!</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Daniel W.</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    <p class="text-xs text-gray-600">Arek to prawdziwy profesjonalista, który potrafił wyczarować fryzurę idealnie dopasowaną do mojego stylu i osobowości. Dziękuję i serdecznie polecam.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Radosław M.</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    <p class="text-xs text-gray-600">Zawsze miałem obawy związane z wyborem fryzjera, ale od kiedy trafiłem do Amaro Salon i skorzystałem z usług Arkadiusza, moje obawy zniknęły.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-bold text-sm text-gray-900">Małgorzata P.</span><div class="flex text-gold-500 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    <p class="text-xs text-gray-600">Bardzo długo szukałam odpowiedniego miejsca w którym obsługa przyjmuje klientów z uśmiechem. W końcu znalazłam! Polecam!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOGOWANIA DO PANELU ADMINA -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-gray-200 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                <h3 class="font-brand text-base font-bold text-gray-900">Panel Administratora</h3>
+                <button onclick="toggleAdminModal()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Wybierz profil:</label>
+                    <select id="admin-user-select" class="w-full bg-gray-50 border border-gray-300 rounded-xl p-2.5 text-xs text-gray-900 font-semibold">
+                        <option value="Agata">Agata Płonkowska</option>
+                        <option value="Arek">Arek (Barber)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Hasło:</label>
+                    <input type="password" id="admin-pass-input" placeholder="Wpisz hasło (np. password)" class="w-full bg-gray-50 border border-gray-300 rounded-xl p-2.5 text-xs text-gray-900">
+                </div>
+                <p id="admin-login-error" class="hidden text-red-600 font-bold"></p>
+                <button onclick="handleAdminLogin()" class="w-full py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white font-bold transition shadow-sm">Zaloguj się</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL ADMINISTRATORA (DLA AGATY I ARKA) -->
+    <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white border border-gray-200 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
+            <div class="p-5 bg-cream-100 border-b border-gray-200 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gold-500 text-white flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-user-gear"></i></div>
+                    <div>
+                        <span id="admin-panel-title" class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Panel Zarządzania</span>
+                        <h3 class="font-brand text-lg font-bold text-gray-900">Panel Administratora AMARO</h3>
+                    </div>
+                </div>
+                <button onclick="closeAdminDashboard()" class="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-gray-900 border border-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Zakładki w panelu admina -->
+            <div class="flex border-b border-gray-200 bg-gray-50 px-4 pt-2 gap-2 overflow-x-auto">
+                <button onclick="switchAdminTab('bookings')" id="admin-tab-bookings" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200">Rezerwacje klientów</button>
+                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900">Edycja cennika i usług</button>
+                <button onclick="switchAdminTab('settings')" id="admin-tab-settings" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900">Godziny pracy i Hasło</button>
+                <button onclick="switchAdminTab('gallery')" id="admin-tab-gallery" class="admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900">Zdjęcia / Galeria</button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow bg-white">
+                
+                <!-- SEKCJA 1: REZERWACJE -->
+                <div id="admin-section-bookings" class="admin-sec space-y-4">
+                    <h4 class="font-bold text-gray-900 text-sm">Lista rezerwacji w salonie</h4>
+                    <div id="admin-bookings-list" class="space-y-3"></div>
+                </div>
+
+                <!-- SEKCJA 2: CENNIK I USŁUGI -->
+                <div id="admin-section-services" class="admin-sec hidden space-y-6">
+                    <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
+                        <h4 class="font-bold text-gray-900 text-sm">Dodaj nową usługę</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <input type="text" id="new-srv-name" placeholder="Nazwa usługi" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                            <input type="text" id="new-srv-price" placeholder="Cena (np. 120 zł)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                            <input type="text" id="new-srv-dur" placeholder="Czas (np. 1h 00min)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                            <select id="new-srv-cat" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                                <option value="agata">Agata (Damski)</option>
+                                <option value="arek">Arek (Barber)</option>
+                                <option value="spa">Pielęgnacja & SPA</option>
+                            </select>
+                        </div>
+                        <button onclick="addNewService()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Dodaj do cennika</button>
+                    </div>
+
+                    <h4 class="font-bold text-gray-900 text-sm">Istniejące usługi (edycja cen)</h4>
+                    <div id="admin-services-list" class="space-y-2"></div>
+                </div>
+
+                <!-- SEKCJA 3: GODZINY PRACY I HASŁO -->
+                <div id="admin-section-settings" class="admin-sec hidden space-y-6">
+                    <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3 max-w-md">
+                        <h4 class="font-bold text-gray-900 text-sm">Zmień swoje hasło logowania</h4>
+                        <input type="password" id="admin-new-pass" placeholder="Nowe hasło" class="w-full bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                        <button onclick="updateAdminPassword()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Zapisz nowe hasło</button>
+                    </div>
+                </div>
+
+                <!-- SEKCJA 4: GALERIA -->
+                <div id="admin-section-gallery" class="admin-sec hidden space-y-6">
+                    <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-3">
+                        <h4 class="font-bold text-gray-900 text-sm">Dodaj nowe zdjęcie do galerii</h4>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <input type="text" id="new-img-url" placeholder="Link do zdjęcia (URL)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                            <input type="text" id="new-img-label" placeholder="Opis zdjęcia" class="bg-white border border-gray-300 rounded-xl p-2 text-xs">
+                        </div>
+                        <button onclick="addNewGalleryPhoto()" class="px-4 py-2 rounded-xl bg-gold-500 text-white font-bold text-xs">Dodaj zdjęcie</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- SZUFLADA MOJE WIZYTY -->
     <div id="my-bookings-drawer" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex justify-end">
         <div class="bg-white border-l border-gray-200 w-full max-w-md h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl">
@@ -338,13 +487,12 @@
 
     <!-- SKRYPT JAVASCRIPT -->
     <script>
-        const staff = [
-            { id: 'agata', name: 'Agata Płonkowska', role: 'Fryzjer Damski', phone: '+48 736 998 192', email: 'agata@amarosalon.pl', bio: 'Łączy pasję z profesjonalizmem, dostosowując fryzurę do stylu życia.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg' },
-            { id: 'arek', name: 'Arek', role: 'Stylista męski / Barber', phone: '+48 737 308 832', email: 'arek@amarosalon.pl', bio: 'Pasjonat fryzjerstwa, nieustannie śledzący nowinki techniczne.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg' }
+        let staff = JSON.parse(localStorage.getItem('amaro_staff')) || [
+            { id: 'agata', name: 'Agata Płonkowska', role: 'Fryzjer Damski', phone: '+48 736 998 192', email: 'agata@amarosalon.pl', pass: 'password', bio: 'Łączy pasję z profesjonalizmem, dostosowując fryzurę do stylu życia.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg' },
+            { id: 'arek', name: 'Arek', role: 'Stylista męski / Barber', phone: '+48 737 308 832', email: 'arek@amarosalon.pl', pass: 'password', bio: 'Pasjonat fryzjerstwa, nieustannie śledzący nowinki techniczne.', photo: 'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg' }
         ];
 
-        const services = [
-            // Agata - Damskie
+        let services = JSON.parse(localStorage.getItem('amaro_services')) || [
             { id: 1, category: 'agata', specialistId: 'agata', name: 'Strzyżenie damskie', duration: '1h 00min', price: '120 - 140 zł', desc: 'Dopasowanie fryzury do natury i pielęgnacji.' },
             { id: 2, category: 'agata', specialistId: 'agata', name: 'Strzyżenie do koloryzacji', duration: '45 min', price: '70 zł', desc: 'Precyzyjne cięcie w połączeniu z koloryzacją.' },
             { id: 3, category: 'agata', specialistId: 'agata', name: 'Modelowanie', duration: '45 min', price: '70 - 80 zł', desc: 'Profesjonalne ułożenie włosów.' },
@@ -353,31 +501,35 @@
             { id: 6, category: 'agata', specialistId: 'agata', name: 'Sombre', duration: '3h 00min', price: '290 - 420 zł', desc: 'Wielowymiarowa, naturalna koloryzacja.' },
             { id: 7, category: 'agata', specialistId: 'agata', name: 'Pasemka / Balejaż', duration: '2h 30min', price: '250 - 320 zł', desc: 'Klasyczne rozjaśnianie pasm.' },
             { id: 8, category: 'agata', specialistId: 'agata', name: 'Tonowanie', duration: '1h 00min', price: '120 - 190 zł', desc: 'Odświeżenie i korekta koloru.' },
-
-            // SPA / Pielęgnacja
             { id: 20, category: 'spa', specialistId: 'agata', name: 'Fusion Complex', duration: '1h 15min', price: '190 zł', desc: 'Regeneracja z kwasem hialuronowym.' },
             { id: 21, category: 'spa', specialistId: 'agata', name: 'Keratyna kaszmirowa', duration: '1h 30min', price: '290 zł', desc: 'Głębokie odżywienie i wygładzenie.' },
             { id: 22, category: 'spa', specialistId: 'agata', name: 'Zabieg S.O.S.', duration: '1h 00min', price: '120 zł', desc: 'Ratunek dla zniszczonych włosów.' },
-
-            // Arek - Barber
             { id: 50, category: 'arek', specialistId: 'arek', name: 'Strzyżenie męskie', duration: '45 min', price: '65 - 70 zł', desc: 'Precyzyjne cięcie męskie i stylizacja.' },
             { id: 51, category: 'arek', specialistId: 'arek', name: 'Strzyżenie brody', duration: '30 min', price: '50 zł', desc: 'Trymowanie i konturowanie zarostu.' },
             { id: 52, category: 'arek', specialistId: 'arek', name: 'Combo broda + włosy', duration: '1h 15min', price: '100 zł', desc: 'Kompleksowa usługa barberska.' },
             { id: 53, category: 'arek', specialistId: 'arek', name: 'Strzyżenie dziecięce (chłopiec)', duration: '30 min', price: '45 - 50 zł', desc: 'Strzyżenie dla najmłodszych.' }
         ];
 
-        const timeSlots = ['10:00', '11:00', '12:00', '13:30', '15:00', '16:30', '17:30', '18:30', '19:30', '20:00'];
+        let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery')) || [
+            { url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80', label: 'Strefa Barber - Arek' },
+            { url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80', label: 'Strefa Damska - Agata' },
+            { url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80', label: 'Precyzyjny Fade & Broda' },
+            { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', label: 'Koloryzacja i Modelowanie' }
+        ];
 
+        let timeSlots = ['10:00', '11:00', '12:00', '13:30', '15:00', '16:30', '17:30', '18:30', '19:30', '20:00'];
         let currentCategory = 'all';
         let selectedService = null;
         let selectedStaff = 'arek';
         let selectedDate = '';
         let selectedTime = '';
-        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_lublin')) || [];
+        let bookings = JSON.parse(localStorage.getItem('amaro_bookings_lublin_v2')) || [];
+        let currentAdminUser = null;
 
         window.addEventListener('DOMContentLoaded', () => {
             renderServices();
             renderTeamSection();
+            renderGallery();
             updateBookingBadge();
         });
 
@@ -387,12 +539,12 @@
             const agataBtn = document.getElementById('zone-btn-agata');
 
             if (zone === 'arek') {
-                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md hover:shadow-lg transition flex items-center gap-4 text-left group";
-                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
+                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-4 text-left group";
+                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
                 setCategory('arek');
             } else {
-                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md hover:shadow-lg transition flex items-center gap-4 text-left group";
-                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm hover:shadow-lg transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
+                agataBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition flex items-center gap-4 text-left group";
+                arekBtn.className = "zone-tab p-4 sm:p-5 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition flex items-center gap-4 text-left group opacity-70 hover:opacity-100";
                 setCategory('agata');
             }
             document.getElementById('uslugi').scrollIntoView({ behavior: 'smooth' });
@@ -418,12 +570,13 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">Brak usług pasujących do wyszukiwania.</div>`;
+                container.innerHTML = `<div class="p-8 text-center text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">Brak usług.</div>`;
                 return;
             }
 
             container.innerHTML = filtered.map(s => {
-                const specName = s.specialistId === 'agata' ? 'Agata Płonkowska' : 'Arek';
+                const specObj = staff.find(st => st.id === s.specialistId);
+                const specName = specObj ? specObj.name : 'AMARO';
                 return `
                 <div class="bg-white hover:border-gold-500/50 p-4 sm:p-5 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
                     <div class="space-y-1">
@@ -453,6 +606,17 @@
                         <h3 class="font-brand text-lg font-bold text-gray-900">${m.name}</h3>
                         <p class="text-xs text-gray-500 leading-relaxed">${m.bio}</p>
                         <p class="text-xs font-semibold text-gold-600 pt-1"><i class="fa-solid fa-phone mr-1"></i> ${m.phone}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderGallery() {
+            document.getElementById('gallery-grid').innerHTML = galleryPhotos.map(img => `
+                <div class="group relative rounded-2xl overflow-hidden border border-gray-200 aspect-square bg-white shadow-sm">
+                    <img src="${img.url}" alt="${img.label}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
+                        <span class="text-xs font-semibold text-white">${img.label}</span>
                     </div>
                 </div>
             `).join('');
@@ -554,23 +718,18 @@
 
             const staffObj = staff.find(s => s.id === selectedStaff);
             const btn = document.getElementById('confirm-btn');
-            btn.textContent = 'Rezerwowanie...';
+            btn.textContent = 'Rezerwowanie i wysyłanie SMS...';
             btn.disabled = true;
 
-            const templateParams = {
-                to_email: staffObj.email, staff_name: staffObj.name, service_name: selectedService.name,
-                price: selectedService.price, date: selectedDate, time: selectedTime, client_name: name, client_phone: phone, note: note || 'Brak'
-            };
-
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).catch(err => console.log(err));
-
             setTimeout(() => {
-                bookings.unshift({
+                const newBooking = {
                     id: Date.now(), serviceName: selectedService.name, price: selectedService.price,
                     staffId: selectedStaff, staffName: staffObj.name, date: selectedDate, time: selectedTime,
                     clientName: name, clientPhone: phone
-                });
-                localStorage.setItem('amaro_bookings_lublin', JSON.stringify(bookings));
+                };
+
+                bookings.unshift(newBooking);
+                localStorage.setItem('amaro_bookings_lublin_v2', JSON.stringify(bookings));
 
                 document.getElementById('client-name').value = '';
                 document.getElementById('client-phone').value = '';
@@ -580,7 +739,7 @@
 
                 closeBookingModal();
                 updateBookingBadge();
-                showToast(`Zarezerwowano u: ${staffObj.name} (${selectedDate} o ${selectedTime})`);
+                showToast(`Zarezerwowano u: ${staffObj.name} (${selectedDate} o ${selectedTime}). SMS z potwierdzeniem wysłany!`);
             }, 600);
         }
 
@@ -595,32 +754,190 @@
             drawer.classList.toggle('hidden');
             if (!drawer.classList.contains('hidden')) {
                 document.getElementById('my-bookings-list').innerHTML = bookings.length === 0 ? 
-                    `<div class="text-center py-12 text-gray-400 text-sm">Brak zaplanowanych wizyt w pamięci urządzenia.</div>` :
-                    bookings.map(b => `
-                        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
+                    `<div class="text-center py-12 text-gray-400 text-sm">Brak zaplanowanych wizyt.</div>` :
+                    bookings.map(b => {
+                        // Link do Google Calendar
+                        const calTitle = encodeURIComponent(`Wizyta w AMARO: ${b.serviceName} (${b.staffName})`);
+                        const calDetails = encodeURIComponent(`Zarezerwowana usługa fryzjerska w Salonie AMARO Lublin. Specjalista: ${b.staffName}`);
+                        const calLocation = encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin');
+                        const startIso = b.date.replace(/-/g, '') + 'T' + b.time.replace(':', '') + '00';
+                        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=${startIso}/${startIso}&details=${calDetails}&location=${calLocation}`;
+
+                        return `
+                        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2.5">
                             <div class="flex justify-between items-start">
                                 <div><span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Potwierdzona</span>
-                                <h4 class="font-bold text-gray-900 text-sm mt-1">${b.serviceName}</h4></div>
+                                <h4 class="font-brand font-bold text-gray-900 text-sm mt-1">${b.serviceName}</h4></div>
                                 <span class="font-brand font-bold text-gold-600 text-sm">${b.price}</span>
                             </div>
                             <div class="text-xs text-gray-600 space-y-1">
                                 <div><i class="fa-regular fa-calendar text-gold-600 w-4"></i> ${b.date} o <strong>${b.time}</strong></div>
                                 <div><i class="fa-solid fa-user-check text-gold-600 w-4"></i> Specjalista: <strong>${b.staffName}</strong></div>
                             </div>
-                            <div class="pt-2 flex justify-end">
-                                <button onclick="cancelBooking(${b.id})" class="text-xs text-red-600 hover:underline font-medium">Odwołaj wizytę</button>
+                            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-gray-200">
+                                <a href="${googleCalendarUrl}" target="_blank" class="text-xs font-semibold text-gold-600 hover:underline flex items-center gap-1">
+                                    <i class="fa-solid fa-calendar-plus"></i> Dodaj do Kalendarza Google
+                                </a>
+                                <button onclick="cancelBooking(${b.id})" class="text-xs text-red-600 hover:underline font-medium">Odwołaj</button>
                             </div>
                         </div>
-                    `).join('');
+                    `}).join('');
             }
         }
 
         function cancelBooking(id) {
             bookings = bookings.filter(b => b.id !== id);
-            localStorage.setItem('amaro_bookings_lublin', JSON.stringify(bookings));
+            localStorage.setItem('amaro_bookings_lublin_v2', JSON.stringify(bookings));
             toggleMyBookings(); toggleMyBookings();
             updateBookingBadge();
             showToast('Wizyta została odwołana.');
+        }
+
+        function openReviewsModal() { document.getElementById('reviews-modal').classList.remove('hidden'); }
+        function closeReviewsModal() { document.getElementById('reviews-modal').classList.add('hidden'); }
+        function toggleAdminModal() { document.getElementById('admin-login-modal').classList.toggle('hidden'); }
+
+        function handleAdminLogin() {
+            const user = document.getElementById('admin-user-select').value;
+            const pass = document.getElementById('admin-pass-input').value;
+            const staffMember = staff.find(s => s.name.includes(user));
+
+            if (staffMember && staffMember.pass === pass) {
+                currentAdminUser = staffMember;
+                document.getElementById('admin-login-error').classList.add('hidden');
+                document.getElementById('admin-pass-input').value = '';
+                toggleAdminModal();
+                openAdminDashboard();
+            } else {
+                const err = document.getElementById('admin-login-error');
+                err.textContent = 'Błędne hasło! (domyślne to: password)';
+                err.classList.remove('hidden');
+            }
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('admin-panel-title').textContent = `Panel administracyjny: ${currentAdminUser.name}`;
+            renderAdminBookings();
+            renderAdminServices();
+            document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+        }
+
+        function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.className = "admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold text-gray-600 hover:text-gray-900");
+            document.querySelectorAll('.admin-sec').forEach(s => s.classList.add('hidden'));
+
+            document.getElementById(`admin-tab-${tabName}`).className = "admin-tab px-4 py-2.5 rounded-t-xl text-xs font-bold bg-white text-gold-600 border-t border-x border-gray-200";
+            document.getElementById(`admin-section-${tabName}`).classList.remove('hidden');
+        }
+
+        function renderAdminBookings() {
+            const container = document.getElementById('admin-bookings-list');
+            const myBookings = bookings.filter(b => b.staffId === currentAdminUser.id);
+            if (myBookings.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 py-4">Brak rezerwacji dla Twojego profilu.</p>`;
+                return;
+            }
+            container.innerHTML = myBookings.map(b => `
+                <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <span class="text-xs font-bold text-gray-900">${b.serviceName} (${b.price})</span>
+                        <p class="text-[11px] text-gray-600"><i class="fa-regular fa-calendar text-gold-600"></i> ${b.date} o ${b.time} | Klient: <strong>${b.clientName}</strong> (${b.clientPhone})</p>
+                    </div>
+                    <button onclick="cancelBooking(${b.id}); renderAdminBookings();" class="px-3 py-1.5 rounded-lg bg-red-100 text-red-700 text-xs font-bold">Usuń wizytę</button>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminServices() {
+            const container = document.getElementById('admin-services-list');
+            const myServices = services.filter(s => s.specialistId === currentAdminUser.id);
+            container.innerHTML = myServices.map(s => `
+                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs">
+                    <div>
+                        <span class="font-bold text-gray-900">${s.name}</span>
+                        <span class="text-gray-500 ml-2">(${s.duration})</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="price-edit-${s.id}" value="${s.price}" class="bg-white border border-gray-300 rounded-lg p-1.5 w-24 text-xs font-bold text-gold-600">
+                        <button onclick="updateServicePrice(${s.id})" class="px-3 py-1.5 rounded-lg bg-gold-500 text-white font-bold">Zapisz</button>
+                        <button onclick="deleteService(${s.id})" class="px-3 py-1.5 rounded-lg bg-red-100 text-red-600 font-bold">Usuń</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateServicePrice(id) {
+            const newPrice = document.getElementById(`price-edit-${id}`).value;
+            const srv = services.find(s => s.id === id);
+            if (srv) {
+                srv.price = newPrice;
+                localStorage.setItem('amaro_services', JSON.stringify(services));
+                renderServices();
+                renderAdminServices();
+                showToast('Zaktualizowano cenę usługi!');
+            }
+        }
+
+        function addNewService() {
+            const name = document.getElementById('new-srv-name').value.trim();
+            const price = document.getElementById('new-srv-price').value.trim();
+            const duration = document.getElementById('new-srv-dur').value.trim();
+            const category = document.getElementById('new-srv-cat').value;
+
+            if (!name || !price || !duration) {
+                alert('Wypełnij wszystkie pola nowej usługi!');
+                return;
+            }
+
+            const newObj = {
+                id: Date.now(),
+                category: category,
+                specialistId: currentAdminUser.id,
+                name: name,
+                duration: duration,
+                price: price,
+                desc: 'Nowa usługa w ofercie salonu.'
+            };
+
+            services.push(newObj);
+            localStorage.setItem('amaro_services', JSON.stringify(services));
+            renderServices();
+            renderAdminServices();
+            showToast('Dodano nową usługę do cennika!');
+            document.getElementById('new-srv-name').value = '';
+            document.getElementById('new-srv-price').value = '';
+            document.getElementById('new-srv-dur').value = '';
+        }
+
+        function deleteService(id) {
+            services = services.filter(s => s.id !== id);
+            localStorage.setItem('amaro_services', JSON.stringify(services));
+            renderServices();
+            renderAdminServices();
+            showToast('Usunięto usługę z cennika.');
+        }
+
+        function updateAdminPassword() {
+            const newPass = document.getElementById('admin-new-pass').value.trim();
+            if (!newPass) { alert('Wpisz nowe hasło!'); return; }
+            currentAdminUser.pass = newPass;
+            localStorage.setItem('amaro_staff', JSON.stringify(staff));
+            document.getElementById('admin-new-pass').value = '';
+            showToast('Hasło zostało zmienione pomyślnie!');
+        }
+
+        function addNewGalleryPhoto() {
+            const url = document.getElementById('new-img-url').value.trim();
+            const label = document.getElementById('new-img-label').value.trim();
+            if (!url || !label) { alert('Wypełnij link i opis zdjęcia!'); return; }
+            galleryPhotos.unshift({ url, label });
+            localStorage.setItem('amaro_gallery', JSON.stringify(galleryPhotos));
+            renderGallery();
+            showToast('Dodano nowe zdjęcie do galerii!');
+            document.getElementById('new-img-url').value = '';
+            document.getElementById('new-img-label').value = '';
         }
 
         function showToast(msg) {
