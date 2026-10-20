@@ -48,11 +48,10 @@ tailwind.config = {
 </script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
-html, body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; transition: background-color 0.6s ease, color 0.6s ease; }
+html, body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; width: 100%; max-width: 100vw; overflow-x: hidden; transition: background-color 0.5s ease, color 0.5s ease; }
 body.modal-open { overflow: hidden !important; position: fixed !important; width: 100% !important; height: 100% !important; }
 .font-brand { font-family: 'Cinzel', serif; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: inherit; }
 ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -66,11 +65,11 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
         <a href="#" class="flex items-center gap-2 shrink-0">
             <div class="w-9 h-9 rounded-full bg-gold-500 flex items-center justify-center text-white font-bold text-base shadow-md"><i class="fa-solid fa-scissors"></i></div>
             <div>
-                <span class="font-brand text-base sm:text-xl tracking-wider font-bold block leading-none transition-colors duration-500" id="nav-brand-title">AMARO</span>
+                <span class="font-brand text-base sm:text-xl tracking-wider font-brand font-bold block leading-none" id="nav-brand-title">AMARO</span>
                 <span class="text-[9px] tracking-[0.18em] text-gold-600 font-semibold uppercase block">Salon & Barber Lublin</span>
             </div>
         </a>
-        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium transition-colors duration-500" id="nav-links">
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium" id="nav-links">
             <a href="#strefy" class="hover:text-gold-500 transition">Strefy</a>
             <a href="#uslugi" class="hover:text-gold-500 transition">Cennik</a>
             <a href="#zespol" class="hover:text-gold-500 transition">Zespół</a>
@@ -98,14 +97,14 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
 </header>
 
 <!-- PRZEŁĄCZNIKI STREF -->
-<section id="strefy" class="py-5 border-b border-gray-200 w-full transition-all duration-500" id="zones-section">
+<section id="strefy" class="py-5 border-b border-gray-200 w-full transition-all duration-500">
     <div class="max-w-7xl mx-auto px-3 sm:px-6">
         <div class="text-center max-w-xl mx-auto mb-4">
             <span class="text-[10px] font-bold tracking-widest text-gold-600 uppercase">Wybierz swój świat w AMARO</span>
-            <h2 class="font-brand text-lg sm:text-2xl font-bold transition-colors duration-550">Do którego specjalisty chcesz się zapisać?</h2>
+            <h2 class="font-brand text-lg sm:text-2xl font-bold">Do którego specjalisty chcesz się zapisać?</h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
-            <button onclick="switchZone('arek')" id="zone-btn-arek" class="zone-card p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0">
+            <button onclick="switchZone('arek')" id="zone-btn-arek" class="p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0">
                 <img src="https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg" alt="Arek" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gold-500/40 shrink-0">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
@@ -116,7 +115,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                     <p class="text-xs text-gray-500 truncate">Stylista męski, broda, fade i klasyczne cięcia</p>
                 </div>
             </button>
-            <button onclick="switchZone('agata')" id="zone-btn-agata" class="zone-card p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-80 hover:opacity-100 w-full min-w-0">
+            <button onclick="switchZone('agata')" id="zone-btn-agata" class="p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-80 hover:opacity-100 w-full min-w-0">
                 <img src="https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg" alt="Agata" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-gray-300 shrink-0">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
@@ -206,7 +205,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
         <section id="galeria" class="space-y-4 pt-6 border-t" style="border-color: rgba(197,160,89,0.3);">
             <div class="flex justify-between items-center">
                 <h2 class="font-brand text-xl sm:text-2xl font-bold">Galeria Metamorfoz (Przed i Po)</h2>
-                <span class="text-xs text-gold-600 font-bold">Kliknij zdjęcie, aby powiększyć</span>
+                <span class="text-xs text-gold-600 font-bold">Z ochroną prywatności</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="gallery-grid"></div>
         </section>
@@ -292,7 +291,7 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                 <div id="modal-staff-list" class="grid grid-cols-2 gap-2"></div>
             </div>
 
-            <div class="bg-cream-50 p-3 rounded-2xl border border-gray-200 space-y-2">
+            <div class="bg-cream-50 p-3 rounded-2xl border border-gold-500/30 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-wand-magic-sparkles text-gold-600 mr-1"></i> Długość/gęstość włosów:</span>
                     <span id="computed-duration-badge" class="text-[11px] font-bold text-gold-750 bg-gold-100 px-2 py-0.5 rounded-full">Czas: 45 min</span>
@@ -619,10 +618,8 @@ body.modal-open { overflow: hidden !important; position: fixed !important; width
                     </div>
                 </div>
 
-                <!-- USTAWIENIA MOTYWU DLA FRYZJERA -->
                 <div class="bg-cream-100 p-4 rounded-2xl border border-gray-200 space-y-2.5">
                     <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-palette text-gold-600 mr-1"></i> Wybór motywu dla Twojej strefy</h4>
-                    <p class="text-xs text-gray-600">Wybierz, jaki motyw ma się włączać na całej stronie, gdy użytkownicy wybierają Twoją strefę:</p>
                     <select id="admin-theme-selector" onchange="updateStaffThemeSetting(this.value)" class="bg-white border border-gray-300 rounded-xl p-2 text-xs font-bold text-gray-900 w-full">
                         <option value="light">Jasny motyw (Classic Cream & Gold)</option>
                         <option value="dark">Ciemny motyw (Midnight Black & Gold)</option>
@@ -721,13 +718,13 @@ const defaultWeeklyHours = {
     0:{open:false,start:'09:00',end:'14:00',name:'Niedziela'}
 };
 
-let staff = JSON.parse(localStorage.getItem('amaro_staff_v115')) || [
+let staff = JSON.parse(localStorage.getItem('amaro_staff_v135')) || [
     {id:'arek',name:'Arek',role:'Stylista męski / Barber',phone:'+48 737 308 832',pass:'password',bio:'Stylista męski, barber. Pasjonat fryzjerstwa.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/arek.jpg',theme:'dark',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]},
     {id:'agata',name:'Agata Płonkowska',role:'Fryzjer Damski',phone:'+48 736 998 192',pass:'password',bio:'Łączy pasję z profesjonalizmem w strefie damskiej.',photo:'https://amarosalon.pl/wp-content/uploads/2023/11/agata_plonkowska.jpg',theme:'light',schedule:JSON.parse(JSON.stringify(defaultWeeklyHours)),customDates:{},blockedDates:[]}
 ];
 staff.forEach(s => { if(!s.customDates) s.customDates={}; if(!s.blockedDates) s.blockedDates=[]; if(!s.theme) s.theme = s.id==='arek'?'dark':'light'; });
 
-let services = JSON.parse(localStorage.getItem('amaro_services_v115')) || [
+let services = JSON.parse(localStorage.getItem('amaro_services_v135')) || [
     {id:50,category:'arek',specialistId:'arek',name:'Strzyżenie męskie',durationMin:45,freqWeeks:3,price:'65 – 70 zł',desc:'Precyzyjne strzyżenie męskie i stylizacja.'},
     {id:51,category:'arek',specialistId:'arek',name:'Strzyżenie brody',durationMin:30,freqWeeks:2,price:'50 zł',desc:'Trymowanie, konturowanie i pielęgnacja zarostu.'},
     {id:52,category:'arek',specialistId:'arek',name:'Combo broda + włosy',durationMin:75,freqWeeks:3,price:'100 zł',desc:'Kompleksowe strzyżenie włosów oraz brody.'},
@@ -747,7 +744,7 @@ let services = JSON.parse(localStorage.getItem('amaro_services_v115')) || [
     {id:22,category:'spa',specialistId:'agata',name:'Zabieg S.O.S. / Clean-up + Action',durationMin:60,freqWeeks:4,price:'120 zł',desc:'Regeneracja ekspresowa.'}
 ];
 
-let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v115')) || [
+let galleryPhotos = JSON.parse(localStorage.getItem('amaro_gallery_v135')) || [
     {before: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80', label: 'Strzyżenie Fade (Arek)'},
     {before: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80', after: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80', label: 'Sombre & Wygładzenie (Agata)'}
 ];
@@ -776,7 +773,7 @@ for(let i=0; i<420; i++){
 
 let bookingHorizonDays = parseInt(localStorage.getItem('amaro_horizon_days')) || 30;
 let bufferTimeMinutes = parseInt(localStorage.getItem('amaro_buffer_time')) || 5;
-let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v115')) || [];
+let bookings = JSON.parse(localStorage.getItem('amaro_bookings_v135')) || [];
 let clientPrivateNotes = JSON.parse(localStorage.getItem('amaro_client_notes')) || {};
 
 let currentCategory = 'all', selectedService = null, selectedStaff = 'arek', selectedDate = '', selectedTime = '', clientExtraMinutes = 0;
@@ -844,7 +841,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
     applyGlobalTheme(selectedStaff);
 });
 
-// DYNAMICZNA ZMIANA MOTYWU CAŁEJ STRONY (AGATA = JASNY / AREK = CIEMNY LUB W/G USTAWIEŃ)
 function applyGlobalTheme(staffId){
     const st = staff.find(s => s.id === staffId) || staff[0];
     const theme = st.theme || (st.id === 'arek' ? 'dark' : 'light');
@@ -873,10 +869,12 @@ function applyGlobalTheme(staffId){
         document.querySelectorAll('.content-subcard').forEach(el => {
             el.style.backgroundColor = '#1a1a1a';
             el.style.borderColor = 'rgba(255,255,255,0.1)';
+            el.style.color = '#f5f5f5';
         });
         document.querySelectorAll('.hero-card-box').forEach(el => {
             el.style.backgroundColor = '#1a1a1a';
             el.style.borderColor = 'rgba(197,160,89,0.3)';
+            el.style.color = '#f5f5f5';
         });
         document.querySelectorAll('.hero-stat-card').forEach(el => {
             el.style.backgroundColor = '#121212';
@@ -886,6 +884,7 @@ function applyGlobalTheme(staffId){
         document.querySelectorAll('.hero-btn-sec').forEach(el => {
             el.style.backgroundColor = '#1a1a1a';
             el.style.color = '#ffffff';
+            el.style.borderColor = 'rgba(197,160,89,0.4)';
         });
         document.querySelectorAll('.search-input-box').forEach(el => {
             el.style.backgroundColor = '#121212';
@@ -909,10 +908,12 @@ function applyGlobalTheme(staffId){
         document.querySelectorAll('.content-subcard').forEach(el => {
             el.style.backgroundColor = '#f7f5f0';
             el.style.borderColor = '#e5e7eb';
+            el.style.color = '#1a1a1a';
         });
         document.querySelectorAll('.hero-card-box').forEach(el => {
             el.style.backgroundColor = '#f7f5f0';
             el.style.borderColor = 'rgba(197,160,89,0.3)';
+            el.style.color = '#1a1a1a';
         });
         document.querySelectorAll('.hero-stat-card').forEach(el => {
             el.style.backgroundColor = '#ffffff';
@@ -922,6 +923,7 @@ function applyGlobalTheme(staffId){
         document.querySelectorAll('.hero-btn-sec').forEach(el => {
             el.style.backgroundColor = '#f7f5f0';
             el.style.color = '#1a1a1a';
+            el.style.borderColor = 'rgba(197,160,89,0.4)';
         });
         document.querySelectorAll('.search-input-box').forEach(el => {
             el.style.backgroundColor = '#ffffff';
@@ -1015,8 +1017,8 @@ function renderHoursDisplay(){
 function switchZone(zone){
     selectedStaff = zone;
     applyGlobalTheme(zone);
-    document.getElementById('zone-btn-arek').className = zone==='arek' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
-    document.getElementById('zone-btn-agata').className = zone==='agata' ? "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
+    document.getElementById('zone-btn-arek').className = zone==='arek' ? "p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
+    document.getElementById('zone-btn-agata').className = zone==='agata' ? "p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gold-500 shadow-md transition-all duration-500 flex items-center gap-3.5 text-left w-full min-w-0" : "p-3.5 sm:p-4 rounded-2xl bg-white text-gray-900 border-2 border-gray-200 shadow-sm transition-all duration-500 flex items-center gap-3.5 text-left opacity-75 w-full min-w-0";
     setCategory(zone); renderHoursDisplay();
     document.getElementById('uslugi').scrollIntoView({behavior:'smooth'});
 }
@@ -1034,7 +1036,7 @@ function renderServices(){
     const list = services.filter(s=>(currentCategory==='all'||s.category===currentCategory)&&(s.name.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q)));
     document.getElementById('services-list').innerHTML = list.length===0 ? `<div class="p-6 text-center text-gray-400 bg-white rounded-2xl border">Brak usług.</div>` : list.map(s=>{
         const st = staff.find(x=>x.id===s.specialistId);
-        return `<div class="bg-white hover:border-gold-500 p-4 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full min-w-0 text-gray-900">
+        return `<div class="bg-white text-gray-900 hover:border-gold-500 p-4 rounded-2xl border border-gray-200 transition shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full min-w-0">
             <div class="space-y-0.5 min-w-0">
                 <span class="text-[10px] font-bold uppercase text-gold-600 block">${st?st.name:'AMARO'}</span>
                 <h3 class="font-brand font-bold text-gray-900 text-sm sm:text-base break-words">${s.name}</h3>
@@ -1053,7 +1055,7 @@ function renderServices(){
 
 function renderTeamSection(){
     document.getElementById('team-list').innerHTML = staff.map(m=>`
-        <div class="bg-white rounded-2xl border border-gray-200 flex items-center gap-4 p-4 shadow-sm min-w-0 text-gray-900">
+        <div class="bg-white text-gray-900 rounded-2xl border border-gray-200 flex items-center gap-4 p-4 shadow-sm min-w-0">
             <img src="${m.photo}" alt="${m.name}" class="w-20 h-20 rounded-2xl object-cover border-2 border-gold-500/30 shrink-0">
             <div class="space-y-1 min-w-0 flex-1">
                 <span class="text-[10px] font-bold uppercase text-gold-600 bg-gold-500/10 px-2 py-0.5 rounded">${m.role}</span>
@@ -1113,7 +1115,7 @@ function renderReviewsFiltered(staffFilter, ratingFilter){
     if(ratingFilter) list = list.filter(r=>r.rating===ratingFilter);
 
     document.getElementById('reviews-list-container').innerHTML = list.length===0 ? `<div class="p-6 text-center text-gray-400">Brak opinii spełniających kryteria.</div>` : list.map(r=>`
-        <div class="p-3.5 rounded-2xl bg-gray-50 border border-gray-200 space-y-1">
+        <div class="p-3.5 rounded-2xl bg-gray-50 text-gray-900 border border-gray-200 space-y-1">
             <div class="flex justify-between items-center"><strong class="text-gray-900">${r.name}</strong><div class="flex text-gold-500 text-[10px]">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}</div></div>
             <p class="text-gray-600 italic">${r.text}</p>
         </div>`).join('');
@@ -1152,8 +1154,8 @@ function openBookingModal(serviceId){
     if(galleryPhotos.length > 0){
         const item = galleryPhotos[0];
         previewEl.innerHTML = `
-            <div class="bg-white p-1 rounded-lg border text-center"><img src="${item.before}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PRZED</span></div>
-            <div class="bg-white p-1 rounded-lg border text-center"><img src="${item.after}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PO</span></div>
+            <div class="bg-white text-gray-900 p-1 rounded-lg border text-center"><img src="${item.before}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PRZED</span></div>
+            <div class="bg-white text-gray-900 p-1 rounded-lg border text-center"><img src="${item.after}" class="w-full h-20 object-cover rounded mb-1"><span class="font-bold text-[9px] text-gold-700">PO</span></div>
         `;
     }
 
@@ -1190,7 +1192,7 @@ function renderModalStaff(){
     document.getElementById('modal-staff-list').innerHTML = staff.map(m=>`
         <button onclick="selectStaff('${m.id}')" class="p-2 rounded-2xl border text-left flex items-center gap-2 min-w-0 ${selectedStaff===m.id?'bg-gold-500/10 border-gold-500':'bg-gray-50 border-gray-200'}">
             <img src="${m.photo}" class="w-8 h-8 rounded-full object-cover shrink-0">
-            <div class="min-w-0"><span class="text-xs font-bold block truncate">${m.name.split(' ')[0]}</span><span class="text-[10px] text-gray-500 block truncate">${m.role}</span></div>
+            <div class="min-w-0"><span class="text-xs font-bold block truncate text-gray-900">${m.name.split(' ')[0]}</span><span class="text-[10px] text-gray-500 block truncate">${m.role}</span></div>
         </button>`).join('');
 }
 function selectStaff(id){ selectedStaff=id; selectedTime=''; renderModalStaff(); renderClientCalendar(); renderModalTimes(); }
@@ -1252,7 +1254,7 @@ function confirmBooking(){
     const stObj=staff.find(s=>s.id===selectedStaff);
     localStorage.setItem('amaro_client_name',name); localStorage.setItem('amaro_client_phone',phone); localStorage.setItem('amaro_client_email',email);
     bookings.unshift({id:Date.now(),serviceName:selectedService.name,price:selectedService.price,durationMin:dur,freqWeeks:selectedService.freqWeeks||4,staffId:selectedStaff,staffName:stObj.name,date:selectedDate,time:selectedTime,clientName:name,clientPhone:phone,clientEmail:email,note,status:'pending'});
-    localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     closeBookingModal(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Zarezerwowano u ${stObj.name} (${selectedDate} ${selectedTime}). Oczekuje na potwierdzenie salonu.`);
 }
@@ -1277,13 +1279,13 @@ function generateFakeBookings(){
             }
         });
     }
-    localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); renderAdminCrmList(); updateBookingBadge(); updateNextFreeBadges();
     showToast(`Wygenerowano ${cnt} testowych wizyt!`);
 }
 
 function clearFakeBookings(){
-    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    bookings=bookings.filter(b=>!b.isFake); localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); renderAdminPendingBox(); renderAdminCrmList(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Usunięto wizyty testowe.');
 }
@@ -1343,7 +1345,7 @@ function closeAdminDashboard(){
 function updateStaffThemeSetting(newTheme){
     if(currentAdminUser){
         currentAdminUser.theme = newTheme;
-        localStorage.setItem('amaro_staff_v125', JSON.stringify(staff));
+        localStorage.setItem('amaro_staff_v135', JSON.stringify(staff));
         applyGlobalTheme(currentAdminUser.id);
         showToast(`Zmieniono motyw dla ${currentAdminUser.name} na ${newTheme === 'dark' ? 'Ciemny' : 'Jasny'}`);
     }
@@ -1409,7 +1411,7 @@ function renderAdminCrmList(){
         const smsText = encodeURIComponent(`Cześć ${c.name}! Minęło już trochę czasu od Twojej ostatniej wizyty (${c.serviceName}) w Salonie AMARO. Zapraszamy do ponownej rezerwacji: https://amarosalon.pl`);
 
         return `
-            <div class="p-3.5 bg-white rounded-xl border ${isOverdue ? 'border-red-400 shadow-sm' : 'border-gray-200'} flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
+            <div class="p-3.5 bg-white text-gray-900 rounded-xl border ${isOverdue ? 'border-red-400 shadow-sm' : 'border-gray-200'} flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
                 <div>
                     <div class="flex items-center gap-2">
                         <strong class="text-sm text-gray-900">${c.name}</strong>
@@ -1434,16 +1436,16 @@ function renderAdminPendingBox(){
     if(pend.length===0){ box.classList.add('hidden'); badge.classList.add('hidden'); return; }
     box.classList.remove('hidden'); badge.textContent=pend.length; badge.classList.remove('hidden');
     document.getElementById('admin-pending-list').innerHTML = pend.map(b=>`
-        <div class="bg-white p-2.5 rounded-xl border border-amber-300 flex justify-between items-center gap-2 text-xs">
+        <div class="bg-white text-gray-900 p-2.5 rounded-xl border border-amber-300 flex justify-between items-center gap-2 text-xs">
             <div class="min-w-0"><span class="font-bold text-amber-800 block">${b.date} • ${b.time} (${b.durationMin}m) [${b.staffName}]</span><span class="font-bold truncate block">${b.serviceName}</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone})</span></div>
             <button onclick="approveBooking(${b.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shrink-0">Zatwierdź</button>
         </div>`).join('');
 }
-function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
+function approveBooking(id){ const b=bookings.find(x=>x.id===id); if(b){ b.status='confirmed'; localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings)); renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Wizyta zatwierdzona!'); } }
 function approveAllPending(){
     const targetStaffId = collabModeActive ? null : currentAdminUser.id;
     bookings.forEach(b=>{ if((!targetStaffId || b.staffId===targetStaffId) && b.status==='pending') b.status='confirmed'; });
-    localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     renderAdminPendingBox(); renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); showToast('Zatwierdzono wszystkie!');
 }
 
@@ -1460,7 +1462,7 @@ function changeBookingDuration(id, val){
         return;
     }
 
-    b.durationMin=dur; localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    b.durationMin=dur; localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zmieniono czas wizyty na ${formatDuration(dur)}.`);
 }
@@ -1486,7 +1488,7 @@ function autoResolveCollision(){
         }
     }
 
-    localStorage.setItem('amaro_bookings_v125',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     document.getElementById('admin-collision-alert').classList.add('hidden');
     pendingCollisionBookingId = null;
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
@@ -1529,7 +1531,7 @@ function renderAdminCalendar(){
 }
 function selectAdminDay(iso){ adminSelectedDateIso=iso; renderAdminCalendar(); renderAdminSelectedDayDetails(); }
 
-// ULEPSZONY WIDOK WIZYT W DNIU: PODZIELONY NA PORY DNIA Z POPRZEDNIMI WIZYTAMI OD NOWEJ LINII
+// WIZYTY W DNIU PODZIELONE NA PORY DNIA Z POPRZEDNIMI WIZYTAMI OD NOWEJ LINII
 function renderAdminSelectedDayDetails(){
     document.getElementById('admin-selected-day-title').textContent=adminSelectedDateIso;
     const sched=getDayScheduleForStaff(currentAdminUser.id,adminSelectedDateIso);
@@ -1565,7 +1567,7 @@ function renderAdminSelectedDayDetails(){
                         const savedNote = clientPrivateNotes[b.clientPhone] || '';
 
                         return `
-                            <div class="p-2.5 bg-white rounded-xl border ${pend?'border-amber-400':'border-gray-200'} space-y-1.5 text-xs shadow-sm">
+                            <div class="p-2.5 bg-white text-gray-900 rounded-xl border ${pend?'border-amber-400':'border-gray-200'} space-y-1.5 text-xs shadow-sm">
                                 <div class="flex justify-between items-start gap-1">
                                     <div><span class="font-bold text-gold-600">${b.time}–${endT} [${b.staffName.split(' ')[0]}]</span><span class="font-bold block">${b.serviceName} (${b.price})</span><span class="text-[11px] text-gray-500">${b.clientName} (${b.clientPhone}) ${b.clientEmail ? '• '+b.clientEmail : ''}</span></div>
                                     <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-800'}">${pend?'Oczekuje':'Potwierdzona'}</span>
@@ -1620,7 +1622,7 @@ function saveClientNote(phone, note){
 function saveCustomDayHours(){
     const st=document.getElementById('admin-day-start').value, en=document.getElementById('admin-day-end').value;
     currentAdminUser.customDates[adminSelectedDateIso]={open:true,start:st,end:en};
-    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v135',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
     showToast(`Zapisano godziny ${st}–${en} na ${adminSelectedDateIso}`);
 }
@@ -1628,7 +1630,7 @@ function saveCustomDayHours(){
 function toggleBlockSelectedDay(){
     const idx=currentAdminUser.blockedDates.indexOf(adminSelectedDateIso);
     if(idx>-1) currentAdminUser.blockedDates.splice(idx,1); else currentAdminUser.blockedDates.push(adminSelectedDateIso);
-    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff));
+    localStorage.setItem('amaro_staff_v135',JSON.stringify(staff));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateNextFreeBadges();
 }
 
@@ -1639,7 +1641,7 @@ function addManualAdminBooking(){
     if(!isSlotAvailable(srv.specialistId,adminSelectedDateIso,time,srv.durationMin)){ alert('Kolizja czasu!'); return; }
     const stObj = staff.find(s=>s.id===srv.specialistId);
     bookings.unshift({id:Date.now(),serviceName:srv.name,price:srv.price,durationMin:srv.durationMin,freqWeeks:srv.freqWeeks||4,staffId:srv.specialistId,staffName:stObj.name,date:adminSelectedDateIso,time,clientName:cl,clientPhone:'Tel.',clientEmail:'',status:'confirmed'});
-    localStorage.setItem('amaro_bookings_v115',JSON.stringify(bookings));
+    localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings));
     renderAdminCalendar(); renderAdminSelectedDayDetails(); updateBookingBadge(); updateNextFreeBadges();
     showToast('Dodano rezerwację telefoniczną!');
 }
@@ -1651,7 +1653,7 @@ function renderSpecificWeekEditor(){
     const dNames=['Ndz','Pon','Wt','Śr','Czw','Pt','Sob']; let html='';
     for(let i=0;i<7;i++){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d), sc=getDayScheduleForStaff(currentAdminUser.id,iso);
-        html+=`<div class="flex items-center justify-between bg-white p-2 rounded-xl border ${sc.custom?'border-gold-500':'border-gray-200'} text-xs">
+        html+=`<div class="flex items-center justify-between bg-white text-gray-900 p-2 rounded-xl border ${sc.custom?'border-gold-500':'border-gray-200'} text-xs">
             <label class="flex items-center gap-1.5 font-bold"><input type="checkbox" id="spec-open-${iso}" ${sc.open?'checked':''}><span>${dNames[d.getDay()]} (${iso.slice(5)})</span></label>
             <div class="flex items-center gap-1"><input type="time" id="spec-start-${iso}" value="${sc.start||'10:00'}" class="border rounded p-1 text-xs"><span>–</span><input type="time" id="spec-end-${iso}" value="${sc.end||'21:00'}" class="border rounded p-1 text-xs"></div>
         </div>`;
@@ -1663,13 +1665,13 @@ function saveSpecificWeekSchedule(){
         const d=new Date(adminWeekPlanStart); d.setDate(adminWeekPlanStart.getDate()+i); const iso=toIsoDate(d);
         currentAdminUser.customDates[iso]={open:document.getElementById(`spec-open-${iso}`).checked,start:document.getElementById(`spec-start-${iso}`).value,end:document.getElementById(`spec-end-${iso}`).value};
     }
-    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
+    localStorage.setItem('amaro_staff_v135',JSON.stringify(staff)); renderSpecificWeekEditor(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano grafik tygodnia!');
 }
 
 function renderAdminScheduleEditor(){
     document.getElementById('admin-schedule-editor').innerHTML=[1,2,3,4,5,6,0].map(i=>{
         const sc=currentAdminUser.schedule[i];
-        return `<div class="flex items-center justify-between bg-white p-2 rounded-xl border text-xs">
+        return `<div class="flex items-center justify-between bg-white text-gray-900 p-2 rounded-xl border text-xs">
             <label class="flex items-center gap-1.5 font-bold"><input type="checkbox" id="sched-open-${i}" ${sc.open?'checked':''}><span>${sc.name}</span></label>
             <div class="flex items-center gap-1"><input type="time" id="sched-start-${i}" value="${sc.start}" class="border rounded p-1 text-xs"><span>–</span><input type="time" id="sched-end-${i}" value="${sc.end}" class="border rounded p-1 text-xs"></div>
         </div>`;
@@ -1681,7 +1683,7 @@ function saveAdminSchedule(){
         currentAdminUser.schedule[i].start=document.getElementById(`sched-start-${i}`).value;
         currentAdminUser.schedule[i].end=document.getElementById(`sched-end-${i}`).value;
     });
-    localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
+    localStorage.setItem('amaro_staff_v135',JSON.stringify(staff)); renderHoursDisplay(); renderAdminCalendar(); updateNextFreeBadges(); showToast('Zapisano szablon!');
 }
 
 function renderAdminServices(){
@@ -1692,11 +1694,11 @@ function renderAdminServices(){
         const mySrv = services.filter(s => s.specialistId === st.id);
         if(mySrv.length === 0) return '';
         return `
-            <div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-200 space-y-2">
+            <div class="bg-gray-50 text-gray-900 p-3.5 rounded-2xl border border-gray-200 space-y-2">
                 <h5 class="font-brand font-bold text-xs text-gold-700 uppercase tracking-wider border-b pb-1"><i class="fa-solid fa-user-tie mr-1"></i> Usługi w strefie: ${st.name}</h5>
                 <div class="space-y-2">
                     ${mySrv.map(s => `
-                        <div class="flex flex-wrap items-center justify-between bg-white p-2 rounded-xl border text-xs gap-2">
+                        <div class="flex flex-wrap items-center justify-between bg-white text-gray-900 p-2 rounded-xl border text-xs gap-2">
                             <span class="font-bold text-gray-900">${s.name}</span>
                             <div class="flex items-center gap-1.5">
                                 <input type="number" id="dur-edit-${s.id}" value="${s.durationMin}" step="15" class="bg-gray-50 border rounded p-1 w-14 text-xs font-bold text-center"><span>min</span>
@@ -1714,16 +1716,16 @@ function renderAdminServices(){
 
 function updateServicePrice(id){
     const srv=services.find(s=>s.id===id);
-    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
+    if(srv){ srv.price=document.getElementById(`price-edit-${id}`).value; srv.durationMin=parseInt(document.getElementById(`dur-edit-${id}`).value)||45; localStorage.setItem('amaro_services_v135',JSON.stringify(services)); renderServices(); renderAdminServices(); updateNextFreeBadges(); showToast('Zapisano!'); }
 }
 function addNewService(){
     const name=document.getElementById('new-srv-name').value.trim(), price=document.getElementById('new-srv-price').value.trim(), dur=parseInt(document.getElementById('new-srv-dur').value)||60, cat=document.getElementById('new-srv-cat').value;
     if(!name||!price) return;
     services.push({id:Date.now(),category:cat,specialistId:cat==='arek'?'arek':'agata',name,durationMin:dur,freqWeeks:4,price,desc:'Usługa w salonie AMARO.'});
-    localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
+    localStorage.setItem('amaro_services_v135',JSON.stringify(services)); renderServices(); renderAdminServices(); showToast('Dodano usługę!');
 }
-function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v115',JSON.stringify(services)); renderServices(); renderAdminServices(); }
-function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v115',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
+function deleteService(id){ services=services.filter(s=>s.id!==id); localStorage.setItem('amaro_services_v135',JSON.stringify(services)); renderServices(); renderAdminServices(); }
+function updateAdminPassword(){ const p=document.getElementById('admin-new-pass').value.trim(); if(p){ currentAdminUser.pass=p; localStorage.setItem('amaro_staff_v135',JSON.stringify(staff)); showToast('Hasło zmienione!'); } }
 
 // WGRYWANIE ZDJĘĆ PRZED I PO Z TELEFONU Z AUTOMATYCZNĄ CENZURĄ OCZU
 function handleAdminBeforeAfterUpload(){
@@ -1777,7 +1779,7 @@ function saveAndRenderPair(beforeSrc, afterSrc){
     const labelInput = document.getElementById('upload-before-after-label');
     const lbl = labelInput.value.trim() || 'Metamorfoza AMARO';
     galleryPhotos.unshift({ before: beforeSrc, after: afterSrc, label: lbl });
-    localStorage.setItem('amaro_gallery_v115', JSON.stringify(galleryPhotos));
+    localStorage.setItem('amaro_gallery_v135', JSON.stringify(galleryPhotos));
     renderGallery();
     document.getElementById('upload-before-file').value = '';
     document.getElementById('upload-after-file').value = '';
@@ -1799,7 +1801,7 @@ function toggleMyBookings(){
         document.getElementById('my-bookings-list').innerHTML = bookings.length===0 ? `<div class="text-center py-8 text-gray-400 text-xs">Brak wizyt.</div>` : bookings.slice(0,15).map(b=>{
             const dur=b.durationMin||60, endT=minutesToTime(timeToMinutes(b.time)+dur), pend=b.status==='pending';
             const gUrl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('AMARO: '+b.serviceName)}&dates=${b.date.replace(/-/g,'')+'T'+b.time.replace(':','')+'00'}/${b.date.replace(/-/g,'')+'T'+endT.replace(':','')+'00'}&location=${encodeURIComponent('Ul. Kryształowa 28a, Lublin')}`;
-            return `<div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-200 space-y-2 text-xs">
+            return `<div class="bg-gray-50 text-gray-900 p-3.5 rounded-2xl border border-gray-200 space-y-2 text-xs">
                 <div class="flex justify-between items-start"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${pend?'bg-amber-100 text-amber-800':'bg-emerald-100 text-emerald-700'}">${pend?'Zarezerwowana (Oczekuje)':'Potwierdzona przez salon'}</span><span class="font-bold text-gold-600">${b.price}</span></div>
                 <div class="font-brand font-bold text-gray-900">${b.serviceName}</div>
                 <div class="text-gray-600">${b.date} • <strong>${b.time}–${endT}</strong> (${b.staffName})</div>
@@ -1810,7 +1812,7 @@ function toggleMyBookings(){
         toggleBodyScroll(false);
     }
 }
-function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v115',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
+function cancelBooking(id){ bookings=bookings.filter(b=>b.id!==id); localStorage.setItem('amaro_bookings_v135',JSON.stringify(bookings)); updateBookingBadge(); updateNextFreeBadges(); showToast('Wizyta odwołana.'); }
 function navigateFromCurrentLocation(){ window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Ul. Kryształowa 28a, 20-583 Lublin')}`,'_blank'); }
 function openReviewsModal(){ 
     renderReviewsFiltered('all', null);
